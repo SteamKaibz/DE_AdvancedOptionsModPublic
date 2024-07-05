@@ -1,0 +1,61 @@
+I'm hooking functions in my dll that attachs to a game for modding purpose and i'm allowed to do it:
+
+//! __int64 __fastcall idRenderModelGui::DrawString_6239F0(__int64 idMenuPtr_a1,float x_a2,float y_a3,char* text_a4,__int64 idColor_a5,char a6,float scale_a7)
+typedef __int64(__fastcall* idRenderModelGui_DrawString)(__int64 a1, float a2, float a3, const char* a4, __int64 a5, char a6, float a7);
+idRenderModelGui_DrawString pidRenderModelGui_DrawString = nullptr;
+idRenderModelGui_DrawString pidRenderModelGui_DrawStringTarget;
+This is an example of the hooking i'm doing on a function
+
+Here is the typdef and hook:
+
+//!DrawString(idRenderModelGuiAdrr, x, y, text, (__int64)&idColor, forceColorMB 0, scale);
+__int64 __fastcall idRenderModelGui_DrawStringHook(__int64 gui_a1, float x_a2, float y_a3, const char* text_a4, __int64 idColor_a5, char a6, float scale_a7) {
+
+
+	return pidRenderModelGui_DrawString(gui_a1, x_a2, y_a3, text_a4, idColor_a5, a6, scale_a7);
+}
+
+
+Here is how i create the hook:
+
+if (modStatus.isAllGood()) {
+pidRenderModelGui_DrawStringTarget = reinterpret_cast<idRenderModelGui_DrawString>(MinHookManager::GetIdRenderModelGui_DrawStringFuncAddr());
+if (MH_CreateHook(reinterpret_cast<void**>(pidRenderModelGui_DrawStringTarget), &idRenderModelGui_DrawStringHook, reinterpret_cast<void**>(&pidRenderModelGui_DrawString)) != MH_OK) {
+	logErr("pidRenderModelGui_DrawStringTarget CreateHook failed, mod can not start  ");
+
+	modStatus.setHookError();
+}
+
+
+Here is how i enable the hook:
+
+if (modStatus.isAllGood()) {
+	MH_STATUS enableHookforppidRenderModelGui_DrawStringTargetVal = MH_EnableHook(pidRenderModelGui_DrawStringTarget);
+
+	if (enableHookforppidRenderModelGui_DrawStringTargetVal != MH_OK && enableHookforppidRenderModelGui_DrawStringTargetVal != MH_ERROR_ENABLED) {
+		logErr("MMH_EnableHook: pidRenderModelGui_DrawStringTarget failed, mod can not start. MH_EnableHook val is %d", (int)enableHookforppidRenderModelGui_DrawStringTargetVal);
+		modStatus.setHookError();
+	}
+	else {
+		logInfo("MH_EnableHook:: pidRenderModelGui_DrawStringTarget: OK, MH enabled status: %d", (int)enableHookforppidRenderModelGui_DrawStringTargetVal);
+	}
+}
+
+
+Here is how i disable the hook:
+
+	MH_DisableHook(pidRenderModelGui_DrawStringTarget);
+
+
+Can you generate those but for this function definition:
+
+__int64 __fastcall debug_hud_string_4CB340(
+        idRenderModelGui *a1,
+        float a2,
+        __int64 a3,
+        float a4,
+        float *a5,
+        _BYTE *a6,
+        int a7,
+        int a8)
+{
