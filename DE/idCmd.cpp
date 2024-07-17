@@ -50,7 +50,6 @@ uintptr_t idCmd::executeCommandText(const char* txt) {
 
 
 
-
 void idCmd::setGameSpeed(gameSpeed_K gameSpeed) {
 	if (gameSpeed == gameSpeed_K::maxSpeed) {
 		executeCommandText("timescale 10"); //! by default max is 10.
@@ -81,7 +80,6 @@ void idCmd::setGameSpeed(gameSpeed_K gameSpeed) {
 	else {
 		logWarn("setReticleMode: found undefined mode of reticle mode ?!");
 	}
-
 }
 
 
