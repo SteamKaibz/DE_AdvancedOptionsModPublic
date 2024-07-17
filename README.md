@@ -1,4 +1,3 @@
 # DE_AdvancedOptionsMod
 
-
-This mod is in the process of being re-written from scratch in the coming weeks/months to fix freeze issues and fix performance drops.
+complete rewrite of this mod will take place in the coming weeks/months and will look into fixing freeze/crash and performance drops issues
