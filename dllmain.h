@@ -1402,59 +1402,59 @@ __int64 __fastcall idHud_PerspectiveSmth_t_Hook(idHUDElement* idHUDElementPtr_a1
 
 
 //! __int64 __fastcall hud_drawPerspectiveSmth_1549A70(__int64 idHUDElementPtr_a1, __int64 a2, __int64 a3, __int64 a4)
-typedef __int64(__fastcall* hud_drawPerspectiveSmth_t)(idHUDElement* idHUDElementPtr_a1, __int64 a2, __int64 a3, __int64 a4);
-hud_drawPerspectiveSmth_t p_hud_drawPerspectiveSmth_t = nullptr;
-hud_drawPerspectiveSmth_t p_hud_drawPerspectiveSmth_t_Target = nullptr;
-
-__int64 __fastcall hud_drawPerspectiveSmth_t_Hook(idHUDElement* idHUDElementPtr_a1, __int64 a2, __int64 a3, __int64 a4) {
-
-
-
-
-	if (idHUDElementPtr_a1) {
-		idResource* resPtr = (idResource*)idHUDElementPtr_a1->decl;
-		if (resPtr) {
-			std::string idHUDElementNameStr = resPtr->name.str;
-			//logInfo("idHud_PerspectiveSmth_t_Hook: found idHUDElement with name: %s", resPtr->name.str);
-
-			/*idUIElement* idUIElementPtr = (idUIElement*)idHUDElementPtr_a1;			
-
-
-			__int64 idGUIComponentAddr = 0;
-
-			if (idGUIComponentPTR_a3) {
-				idGUIComponentAddr = *(__int64*)idGUIComponentPTR_a3;
-			}
-
-
-			logInfo("hud_drawPerspectiveSmth_1549A70: idHUDElementNameStr: %s for idHUDElementPtr_a1 : %p  a2: %p  idGUIComponentPTR_a3 is %p idGUIComponentAddr: %p", idHUDElementNameStr.c_str(), idUIElementPtr, (void*)a2, (void*)idGUIComponentPTR_a3, (void*)idGUIComponentAddr);*/
-
-
-
-			if (idHUDElementNameStr == "hud_weaponinfo") {
-				
-				idUIElement* idUIElementPtr = (idUIElement*)idHUDElementPtr_a1;
-
-				float f0 = *(float*)(a3);
-				float f1 = *(float*)(a3 + 4);
-				float f2 = *(float*)(a3 + 8);
-
-				logInfo("hud_drawPerspectiveSmth_1549A70: for hud_weaponinfo : %p  a3 is %p f0: %.3f f1: %.3f f2: %.3f", idUIElementPtr, (void*)a3, f0, f1, f2);
-
-				logInfo("hud_drawPerspectiveSmth_1549A70: forcing floats... ");
-			/*	*(float*)(a3 + 4) = 100.0f;
-				*(float*)(a3 + 8) = -1.0f;*/
-
-			}
-		}
-	}
-
-
-
-
-	
-	return p_hud_drawPerspectiveSmth_t(idHUDElementPtr_a1, a2, a3, a4);
-}
+//typedef __int64(__fastcall* hud_drawPerspectiveSmth_t)(idHUDElement* idHUDElementPtr_a1, __int64 a2, __int64 a3, __int64 a4);
+//hud_drawPerspectiveSmth_t p_hud_drawPerspectiveSmth_t = nullptr;
+//hud_drawPerspectiveSmth_t p_hud_drawPerspectiveSmth_t_Target = nullptr;
+//
+//__int64 __fastcall hud_drawPerspectiveSmth_t_Hook(idHUDElement* idHUDElementPtr_a1, __int64 a2, __int64 a3, __int64 a4) {
+//
+//
+//
+//
+//	if (idHUDElementPtr_a1) {
+//		idResource* resPtr = (idResource*)idHUDElementPtr_a1->decl;
+//		if (resPtr) {
+//			std::string idHUDElementNameStr = resPtr->name.str;
+//			//logInfo("idHud_PerspectiveSmth_t_Hook: found idHUDElement with name: %s", resPtr->name.str);
+//
+//			/*idUIElement* idUIElementPtr = (idUIElement*)idHUDElementPtr_a1;			
+//
+//
+//			__int64 idGUIComponentAddr = 0;
+//
+//			if (idGUIComponentPTR_a3) {
+//				idGUIComponentAddr = *(__int64*)idGUIComponentPTR_a3;
+//			}
+//
+//
+//			logInfo("hud_drawPerspectiveSmth_1549A70: idHUDElementNameStr: %s for idHUDElementPtr_a1 : %p  a2: %p  idGUIComponentPTR_a3 is %p idGUIComponentAddr: %p", idHUDElementNameStr.c_str(), idUIElementPtr, (void*)a2, (void*)idGUIComponentPTR_a3, (void*)idGUIComponentAddr);*/
+//
+//
+//
+//			if (idHUDElementNameStr == "hud_weaponinfo") {
+//				
+//				idUIElement* idUIElementPtr = (idUIElement*)idHUDElementPtr_a1;
+//
+//				float f0 = *(float*)(a3);
+//				float f1 = *(float*)(a3 + 4);
+//				float f2 = *(float*)(a3 + 8);
+//
+//				logInfo("hud_drawPerspectiveSmth_1549A70: for hud_weaponinfo : %p  a3 is %p f0: %.3f f1: %.3f f2: %.3f", idUIElementPtr, (void*)a3, f0, f1, f2);
+//
+//				logInfo("hud_drawPerspectiveSmth_1549A70: forcing floats... ");
+//			/*	*(float*)(a3 + 4) = 100.0f;
+//				*(float*)(a3 + 8) = -1.0f;*/
+//
+//			}
+//		}
+//	}
+//
+//
+//
+//
+//	
+//	return p_hud_drawPerspectiveSmth_t(idHUDElementPtr_a1, a2, a3, a4);
+//}
 
 
 

@@ -438,18 +438,18 @@ bool InitializeHooks() {
 	}
 
 
-	p_idHud_PerspectiveSmth_t_Target = reinterpret_cast<idHud_PerspectiveSmth_t>(MemHelper::getFuncAddr(0x1549D80));
+	/*p_idHud_PerspectiveSmth_t_Target = reinterpret_cast<idHud_PerspectiveSmth_t>(MemHelper::getFuncAddr(0x1549D80));
 	if (MH_CreateHook(reinterpret_cast<void**>(p_idHud_PerspectiveSmth_t_Target), &idHud_PerspectiveSmth_t_Hook, reinterpret_cast<void**>(&p_idHud_PerspectiveSmth_t)) != MH_OK) {
 		logErr("Failed to create p_idHud_PerspectiveSmth_t_Target hook.");
 		return false;
-	}
+	}*/
 
 	
-	p_hud_drawPerspectiveSmth_t_Target = reinterpret_cast<hud_drawPerspectiveSmth_t>(MemHelper::getFuncAddr(0x1549A70));
+	/*p_hud_drawPerspectiveSmth_t_Target = reinterpret_cast<hud_drawPerspectiveSmth_t>(MemHelper::getFuncAddr(0x1549A70));
 	if (MH_CreateHook(reinterpret_cast<void**>(p_hud_drawPerspectiveSmth_t_Target), &hud_drawPerspectiveSmth_t_Hook, reinterpret_cast<void**>(&p_hud_drawPerspectiveSmth_t)) != MH_OK) {
 		logErr("Failed to create p_hud_drawPerspectiveSmth_t_Target hook.");
 		return false;
-	}
+	}*/
 
 
 
@@ -526,7 +526,7 @@ DWORD WINAPI ModMain() {
 	
 	//! even though we managed to find a way to change a file logging level at runtime, because the mod will have a release and debug version we don't have to get any "version" from the json settings file.
 	//? IF YOU EVER UPDATE THE OLD MOD VERSION MAKE SURE TO ADD ITS MD5 TO THE LIST OF CONFLICTING MODS TO CHECK FOR
-	Config::set(ModConfig::dev); // nexusRelease, nexusDebug, dev
+	Config::set(ModConfig::nexusDebug); // nexusRelease, nexusDebug, dev
 
 	Config::printHeaderInLogFile();
 
