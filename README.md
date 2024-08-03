@@ -1,3 +1,6 @@
 # DE_AdvancedOptionsMod
 
-complete rewrite of this mod will take place in the coming weeks/months and will look into fixing freeze/crash and performance drops issues.
+
+Source for: https://www.nexusmods.com/doometernal/mods/1255
+
+If you to help making the mod's performance better, please let me know.
