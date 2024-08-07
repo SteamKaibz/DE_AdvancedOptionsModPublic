@@ -129,7 +129,7 @@ public:
 
 	static void setHandsFov(int iniFileValue);
 
-	static std::string getHandsFovFloatValAsStr(int iniFileValue);
+	static std::string getHandsFovCmdAsStr(int iniFileValue);
 
 	//! enable/disable mouse input so user can use the mouse in imgui
 	static void SetInMouseEnabled(bool isEnable);

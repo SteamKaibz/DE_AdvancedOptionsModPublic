@@ -99,10 +99,11 @@ private:
 	static inline bool m_isImprovedWeaponSwitching = modSettingsDefault::g_defaultIsImprovedWeaponSwitchEnabled;
 	static inline bool m_isImprovedWeaponSwitchingBeep = modSettingsDefault::g_defaultIsImprovedWeaponSwitchBeep;
 
-
 	static inline bool m_isGameFovUnlocked = modSettingsDefault::g_defaultIsGameFovUnlocked;
 
-	static inline int m_handsFOV = modSettingsDefault::g_defaultHandsFOV;
+	//static inline int m_handsFOV = modSettingsDefault::g_defaultHandsFOV;
+
+
 		  
 	static inline float m_reticleScale = Reticle::g_defaultReticleScale;
 		  
@@ -205,9 +206,24 @@ private:
 	//static inline std::string m_lastLoadedSerializedDataStr = "";
 
 
+
 public:
 
+	//? this might seem strange than only those are declared plublic but the goal is to refactor so all mod settings vars become public so that it makes the code easier to couple with imgui
+	static inline int HandsFOVShotgun = modSettingsDefault::g_defaultHandsFOVShotgun;
+	static inline int HandsFOVHAR = modSettingsDefault::g_defaultHandsFOVHAR;
+	static inline int HandsFOVPlasma = modSettingsDefault::g_defaultHandsFOVPlasma;
+	static inline int HandsFOVRocket = modSettingsDefault::g_defaultHandsFOVRocket;
+	static inline int HandsFOVSSG = modSettingsDefault::g_defaultHandsFOVSSG;
+	static inline int HandsFOVBallista = modSettingsDefault::g_defaultHandsFOVBallista;
+	static inline int HandsFOVChaingun = modSettingsDefault::g_defaultHandsFOVChaingun;
+	static inline int HandsFOVBFGUnmaykr = modSettingsDefault::g_defaultHandsFOVBFGUnmaykr;
+	static inline int HandsFOVWeapon9 = modSettingsDefault::g_defaultHandsFOVWeapon9;
+	static inline int HandsFOVCrucibleHammer = modSettingsDefault::g_defaultHandsFOVCrucibleHammer;
 
+
+
+public:
 
 
 	//! so other cls can acces vals without having to use getters/setters. a bit late though...
@@ -215,7 +231,6 @@ public:
 
 	static void loadSettings();
 	static void saveSettings();	
-
 
 
 	static void apply();
@@ -427,8 +442,8 @@ public:
 	static void setIsGameFovMenuUnlocked(bool value);
 
 
-	static int getHandsFOV();
-	static void setHandsFOV(int value);
+	//static int getHandsFOV();
+	//static void setHandsFOV(int value);
 
 	
 

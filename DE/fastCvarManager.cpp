@@ -78,8 +78,15 @@ bool fastCvarManager::cacheCriticalCvars()
 	}
 
 
+	m_hands_fovScaleCvarPtr = (idCVar*)idCvarManager::getCvarPtr("hands_fovScale");
+	if (MemHelper::isBadReadPtr(m_hands_fovScaleCvarPtr)) {
+		logErr("cacheCriticalCvars: failed to find m_hands_fovScaleCvarPtr");
+		m_hands_fovScaleCvarPtr = nullptr;
+		return false;
+	}
 
-	logInfo("cacheCriticalCvars: succes caching critical cvars");
+
+	logInfo("cacheCriticalCvars: succes caching all critical cvars");
 	return true;
 }
 
@@ -173,6 +180,16 @@ antialiasingLevel fastCvarManager::getCurAntiAliasLevel() {
 	return (antialiasingLevel)m_r_antialiasingCvarPtr->data->valueInteger;
 }
 
+//! Hands_fovScale == weapon fov
+float fastCvarManager::getCurHands_fovScale() {
+	if (!m_hands_fovScaleCvarPtr) {
+		logErr("getCurHands_fovScale: m_hands_fovScaleCvarPtr is nullptr");
+		return -1.0f;
+	}
+
+	return m_hands_fovScaleCvarPtr->data->valueFloat;
+
+}
 
 
 

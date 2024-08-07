@@ -41,7 +41,13 @@ void DebugGui::showDebugWindow(bool* p_open) {
 
     //? keep those comments:
     //ImGuiDebugWin::AddMessage(idPlayer_K::getDbgStrForImgui());
-    //ImGuiDebugWin::AddMessage(idHudManager::getDdgStrForImgui());  
+    ImGuiDebugWin::AddMessage(idHudManager::getDdgStrForImgui());  
+
+    weaponSlot_t curWeaponSlot = idWeaponManager::getCurWeaponSlot();
+    std::string curWeaponSlotStr = "Cur weapon Slot: ";
+    curWeaponSlotStr += std::to_string((int)curWeaponSlot);
+    ImGuiDebugWin::AddMessage(curWeaponSlotStr);
+
     //ImGuiDebugWin::AddMessage(PlayerStateChecker::getDbgStrForImgui());
     //ImGuiDebugWin::AddMessage(KaibzHudManager::getDdgStrForImgui());
     ImGuiDebugWin::AddMessage(fastCvarManager::getDbgStrFromImgui());

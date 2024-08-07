@@ -325,6 +325,12 @@
 		return false;
 	}
 
+	if (!MinHookManager::SetIdUsercmdGenLocalSendBtnPressFuncAdd((uintptr_t)MemHelper::ModulePatternScan("SetIdUsercmdGenLocalSendBtnPressFpSig", IdUsercmdGenLocalSendBtnPressFpSig))) {
+		logErr("scanForAddrs failed for IdUsercmdGenLocalSendBtnPressFpSig");
+		return false;
+	}
+
+
 	if (!MinHookManager::SetConsoleLogFuncAdd((uintptr_t)MemHelper::ModulePatternScan("consoleLogFpSig", consoleLogFpSig))) {
 		logErr("scanForAddrs failed for consoleLogFpSig");
 		return false;

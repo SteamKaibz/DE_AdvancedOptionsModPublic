@@ -1,6 +1,0 @@
-LIBRARY MSIMG32
-
-EXPORTS
-    AlphaBlend
-    TransparentBlt
-    GradientFill

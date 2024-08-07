@@ -148,12 +148,14 @@ void idCmd::setGameSpeed(gameSpeed_K gameSpeed) {
  }
 
 
+ 
+
 
 //! this is slow (i assmue) but it's ok cause triggered only when user is out of mod menu
 
  void idCmd::setHandsFov(int iniFileValue) {
 	
-	std::string valAsStr = getHandsFovFloatValAsStr(iniFileValue);
+	std::string valAsStr = getHandsFovCmdAsStr(iniFileValue);
 	logInfo("Setting hands fov to: %s ", valAsStr.c_str());
 	executeCommandText(valAsStr.c_str());
 
@@ -161,28 +163,35 @@ void idCmd::setGameSpeed(gameSpeed_K gameSpeed) {
  }
 
 
- std::string idCmd::getHandsFovFloatValAsStr(int iniFileValue) { //! 1 - 100
-	logDebug("getHandsFovFloatValAsStr: iniFileValue: %d", iniFileValue);
-	if (iniFileValue <= 0) {
-		iniFileValue = 0; //! default value 
+ std::string idCmd::getHandsFovCmdAsStr(int targetValueInt) { //! 1 - 100
+	//logDebug("getHandsFovCmdAsStr: targetValueInt: %d", targetValueInt);
+	if (targetValueInt <= 0) {
+		targetValueInt = 0; //! default value 
 	}
-	else if (iniFileValue > 100) {
-		iniFileValue = 100;
+	else if (targetValueInt > 100) {
+		targetValueInt = 100;
 	}
 
-	float floatVal = (float)iniFileValue / (float)100;
-	if (iniFileValue == 0) {
+	float floatVal = (float)targetValueInt / (float)100;
+	if (targetValueInt == 0) {
 		floatVal = 0.f;
 	}
-	else if (floatVal > 0.95f) {
+
+	//? changing this to see if 1.0f is really a problem....
+	/*else if (floatVal > 0.95f) {
 		floatVal = 0.95f;
+	}*/
+	else if (floatVal > 1.0f) {
+		floatVal = 1.0f;
 	}
+
+
 	else if (floatVal < 0.1f) { //! there are issues if val is like 0.02 so 0.1 is a good base.
 		floatVal = 0.1f;
 	}
 	std::string valAsStr = std::to_string(floatVal);
 	valAsStr = "hands_fovScale " + valAsStr;
-	logInfo("getHandsFovFloatValAsStr: iniFileValue: %d  converted value as floatStr:  %s ", iniFileValue, valAsStr.c_str());
+	//logInfo("getHandsFovCmdAsStr: targetValueInt: %d  converted value as floatStr:  %s ", targetValueInt, valAsStr.c_str());
 	return valAsStr;
  }
 

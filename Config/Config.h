@@ -102,7 +102,7 @@ public:
 
 	//static const inline std::string MOD_NEXUS_LINK = "https://www.nexusmods.com/doometernal/mods/1255";
 
-	static const inline std::vector<std::string> CREDITS_VEC = { "MethanHydrat for the inspiration and advices", "SamPT for his help, testing and advices", "SunBeam for his idTech findings and articles", "Chrispy for his amazing Meathook mod", "Zwip - Zwap Zapony for all that he has done for the DE modding community", "Crazyslugger for testing and feedback", "The Doom Eternal Modding Discord Community" };
+	static const inline std::vector<std::string> CREDITS_VEC = { "Belazr for fixing crash/freeze issue with Vulkan/Imgui for AMD GPU", "Decimation for all his help/advices", "MethanHydrat for making me get into modding", "SamPT for his help, testing and advices", "SunBeam for his idTech findings and articles", "Chrispy for his amazing Meathook mod", "Zwip - Zwap Zapony for all that he has done for the DE modding community", "Crazyslugger for testing and feedback", "The Doom Eternal Modding Discord Community" };
 	
 
 

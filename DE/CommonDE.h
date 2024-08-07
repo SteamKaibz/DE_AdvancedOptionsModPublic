@@ -1541,6 +1541,17 @@ namespace modSettingsDefault {
 	//! 0 means no change to HandsFOV
 	static const int g_defaultHandsFOV = 0;
 
+	static const int g_defaultHandsFOVShotgun = 0;
+	static const int g_defaultHandsFOVHAR = 0;
+	static const int g_defaultHandsFOVPlasma = 0;
+	static const int g_defaultHandsFOVRocket = 0;
+	static const int g_defaultHandsFOVSSG = 0;
+	static const int g_defaultHandsFOVBallista = 0;
+	static const int g_defaultHandsFOVChaingun = 0;
+	static const int g_defaultHandsFOVBFGUnmaykr = 0;
+	static const int g_defaultHandsFOVWeapon9 = 0;
+	static const int g_defaultHandsFOVCrucibleHammer = 0;
+
 
 	static const bool g_defaultIsGameFovUnlocked = false;
 

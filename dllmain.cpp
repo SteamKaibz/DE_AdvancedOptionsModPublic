@@ -34,67 +34,40 @@
 
 
 
+//! proxy gen:
+#pragma region Proxy
+struct msimg32_dll {
+	HMODULE dll;
+	FARPROC oAlphaBlend;
+	FARPROC oDllInitialize;
+	FARPROC oGradientFill;
+	FARPROC oTransparentBlt;
+	FARPROC ovSetDdrawflag;
+} msimg32;
 
+extern "C" {
+	FARPROC PA = 0;
+	int runASM();
 
-
-
-typedef BOOL(WINAPI* ORIG_FUNCTION_AlphaBlend)(HDC, int, int, int, int, HDC, int, int, int, int, BLENDFUNCTION);
-//ORIG_FUNCTION_AlphaBlend orig_AlphaBlend ;
-ORIG_FUNCTION_AlphaBlend orig_AlphaBlend = nullptr;
-
-BOOL WINAPI AlphaBlend(HDC hdcDest, int xoriginDest, int yoriginDest, int wDest, int hDest, HDC hdcSrc, int xoriginSrc, int yoriginSrc, int wSrc, int hSrc, BLENDFUNCTION ftn)
-{
-	//? attempting this to get rid of warning
-
-	if (orig_AlphaBlend)
-	{
-		return orig_AlphaBlend(hdcDest, xoriginDest, yoriginDest, wDest, hDest, hdcSrc, xoriginSrc, yoriginSrc, wSrc, hSrc, ftn);
-	}
-	else
-	{
-		// Handle error: Original function pointer not initialized
-		// For example:
-		return FALSE;
-	}
-
-	//! this works though !!!!!
-	// Call the original AlphaBlend function
-	//return orig_AlphaBlend(hdcDest, xoriginDest, yoriginDest, wDest, hDest, hdcSrc, xoriginSrc, yoriginSrc, wSrc, hSrc, ftn);
+	void fAlphaBlend() { PA = msimg32.oAlphaBlend; runASM(); }
+	void fDllInitialize() { PA = msimg32.oDllInitialize; runASM(); }
+	void fGradientFill() { PA = msimg32.oGradientFill; runASM(); }
+	void fTransparentBlt() { PA = msimg32.oTransparentBlt; runASM(); }
+	void fvSetDdrawflag() { PA = msimg32.ovSetDdrawflag; runASM(); }
 }
 
-
-
-typedef BOOL(WINAPI* ORIG_FUNCTION_GradientFill)(HDC, PTRIVERTEX, ULONG, PVOID, ULONG, ULONG);
-ORIG_FUNCTION_GradientFill orig_GradientFill;
-BOOL WINAPI GradientFill(HDC hdc, PTRIVERTEX pVertex, ULONG dwNumVertex, PVOID pMesh, ULONG dwNumMesh, ULONG dwMode)
-{
-	return (orig_GradientFill)(hdc, pVertex, dwNumVertex, pMesh, dwNumMesh, dwMode);
+void setupFunctions() {
+	msimg32.oAlphaBlend = GetProcAddress(msimg32.dll, "AlphaBlend");
+	msimg32.oDllInitialize = GetProcAddress(msimg32.dll, "DllInitialize");
+	msimg32.oGradientFill = GetProcAddress(msimg32.dll, "GradientFill");
+	msimg32.oTransparentBlt = GetProcAddress(msimg32.dll, "TransparentBlt");
+	msimg32.ovSetDdrawflag = GetProcAddress(msimg32.dll, "vSetDdrawflag");
 }
-
-typedef BOOL(WINAPI* ORIG_FUNCTION_TransparentBlt)(HDC, int, int, int, int, HDC, int, int, int, int, UINT);
-ORIG_FUNCTION_TransparentBlt orig_TransparentBlt;
-BOOL WINAPI TransparentBlt(HDC hdcDest, int xoriginDest, int yoriginDest, int wDest, int hDest, HDC hdcSrc, int xoriginSrc, int yoriginSrc, int wSrc, int hSrc, UINT crTransparent)
-{
-	return (orig_TransparentBlt)(hdcDest, xoriginDest, yoriginDest, wDest, hDest, hdcSrc, xoriginSrc, yoriginSrc, wSrc, hSrc, crTransparent);
-}
+#pragma endregion
 
 
 
-void DllInit()
-{
 
-	HMODULE hOriginalDll = LoadLibraryW(L"msimg32.dll");	
-	if (hOriginalDll) {
-		orig_AlphaBlend = (ORIG_FUNCTION_AlphaBlend)GetProcAddress(hOriginalDll, "AlphaBlend");
-		orig_GradientFill = (ORIG_FUNCTION_GradientFill)GetProcAddress(hOriginalDll, "GradientFill");
-		orig_TransparentBlt = (ORIG_FUNCTION_TransparentBlt)GetProcAddress(hOriginalDll, "TransparentBlt");
-	}
-	else {
-		logErr("DllInit: hOriginalDll is nullptr, mod should not be working...");
-		g_isDllInitOk = false;
-	}
-	
-}
 
 
 void DisableWndProcHook(HWND hwnd) {
@@ -438,6 +411,14 @@ bool InitializeHooks() {
 	}
 
 
+	//p_idUsercmdGenLocalSendBtnPressMB_t_Target = reinterpret_cast<idUsercmdGenLocalSendBtnPressMB_t>(MemHelper::getFuncAddr(0x4C8970));
+	p_idUsercmdGenLocalSendBtnPressMB_t_Target = reinterpret_cast<idUsercmdGenLocalSendBtnPressMB_t>(MinHookManager::GetIdUsercmdGenLocalSendBtnPressFuncAdd());
+	if (MH_CreateHook(reinterpret_cast<void**>(p_idUsercmdGenLocalSendBtnPressMB_t_Target), &idUsercmdGenLocalSendBtnPressMB_Hook, reinterpret_cast<void**>(&p_idUsercmdGenLocalSendBtnPressMB_t)) != MH_OK) {
+		logErr("Failed to create idUsercmdGenLocalSendBtnPressMB_t_Target hook.");
+		return false;
+	}
+
+
 	/*p_idHud_PerspectiveSmth_t_Target = reinterpret_cast<idHud_PerspectiveSmth_t>(MemHelper::getFuncAddr(0x1549D80));
 	if (MH_CreateHook(reinterpret_cast<void**>(p_idHud_PerspectiveSmth_t_Target), &idHud_PerspectiveSmth_t_Hook, reinterpret_cast<void**>(&p_idHud_PerspectiveSmth_t)) != MH_OK) {
 		logErr("Failed to create p_idHud_PerspectiveSmth_t_Target hook.");
@@ -513,9 +494,11 @@ DWORD __stdcall EjectThread(LPVOID lpParameter) {
 DWORD WINAPI ModMain() {
 
 
-	//? attempting to close the mod if/when idlauncher triggers msimg32.dll 
+	//? attempting to close mod if/when idlauncher triggers msimg32.dll 
 	if (!mem.isGameFileNameValid()) {
 		CreateThread(0, 0, EjectThread, 0, 0, 0);
+		FreeLibrary(msimg32.dll);
+		Console::Hide();
 		return 0;
 	}
 	
@@ -526,7 +509,7 @@ DWORD WINAPI ModMain() {
 	
 	//! even though we  managed to find a way to change a file logging level at runtime, because the mod will have a release and debug version we don't have to get any "version" from the json settings file..
 	//? IF YOU EVER UPDATE THE OLD MOD VERSION MAKE SURE TO ADD ITS MD5 TO THE LIST OF CONFLICTING MODS TO CHECK FOR
-	Config::set(ModConfig::nexusRelease); // nexusRelease, nexusDebug, dev
+	Config::set(ModConfig::dev); // nexusRelease, nexusDebug, dev
 
 	Config::printHeaderInLogFile();
 
@@ -666,6 +649,7 @@ DWORD WINAPI ModMain() {
 	uint64_t lastcustomUICoordsCheckMs = 0;
 	uint64_t lastcolorReloadMs = 0;
 	uint64_t lastWeaponSwitchCheckMs = 0;
+	uint64_t lastWeaponFovCheckMs = 0;
 	uint64_t lastIdInventoryGetMs = 0;
 	uint64_t lastWeaponSettingCheckMs = 0;
 	uint64_t lastHudColorsUpdateCheckMs = 0;
@@ -732,9 +716,7 @@ DWORD WINAPI ModMain() {
 			isFirstTimeStatusLog = false;
 		}
 
-		//? trying this to check if we can use it to know if game is initialized and mod can "start"
-		//PlayerStateChecker::updateGameState();
-
+		
 		Sleep(loopSleepMs); //! having a long sleep here will not haVK_NUMPADve influence on the hooks which is great. 		
 
 		TTS::sayAllInQueue(); //! make sure this is called before the isHookError check
@@ -786,7 +768,7 @@ DWORD WINAPI ModMain() {
 		
 		if (PlayerStateChecker::isGameLoading()) {
 			//logInfo(" main loop: PlayerStateChecker::isGameLoading())");
-			//? this is horrible....
+			//? this is so inelegant:
 			idPlayer_K::resetLastBloodPunchCount(); // to make sure it updates the colors when player spawns
 			idPlayer_K::resetLastIceGrenadeCount(); // to make sure it updates the colors when player spawns
 			idPlayer_K::resetLastFragGrenadeCount();
@@ -801,9 +783,9 @@ DWORD WINAPI ModMain() {
 			idCmd::setAntiAliasingState(modSettings::getIsDisableAA());
 
 			lastAACheckMs = EpochMillis();
-		}
+		}	
 
-		
+
 
 
 
@@ -829,6 +811,14 @@ DWORD WINAPI ModMain() {
 
 
 				lastPlayerFlagUpdateMs = EpochMillis();
+			}
+
+
+			if (EpochMillis() - lastWeaponFovCheckMs > 50) {
+
+				weaponFovManager::update();
+
+				lastWeaponFovCheckMs = EpochMillis();
 			}
 
 
@@ -990,9 +980,7 @@ DWORD WINAPI ModMain() {
 
 		//	//! this should prevent the bug of the ice nade showing in cutscenes and while dead.
 		//	CustomIceNadeIconManager::updateIsRenderingAllowed(false);
-		//}
-
-	
+		//}	
 
 
 		//? !!!!!!!!!!!!!     CRITICAL    !!!!!!!!!!!!!!!!!!!!!!!!
@@ -1026,15 +1014,13 @@ DWORD WINAPI ModMain() {
 	K_Utils::PlayModUnloadedBeeps();
 	logInfo("attemting to exit mod...");
 	CreateThread(0, 0, EjectThread, 0, 0, 0);	
-	return 0;
-
-	
+	return 0;	
 }
 
 
 
 DWORD WINAPI OnProcessDetach(LPVOID lpParam) {
-	
+	FreeLibrary(msimg32.dll);
 	Console::Hide();	
 	return 0;
 }
@@ -1048,10 +1034,19 @@ extern "C" BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVO
 
 	if (ul_reason_for_call == DLL_PROCESS_ATTACH) {
 
+
+		char path[MAX_PATH];
+		GetWindowsDirectory(path, sizeof(path));
+
+		// Example: "\\System32\\version.dll"
+		strcat_s(path, "\\System32\\msimg32.dll");
+		msimg32.dll = LoadLibrary(path);
+		setupFunctions();
+
 		
 		DllHandle = hModule;
-		DllInit();
-		DisableThreadLibraryCalls(hModule);
+		//DllInit();
+		//DisableThreadLibraryCalls(hModule);
 		
 
 		HANDLE hHandle = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ModMain, DllHandle, 0, NULL);

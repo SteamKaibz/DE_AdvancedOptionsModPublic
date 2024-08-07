@@ -6,6 +6,8 @@
 #include "../../Debug/ImGuiDebugWin.h"
 #include "../../K_Utils/K_Utils.h"
 #include "../../DE/idInventoryManager.h"
+#include "../../DE/idWeaponManager.h"
+
 
 //? this include created a nigthmare, still not sure why to this day....
 //qsdfqsdf#include "../../DE/idRenderModelGuiManager.h"

@@ -24,6 +24,8 @@ private:
 	static inline idCVar* m_r_windowHeightCvarPtr = nullptr;
 	static inline idCVar* m_sys_langCvarPtr = nullptr;
 	static inline idCVar* m_r_antialiasingCvarPtr = nullptr;
+	static inline idCVar* m_hands_fovScaleCvarPtr = nullptr;
+
 
 
 public:
@@ -51,6 +53,8 @@ public:
 	static std::string getLang();
 
 	static antialiasingLevel getCurAntiAliasLevel();
+
+	static float getCurHands_fovScale();
 
 	static std::string getDbgStrFromImgui();
 

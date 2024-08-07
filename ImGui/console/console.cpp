@@ -11,7 +11,7 @@
 
 
 //! uncomment this if you don't want to have the console show anymore
-#define DISABLE_LOGGING_CONSOLE
+//#define DISABLE_LOGGING_CONSOLE
 
 //! the only way i found to not have the game close it self when we disable the mod using Xenos but it doesn't work as intended as the console is ALWAYS created when the mod start but  it works well enough for debug purposes, i spent the whole funking day on this, 
 void Console::Enable( ) {

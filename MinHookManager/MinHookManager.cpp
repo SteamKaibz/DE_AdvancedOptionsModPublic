@@ -297,6 +297,21 @@ bool MinHookManager::SetRenderSpriteFuncAdd(uintptr_t value)
     return true;
 }
 
+uintptr_t MinHookManager::GetIdUsercmdGenLocalSendBtnPressFuncAdd()
+{
+    return m_IdUsercmdGenLocalSendBtnPressFuncAdd;
+}
+
+
+bool MinHookManager::SetIdUsercmdGenLocalSendBtnPressFuncAdd(uintptr_t value) {
+
+    if (MemHelper::isBadReadPtr(reinterpret_cast<void*>(value))) {
+        return false;
+    }
+    m_IdUsercmdGenLocalSendBtnPressFuncAdd = value;
+    return true;
+}
+
 
 uintptr_t MinHookManager::GetConsoleLogFuncAdd()
 {

@@ -34,6 +34,7 @@ private:
     static inline uintptr_t m_idPlayerFovLerpFuncAdd = 0;
     static inline uintptr_t m_syncEndFuncAdd = 0;
     static inline uintptr_t m_renderSpriteFuncAdd = 0;
+    static inline uintptr_t m_IdUsercmdGenLocalSendBtnPressFuncAdd = 0;
     static inline uintptr_t m_UseEquipmentItemFuncAdd = 0;
     static inline uintptr_t m_consoleLogFuncAdd = 0;
 
@@ -106,6 +107,9 @@ public:
 
     static uintptr_t GetRenderSpriteFuncAdd();
     static bool SetRenderSpriteFuncAdd(uintptr_t value);
+
+    static uintptr_t GetIdUsercmdGenLocalSendBtnPressFuncAdd();
+    static bool SetIdUsercmdGenLocalSendBtnPressFuncAdd(uintptr_t value);
 
     static uintptr_t GetConsoleLogFuncAdd();
     static bool SetConsoleLogFuncAdd(uintptr_t value);

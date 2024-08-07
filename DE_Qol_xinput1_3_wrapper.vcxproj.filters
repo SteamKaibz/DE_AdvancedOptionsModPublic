@@ -141,10 +141,10 @@
     <ClInclude Include="DE\EquipmentManager.h" />
     <ClInclude Include="DE\playerSoundManager.h" />
     <ClInclude Include="Hud\CustomIceNadeIconUIData.h" />
+    <ClInclude Include="DE\weaponFovManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Config\Config.cpp" />
     <ClCompile Include="DE\MemHelper.cpp" />
     <ClCompile Include="Voice\Voice.cpp" />
@@ -249,6 +249,7 @@
     <ClCompile Include="DE\EquipmentManager.cpp" />
     <ClCompile Include="DE\playerSoundManager.cpp" />
     <ClCompile Include="Hud\CustomIceNadeIconUIData.cpp" />
+    <ClCompile Include="DE\weaponFovManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Gpt\MinHookTemplate.txt" />
@@ -257,6 +258,6 @@
     <Library Include="MinHookLibX64\libMinHook.x64.lib" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Source.def" />
+    <MASM Include="msimg32.asm" />
   </ItemGroup>
 </Project>

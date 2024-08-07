@@ -694,6 +694,9 @@ namespace Menu {
 
                     ImGui::NewLine();
                     ImGui::NewLine();
+                    ImGui::Separator();
+                    ImGui::NewLine();
+                    ImGui::NewLine();
 
                     ImGui::TextColored(WhiteColorImVec4, "Hud Elements Customisation: (You can set each element color and visibility)");
 
@@ -991,7 +994,6 @@ namespace Menu {
             if (ImGui::BeginTabItem("Game Hud")) {
 
                 ImGui::NewLine();  
-                ImGui::NewLine();
                 ImGui::Indent();
 
                
@@ -1179,16 +1181,99 @@ namespace Menu {
                 ImGui::NewLine();
 
 
-                ImGui::TextColored(WhiteColorImVec4, "Weapons FOV Overide:");
-                int weaponsFOV = modSettings::getHandsFOV();
-                ImGui::SliderInt("##WeaponsFOVOveride", &weaponsFOV, 0, 100);
+                ImGui::TextColored(WhiteColorImVec4, "Weapon FOV Shotgun:");
+                ImGui::SliderInt("##WeaponsovShotgun", &modSettings::HandsFOVShotgun, 0, 100);
                 ImGui::SameLine();
-                if (ImGui::Button("RESET##weaponsFOV")) {
-                    weaponsFOV = 0;
+                if (ImGui::Button("RESET##ResetWeaponsFovShotgun")) {
+                    modSettings::HandsFOVShotgun = 0;
                 }
-                guiHelper::insertToolTipSameLine("How much of the weapon do you want to see.\nYou can either make the weapon disapear by setting a low value\nor see more of the weapons with a higer value.");
-                modSettings::setHandsFOV(weaponsFOV);
+                guiHelper::insertToolTipSameLine("How much of the shotgun do you want to see.\nYou can either make the weapon disapear by setting a low value\nor see more of the weapons with a higer value. 0 set it back to the game default value");  
+                ImGui::NewLine();
 
+                ImGui::TextColored(WhiteColorImVec4, "Weapon FOV Heavy Assault Rifle:");
+                ImGui::SliderInt("##WeaponFovHAR", &modSettings::HandsFOVHAR, 0, 100);
+                ImGui::SameLine();
+                if (ImGui::Button("RESET##ResetWeaponFovHAR")) {
+                    modSettings::HandsFOVHAR = modSettingsDefault::g_defaultHandsFOVHAR;
+                }
+                guiHelper::insertToolTipSameLine("How much of the HAR do you want to see.\nYou can either make the weapon disappear by setting a low value\nor see more of the weapon with a higher value. 0 sets it back to the game default value.");
+                ImGui::NewLine();
+
+                ImGui::TextColored(WhiteColorImVec4, "Weapon FOV Plasma Rifle:");
+                ImGui::SliderInt("##WeaponFovPlasma", &modSettings::HandsFOVPlasma, 0, 100);
+                ImGui::SameLine();
+                if (ImGui::Button("RESET##ResetWeaponFovPlasma")) {
+                    modSettings::HandsFOVPlasma = modSettingsDefault::g_defaultHandsFOVPlasma;
+                }
+                guiHelper::insertToolTipSameLine("How much of the Plasma Gun do you want to see.\nYou can either make the weapon disappear by setting a low value\nor see more of the weapon with a higher value. 0 sets it back to the game default value.");
+                ImGui::NewLine();
+
+                ImGui::TextColored(WhiteColorImVec4, "Weapon FOV Rocket Launcher:");
+                ImGui::SliderInt("##WeaponFovRocket", &modSettings::HandsFOVRocket, 0, 100);
+                ImGui::SameLine();
+                if (ImGui::Button("RESET##ResetWeaponFovRocket")) {
+                    modSettings::HandsFOVRocket = modSettingsDefault::g_defaultHandsFOVRocket;
+                }
+                guiHelper::insertToolTipSameLine("How much of the Rocket Launcher do you want to see.\nYou can either make the weapon disappear by setting a low value\nor see more of the weapon with a higher value. 0 sets it back to the game default value.");
+                ImGui::NewLine();
+
+                ImGui::TextColored(WhiteColorImVec4, "Weapon FOV Super Shotgun:");
+                ImGui::SliderInt("##WeaponFovSSG", &modSettings::HandsFOVSSG, 0, 100);
+                ImGui::SameLine();
+                if (ImGui::Button("RESET##ResetWeaponFovSSG")) {
+                    modSettings::HandsFOVSSG = modSettingsDefault::g_defaultHandsFOVSSG;
+                }
+                guiHelper::insertToolTipSameLine("How much of the Super Shotgun do you want to see.\nYou can either make the weapon disappear by setting a low value\nor see more of the weapon with a higher value. 0 sets it back to the game default value.");
+                ImGui::NewLine();
+
+                ImGui::TextColored(WhiteColorImVec4, "Weapon FOV Ballista:");
+                ImGui::SliderInt("##WeaponFovBallista", &modSettings::HandsFOVBallista, 0, 100);
+                ImGui::SameLine();
+                if (ImGui::Button("RESET##ResetWeaponFovBallista")) {
+                    modSettings::HandsFOVBallista = modSettingsDefault::g_defaultHandsFOVBallista;
+                }
+                guiHelper::insertToolTipSameLine("How much of the Ballista do you want to see.\nYou can either make the weapon disappear by setting a low value\nor see more of the weapon with a higher value. 0 sets it back to the game default value.");
+                ImGui::NewLine();
+
+                ImGui::TextColored(WhiteColorImVec4, "Weapon FOV Chaingun:");
+                ImGui::SliderInt("##WeaponFovChaingun", &modSettings::HandsFOVChaingun, 0, 100);
+                ImGui::SameLine();
+                if (ImGui::Button("RESET##ResetWeaponFovChaingun")) {
+                    modSettings::HandsFOVChaingun = modSettingsDefault::g_defaultHandsFOVChaingun;
+                }
+                guiHelper::insertToolTipSameLine("How much of the Chaingun do you want to see.\nYou can either make the weapon disappear by setting a low value\nor see more of the weapon with a higher value. 0 sets it back to the game default value.");
+                ImGui::NewLine();
+
+                ImGui::TextColored(WhiteColorImVec4, "Weapon FOV BFG/Unmaykr:");
+                ImGui::SliderInt("##WeaponFovBFGUnmaykr", &modSettings::HandsFOVBFGUnmaykr, 0, 100);
+                ImGui::SameLine();
+                if (ImGui::Button("RESET##ResetWeaponFovBFGUnmaykr")) {
+                    modSettings::HandsFOVBFGUnmaykr = modSettingsDefault::g_defaultHandsFOVBFGUnmaykr;
+                }
+                guiHelper::insertToolTipSameLine("How much of the BFG/Unmaykr do you want to see.\nYou can either make the weapon disappear by setting a low value\nor see more of the weapon with a higher value. 0 sets it back to the game default value.");
+                ImGui::NewLine();
+
+                ImGui::TextColored(WhiteColorImVec4, "Weapon FOV Weapon 9:");
+                ImGui::SliderInt("##WeaponFovWeapon9", &modSettings::HandsFOVWeapon9, 0, 100);
+                ImGui::SameLine();
+                if (ImGui::Button("RESET##ResetWeaponFovWeapon9")) {
+                    modSettings::HandsFOVWeapon9 = modSettingsDefault::g_defaultHandsFOVWeapon9;
+                }
+                guiHelper::insertToolTipSameLine("Weapon 9 is not used by the game atm but i leave the setting here just in case.\n0 sets it back to the game default value.");
+                ImGui::NewLine();
+
+                ImGui::TextColored(WhiteColorImVec4, "Weapon FOV Crucible/Hammer/Melee:");
+                ImGui::SliderInt("##WeaponFovCrucibleHammer", &modSettings::HandsFOVCrucibleHammer, 0, 100);
+                ImGui::SameLine();
+                if (ImGui::Button("RESET##ResetWeaponFovCrucibleHammer")) {
+                    modSettings::HandsFOVCrucibleHammer = modSettingsDefault::g_defaultHandsFOVCrucibleHammer;
+                }
+                guiHelper::insertToolTipSameLine("How much of the Crucible/Hammer/Melee do you want to see.\nYou can either make the weapon disappear by setting a low value\nor see more of the weapon with a higher value. 0 sets it back to the game default value.");
+                
+                ImGui::NewLine();
+                ImGui::NewLine();
+                ImGui::Separator(); // Add separation line here
+                ImGui::NewLine();
                 ImGui::NewLine();
 
 

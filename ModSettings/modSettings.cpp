@@ -61,7 +61,17 @@ void modSettings::loadSettings()
 
         m_isGameFovUnlocked = j.value("m_isGameFovUnlocked", modSettingsDefault::g_defaultIsGameFovUnlocked);
 
-        m_handsFOV = j.value("m_handsFOV", modSettingsDefault::g_defaultHandsFOV);
+        //m_handsFOV = j.value("m_handsFOV", modSettingsDefault::g_defaultHandsFOV);
+        HandsFOVShotgun = j.value("HandsFOVShotgun", modSettingsDefault::g_defaultHandsFOVShotgun);
+        HandsFOVHAR = j.value("HandsFOVHAR", modSettingsDefault::g_defaultHandsFOVHAR);
+        HandsFOVPlasma = j.value("HandsFOVPlasma", modSettingsDefault::g_defaultHandsFOVPlasma);
+        HandsFOVRocket = j.value("HandsFOVRocket", modSettingsDefault::g_defaultHandsFOVRocket);
+        HandsFOVSSG = j.value("HandsFOVSSG", modSettingsDefault::g_defaultHandsFOVSSG);
+        HandsFOVBallista = j.value("HandsFOVBallista", modSettingsDefault::g_defaultHandsFOVBallista);
+        HandsFOVChaingun = j.value("HandsFOVChaingun", modSettingsDefault::g_defaultHandsFOVChaingun);
+        HandsFOVBFGUnmaykr = j.value("HandsFOVBFGUnmaykr", modSettingsDefault::g_defaultHandsFOVBFGUnmaykr);
+        HandsFOVWeapon9 = j.value("HandsFOVWeapon9", modSettingsDefault::g_defaultHandsFOVWeapon9);
+        HandsFOVCrucibleHammer = j.value("HandsFOVCrucibleHammer", modSettingsDefault::g_defaultHandsFOVCrucibleHammer);
 
         m_reticleScale = j.value("m_reticleScale", Reticle::g_defaultReticleScale);
 
@@ -206,7 +216,19 @@ void modSettings::saveSettings()
     j["m_isImprovedWeaponSwitchingBeep"] = m_isImprovedWeaponSwitchingBeep;
 
     j["m_isGameFovUnlocked"] = m_isGameFovUnlocked;
-    j["m_handsFOV"] = m_handsFOV;
+
+    //j["m_handsFOV"] = m_handsFOV;
+    j["HandsFOVShotgun"] = HandsFOVShotgun;
+    j["HandsFOVHAR"] = HandsFOVHAR;
+    j["HandsFOVPlasma"] = HandsFOVPlasma;
+    j["HandsFOVRocket"] = HandsFOVRocket;
+    j["HandsFOVSSG"] = HandsFOVSSG;
+    j["HandsFOVBallista"] = HandsFOVBallista;
+    j["HandsFOVChaingun"] = HandsFOVChaingun;
+    j["HandsFOVBFGUnmaykr"] = HandsFOVBFGUnmaykr;
+    j["HandsFOVWeapon9"] = HandsFOVWeapon9;
+    j["HandsFOVCrucibleHammer"] = HandsFOVCrucibleHammer;
+
     j["m_reticleScale"] = m_reticleScale;
     j["m_immersiveCrosshairLevel"] = m_immersiveCrosshairLevel;
 
@@ -336,7 +358,8 @@ void modSettings::apply()
 {
     idCmd::skipHudBtnsCallOut(getIsRemoveBindsReminderOnHud());
 
-    idCmd::setHandsFov(getHandsFOV());
+    //! this is now handled in weaponFovManager
+    //idCmd::setHandsFov(getHandsFOV());
 
     idCmd::setMinMaxFov(getIsGameFovMenuUnlocked());
 
@@ -612,13 +635,13 @@ void modSettings::setIsGameFovMenuUnlocked(bool value)
 //	return m_gameUiSettingsMaxFov;
 //}
 
-int modSettings::getHandsFOV() {
-	return m_handsFOV;
-}
-
-void modSettings::setHandsFOV(int value) {
-    m_handsFOV = value;
-}
+//int modSettings::getHandsFOV() {
+//	return m_handsFOV;
+//}
+//
+//void modSettings::setHandsFOV(int value) {
+//    m_handsFOV = value;
+//}
 
 
 float modSettings::getReticleScale() {
@@ -1257,7 +1280,7 @@ void modSettings::SetDesaturate(float value) {
 
 //! Gameplay
 bool modSettings::GetIsForceAiHaste()  {
-    logInfo("GetIsForceAiHaste: m_isForceAiHaste is: %d", m_isForceAiHaste);
+    //logInfo("GetIsForceAiHaste: m_isForceAiHaste is: %d", m_isForceAiHaste);
     return m_isForceAiHaste;
 }
 
