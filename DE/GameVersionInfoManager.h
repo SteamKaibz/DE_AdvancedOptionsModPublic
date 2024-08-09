@@ -10,7 +10,8 @@
 
 class GameVersionInfoManager {
 private:
-    static inline const std::string m_lastKnownBuildVersion = "20230804-000051-white-wine";
+    //static inline const std::string m_lastKnownBuildVersion = "20230804-000051-white-wine";
+    static inline const std::string m_lastKnownBuildVersion = "20240722-204955-eggplant-purple";
     //static inline __int64 m_idBuildVersionNamePtrAdd = 0;
     //static inline std::string m_buildVersionStr = "Game buildVersion not found";
 

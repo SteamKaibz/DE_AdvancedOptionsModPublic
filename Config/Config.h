@@ -78,7 +78,7 @@ private:
 
 public:
 
-	static const inline float MOD_VERSION_F = 2.0f;
+	static const inline float MOD_VERSION_F = 2.21f;
 
 	static const inline std::string MOD_FOLDER_NAME = "DE_AdvancedOptionsMod";
 

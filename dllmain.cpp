@@ -509,7 +509,7 @@ DWORD WINAPI ModMain() {
 	
 	//! even though we  managed to find a way to change a file logging level at runtime, because the mod will have a release and debug version we don't have to get any "version" from the json settings file..
 	//? IF YOU EVER UPDATE THE OLD MOD VERSION MAKE SURE TO ADD ITS MD5 TO THE LIST OF CONFLICTING MODS TO CHECK FOR
-	Config::set(ModConfig::dev); // nexusRelease, nexusDebug, dev
+	Config::set(ModConfig::nexusRelease); // nexusRelease, nexusDebug, dev
 
 	Config::printHeaderInLogFile();
 

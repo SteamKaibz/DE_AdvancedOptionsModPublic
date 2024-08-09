@@ -412,7 +412,7 @@ namespace Menu {
 
                 static bool isSkipCustomAnimations = modSettings::getIsSkipCustomAnimations();
                 ImGui::Checkbox("Disable Blocking Animations", &isSkipCustomAnimations);
-                guiHelper::insertToolTipSameLine("Checked: will disabled blocking animations like finding a secret, battery cell... \nUnchecked: defaut game behaviour");
+                guiHelper::insertToolTipSameLine("Checked: will disabled blocking animations like finding a secret, battery cell...\nIf you witness any bugs when this feature is on let me know \nUnchecked: defaut game behaviour");
 
                 modSettings::setIsSkipCustomAnimations(isSkipCustomAnimations);
 
