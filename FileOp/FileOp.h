@@ -34,7 +34,10 @@ public:
 
 	//static std::string GetModuleDirectory();
 
-	static bool isGameDirectoryValid();
+	//static bool isGameDirectoryValid();
+
+
+	static bool isExistDirectory(std::string gameDir);
 
 	static bool isModDirectory();
 
@@ -46,9 +49,13 @@ public:
 
 	static std::string getWeaponsSettingsFilePath();
 
-	static void listModDirectory();
+	static std::string getDllDirectory();
 
-	static std::string getGameDirectoryPath(const char* moduleName);
+	static void listGameDirectory();
+
+	static std::string getDoomEternalDirectory();
+
+	//static std::string getGameDirectoryPath(const char* moduleName);
 
 	//static bool isPreviousModVersionInGameFolder();
 

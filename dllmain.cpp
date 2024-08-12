@@ -508,8 +508,8 @@ DWORD WINAPI ModMain() {
    
 	
 	//! even though we  managed to find a way to change a file logging level at runtime, because the mod will have a release and debug version we don't have to get any "version" from the json settings file..
-	//? IF YOU EVER UPDATE THE OLD MOD VERSION MAKE SURE TO ADD ITS MD5 TO THE LIST OF CONFLICTING MODS TO CHECK FOR
-	Config::set(ModConfig::nexusRelease); // nexusRelease, nexusDebug, dev
+	//? IF YOU UPDATE also update mode version AND delete mod folder to make sure file generation works
+	Config::set(ModConfig::nexusDebug); // nexusRelease, nexusDebug, dev
 
 	Config::printHeaderInLogFile();
 
@@ -526,7 +526,7 @@ DWORD WINAPI ModMain() {
 		logErr("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	}
 	
-	FileOp::listModDirectory();
+	FileOp::listGameDirectory();
 
 
 	if (HashManager::isMeathookModInGameFolder()) {
@@ -535,7 +535,14 @@ DWORD WINAPI ModMain() {
 		logWarn("********************************************************************************************");
 	}	
 
-	if (!Config::isModError() && FileOp::isGameDirectoryValid()) {
+
+	Config::setGameDirectoryStr(FileOp::getDllDirectory());
+
+	/*std::string doomDir = FileOp::getDoomEternalDirectory();
+	logInfo("debug doomDir: %s", doomDir.c_str());*/
+
+	//if (!Config::isModError() && FileOp::isGameDirectoryValid()) {
+	if (!Config::isModError() && FileOp::isExistDirectory(Config::getGameDirectoryStr())) {
 
 		if (!FileOp::isModDirectory()) {
 			if (!FileOp::CreateModDirectoryV2()) {

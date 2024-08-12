@@ -377,6 +377,13 @@ namespace Menu {
                 guiHelper::insertToolTipSameLine("Checked: Gives you a throw Frag and a throw Ice keys that you can bind in the game menu.\nChanging this settings requires restart for controller users. \nUnchecked: defaut game behaviour");
                 modSettings::setIsUseDedicatedNadeKeys(isUseDedicatedGrenadeKeys);
 
+                if (isUseDedicatedGrenadeKeys) {
+                    ImGui::Indent();
+                    ImGui::TextColored(YellowColorImVec4, "If you notice a perf drop on your machine because of the second nade icon displayed, report it to mod author.\nYou can use the custom hud in the meantime");
+                    ImGui::Unindent();
+
+                }
+
                 ImGui::NewLine();
 
 
@@ -474,7 +481,7 @@ namespace Menu {
                 if (ImGui::Button("Apply Profile Colors")) {
                     idDeclUIColorManager::setKaibzHudColorsToGameColorProfile();
                 }
-                guiHelper::insertToolTipSameLine("By pressing this button, the custom crosshair and hud colors will be set close to the game settings color profile");   
+                guiHelper::insertToolTipSameLine("By pressing this button, the custom crosshair and hud colors will be set close to the game settings color profile\nThis feature might be broken atm should get fixed next mod update");   
                 ImGui::SameLine();
                 ImGui::TextColored(YellowColorImVec4, "This will automatically set all the colors for the custom hud");
                        

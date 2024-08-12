@@ -261,4 +261,20 @@ std::string Config::getModInfoTextForGui()
 	return result;
 }
 
+std::string Config::getGameDirectoryStr()
+{
+	return m_gameDirectoryStr;
+}
+
+void Config::setGameDirectoryStr(std::string dirPath)
+{
+	m_gameDirectoryStr = dirPath;
+	logInfo("setGameDirectoryStr: m_gameDirectoryStr set to: %s", m_gameDirectoryStr.c_str());
+}
+
+//bool Config::isGameDirectoryValid()
+//{
+//	return FileOp::isExistDirectory(m_gameDirectoryStr);
+//}
+
 

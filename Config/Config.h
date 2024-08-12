@@ -74,11 +74,13 @@ private:
 	static inline FILE* fp;
 	static inline bool m_isModError;
 
+	static inline std::string m_gameDirectoryStr;
+
 	
 
 public:
 
-	static const inline float MOD_VERSION_F = 2.21f;
+	static const inline float MOD_VERSION_F = 2.22f;
 
 	static const inline std::string MOD_FOLDER_NAME = "DE_AdvancedOptionsMod";
 
@@ -129,6 +131,11 @@ public:
 
 	static std::string getModInfoTextForGui();
 
+	static std::string getGameDirectoryStr();
+	static void setGameDirectoryStr(std::string dirPath);
+
+
+	//static bool isGameDirectoryValid();
 
 	//static const bool isDebug = true;
 	//static std::string getImprovedWeaponSwitchFeatureStateStr();
