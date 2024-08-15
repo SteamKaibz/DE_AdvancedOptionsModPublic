@@ -34,7 +34,7 @@ static const char consoleUnlockAltSig[] = "48 8B CE 44 8B F0 41 FF 51";
 //"4C8B0F4?????????????????????41FF51??4C??????"
 
 
-static const char idInternalCVar_SetSig[] = "48 89 5C 24 08 57 48 83 EC 20 48 8B FA 48 8B D9 45 84 C0 75 7F";
+//static const char idInternalCVar_SetSig[] = "48 89 5C 24 08 57 48 83 EC 20 48 8B FA 48 8B D9 45 84 C0 75 7F";
 
 ////! i'm really not sure about this one but i struggled too much to find the language in the code...(47 bytes)
 //static const char languageStaticAddrSig[] = "80 1D 51 EC F7 7F 00 00 48 02 C3 EE F7 7F 00 00 0E 00 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00";
@@ -125,7 +125,7 @@ static const char smallCharHeightSig[] = "F3 0F 11 0D ? ? ? ? 0F B6 43 04";
 
 static const char useScaleSig[] = "F3 0F 11 15 ? ? ? ? E8 ? ? ? ? 48 8B CF";
 
-static const char getGlyphDataFuncSig[] = "89 54 24 10 53 48 83 EC 20 48 8B D9 48 8B 49 58";
+//static const char getGlyphDataFuncSig[] = "89 54 24 10 53 48 83 EC 20 48 8B D9 48 8B 49 58";
 
 //static const char globalDeclSig[] = "48 8B 0D ? ? ? ? 44 8D 40 01 45 33 C9";
 static const char globalDeclSig[] = "48 8B 05 ? ? ? ? 48 85 C0 75 70";

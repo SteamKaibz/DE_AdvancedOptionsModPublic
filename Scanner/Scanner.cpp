@@ -3,9 +3,10 @@
 
 
 
+
  bool Scanner::scanForAddrs() {
 
-	logInfo("scanForAddrs: Pattern Scans Started...");
+	 logInfo("scanForAddrs: Pattern Scans for %s Started...", Config::isSandboxModule() ? "Sandbox module" : "Vanilla module");	
 
 	//! TYPEINFO
 	if (!TypeInfoManager::acquireTypeInfoTools(MemHelper::FindPtrFromRelativeOffset(((uintptr_t)MemHelper::ModulePatternScan("GetTypeInfoToolsSig", GetTypeInfoToolsSig)), 3, 7))) {
@@ -36,10 +37,16 @@
 		return false;
 	}
 
-	if (!idCvarManager::acquireSetInternalFuncAddr((uintptr_t)MemHelper::ModulePatternScan("idInternalCVar_SetSig", idInternalCVar_SetSig))) {
-		logErr("scanForAddrs failed for idInternalCVar_SetSig");
+	//! may be a band aid but because there is now two binaries for DE (vanilla and sandbox) the sigs have to change...great...
+	std::string idInternalCVarSetSig = "48 89 5C 24 08 57 48 83 EC 20 48 8B FA 48 8B D9 45 84 C0 75 7F";
+	if (Config::isSandboxModule()) {
+		idInternalCVarSetSig = "E8 ? ? ? ? FF C7 48 83 C3 60";
+	}
+	if (!idCvarManager::acquireSetInternalFuncAddr((uintptr_t)MemHelper::ModulePatternScan("idInternalCVarSetSig", idInternalCVarSetSig.c_str()))) {
+		logErr("scanForAddrs failed for idInternalCVarSetSig");
 		return false;
 	}
+
 
 	//? this is not technically a scan, but i'll put it here for now...Meaning it will stay here forever surely.
 	if (!fastCvarManager::cacheCriticalCvars()) {
@@ -183,11 +190,7 @@
 	if (!idFontManager::acquirreSetMonospaceFondOffsetAddr(MemHelper::ModulePatternScan("fontSetInSetUpMonoSpaceFontSig", fontSetInSetUpMonoSpaceFontSig) + 3)) {
 		logErr("scanForAddrs failed for fontSetInSetUpMonoSpaceFontSig");
 		return false;
-	}
-
-	/*if (!idFontManager::acquirreSetMonospaceFondOffsetAddr((uintptr_t)MemHelper::PatternScan(doomEternalExeName.c_str(), fontSetInSetUpMonoSpaceFontSig), 3) {
-		anyScanFailed = true;
-	}*/
+	}	
 
 	if (!idFontManager::acquirreDrawStringFontOffsetAddr(MemHelper::ModulePatternScan("fontSetInDrawStringSig", fontSetInDrawStringSig) + 30)) {
 		logErr("scanForAddrs failed for fontSetInDrawStringSig");
@@ -200,7 +203,12 @@
 		return false;
 	}
 
-	if (!idFontManager::acquirreIdFontGetGlyphDataFuncAddr((uintptr_t)MemHelper::ModulePatternScan("getGlyphDataFuncSig", getGlyphDataFuncSig))) {
+
+	std::string getGlyphDataFuncSig = "89 54 24 10 53 48 83 EC 20 48 8B D9 48 8B 49 58";
+	if (Config::isSandboxModule()) {
+		getGlyphDataFuncSig = "89 54 24 10 57 48 83 EC 30 48 8B F9 48 8B 49 58";
+	}	
+	if (!idFontManager::acquirreIdFontGetGlyphDataFuncAddr((uintptr_t)MemHelper::ModulePatternScan("getGlyphDataFuncSig", getGlyphDataFuncSig.c_str()))) {
 		logErr("scanForAddrs failed for getGlyphDataFuncSig");
 		return false;
 	}
@@ -392,7 +400,7 @@
 	}*/
 
 
-	if (!idSWFSpriteInstanceManager::acquirreSetSpriteInstanceScaleFpAdd((uintptr_t)MemHelper::PatternScan(doomEternalExeName.c_str(), SpriteInstanceSetScaleFuncSig))) {
+	if (!idSWFSpriteInstanceManager::acquirreSetSpriteInstanceScaleFpAdd((uintptr_t)MemHelper::ModulePatternScan("SpriteInstanceSetScaleFuncSig", SpriteInstanceSetScaleFuncSig))) {
 		logErr("scanForAddrs failed for SpriteInstanceSetScaleFuncSig");
 		return false;
 	}
@@ -412,8 +420,6 @@
 		logErr("scanForAddrs failed for isWorldMenuAtIndexActiveFaddrSig");
 		return false;
 	}
-
-	
 
 
 

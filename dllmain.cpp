@@ -264,13 +264,15 @@ void modInit() {
 
 
 
-	if (GameVersionInfoManager::isNewGameUpdateReleased()) {
+	logInfo("Game build Version is: %s (this mod was designed for game build version: %s)", GameVersionInfoManager::getBuildVersionStr().c_str(), GameVersionInfoManager::getExpectedBuildVersionStr().c_str());
+
+	/*if (GameVersionInfoManager::isNewGameUpdateReleased()) {
 		logWarn("This version of the game: %s is different than the version the mod was made for: %s, mod 'may' not work as attended or not work at all.", GameVersionInfoManager::getBuildVersionStr().c_str(), GameVersionInfoManager::getExpectedBuildVersionStr().c_str());
 
 	}
 	else {
 		logInfo("Game build Version is the one this mod was designed for: %s", GameVersionInfoManager::getBuildVersionStr().c_str());
-	}
+	}*/
 
 
 	isFirstTimeInit = false;
@@ -508,8 +510,8 @@ DWORD WINAPI ModMain() {
    
 	
 	//! even though we  managed to find a way to change a file logging level at runtime, because the mod will have a release and debug version we don't have to get any "version" from the json settings file..
-	//? IF YOU UPDATE also update mode version AND delete mod folder to make sure file generation works
-	Config::set(ModConfig::nexusDebug); // nexusRelease, nexusDebug, dev
+	//? IF YOU UPDATE also update mod version AND delete mod folder to make sure file generation works
+	Config::set(ModConfig::dev); // nexusRelease, nexusDebug, dev
 
 	Config::printHeaderInLogFile();
 
@@ -779,7 +781,8 @@ DWORD WINAPI ModMain() {
 			idPlayer_K::resetLastBloodPunchCount(); // to make sure it updates the colors when player spawns
 			idPlayer_K::resetLastIceGrenadeCount(); // to make sure it updates the colors when player spawns
 			idPlayer_K::resetLastFragGrenadeCount();
-			//logInfo("Game is loading....resetting inventory count");
+
+			//logWarn("Debug: Game is loading....resetting inventory count");
 			//switcher.resetInventoryCount();
 			continue; //! not doing anything while game loads as this is too prone to crashes.
 		}		

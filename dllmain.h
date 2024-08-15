@@ -1401,7 +1401,6 @@ __int64 __fastcall idHud_PerspectiveSmth_t_Hook(idHUDElement* idHUDElementPtr_a1
 
 
 
-
 //! This let us know what key/button is pressed (even for controller but not the analog stick/triggers) and i suppose we could use it to send key press as well as we do in new collossus.
 typedef __int64(__fastcall* idUsercmdGenLocalSendBtnPressMB_t)(__int64 idUsercmdGenLocal_a1, unsigned int devicneNumMB_a2, int keyNum_t_a3, unsigned __int8 isDown_a4);
 idUsercmdGenLocalSendBtnPressMB_t p_idUsercmdGenLocalSendBtnPressMB_t = nullptr;
@@ -1423,11 +1422,9 @@ __int64 __fastcall idUsercmdGenLocalSendBtnPressMB_Hook(__int64 idUsercmdGenLoca
 		logInfo("isDown_a4 has changed to: %d",  isDown_a4);
 		lastIsDown_a4 = isDown_a4;
 	}*/
-
 	
 	return p_idUsercmdGenLocalSendBtnPressMB_t(idUsercmdGenLocal_a1, devicneNumMB_a2, keyNum_t_a3, isDown_a4);
 }
-
 
 
 

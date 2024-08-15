@@ -113,13 +113,13 @@
 	IdPlayer = (idPlayer*)*(__int64*)idPlayerPtrAddr;
 
 	if (isFirstTime) {
-		logInfo("getIdPlayer: (first get) idPlayer: %p (idPlayerPtr: %p)", IdPlayer, idPlayerPtrAddr);
+		logInfo("getIdPlayer: (first get) idPlayer: %p (idPlayerPtrAddr: %p)", IdPlayer, idPlayerPtrAddr);
 		lastIdPlayer = IdPlayer;
 		isFirstTime = false;
 	}
 	else if (lastIdPlayer != IdPlayer) {
 		lastIdPlayer = IdPlayer;
-		logInfo("getIdPlayer: idPlayer has changed to:  %p (idPlayerPtr: %p)", IdPlayer, idPlayerPtrAddr);
+		logInfo("getIdPlayer: idPlayer has changed to:  %p (idPlayerPtrAddr: %p)", IdPlayer, idPlayerPtrAddr);
 	}
 	return IdPlayer;
 }

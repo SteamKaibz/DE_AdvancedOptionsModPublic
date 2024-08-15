@@ -75,12 +75,13 @@ private:
 	static inline bool m_isModError;
 
 	static inline std::string m_gameDirectoryStr;
-
+	static inline std::string m_currentModuleNameStrToLower;
+	static inline bool m_isSandboxModule = false;
 	
 
 public:
 
-	static const inline float MOD_VERSION_F = 2.22f;
+	static const inline float MOD_VERSION_F = 2.3f;
 
 	static const inline std::string MOD_FOLDER_NAME = "DE_AdvancedOptionsMod";
 
@@ -95,10 +96,16 @@ public:
 
 	static const inline std::string MOD_WEAPON_SETTINGS_FILE_NAME = "DE_ModWeaponSettings.json";
 
-	static const inline std::string GAME_FILE_NAME = "DOOMEternalx64vk.exe";
+	//static const inline std::string GAME_FILE_NAME = "DOOMEternalx64vk.exe";
 
-	static const inline std::string GAME_FILE_NAME_TO_LOWER = "doometernalx64vk.exe";
+	//static const inline std::string GAME_FILE_NAME_TO_LOWER = "doometernalx64vk.exe";
 
+	static const inline std::string DE_VANILLA_MODULE_NAME_TOLOWER = "doometernalx64vk.exe";
+	static const inline std::string DE_SANDBOX_MODULE_NAME_TOLOWER = "doomsandbox64vk.exe";
+
+	static const inline std::vector<std::string> VALID_GAME_EXE_NAMES_TO_LOWER_VEC = {
+		"doometernalx64vk.exe", "doomsandbox64vk.exe"
+	};
 
 	static const inline std::string GAME_WINDOW_CLASS_NAME = "Ghost_CLASS";
 
@@ -117,11 +124,19 @@ public:
 	static void set(ModConfig config);
 	static ModConfig get();
 
-	static std::string getModuleName();
+	//static std::string getModuleName();
+	//static std::string getGameFileNameToLowerStr();
+
 	static std::string getModBuildStr();
 	static std::string getModConfigStr();
+
+	static std::string& getCurrentModuleNameStrToLower();
+	static void setCurrentModuleNameStrToLower(const std::string& moduleName);
+
+	static bool isSandboxModule();
+	static void setIsSandboxModule(std::string moduleNameStrToLower);
+
 	static bool isDevMode();
-	static std::string getGameFileNameToLowerStr();
 
 	static std::string getCreditsStr();
 
@@ -135,30 +150,7 @@ public:
 	static void setGameDirectoryStr(std::string dirPath);
 
 
-	//static bool isGameDirectoryValid();
 
-	//static const bool isDebug = true;
-	//static std::string getImprovedWeaponSwitchFeatureStateStr();
-	//static void set(ModDebugVersion version);
-	////static void exit();
-	//static ModDebugVersion getVersion();
-	//static std::string getDebugLogLevelAsStr();
-	//static bool isDevMode();
-	////static bool isAuthorDebugMode();
-
-	////static bool is666DebugMode();
-	//static void printHeaderInLogFile();
-	//static std::string getLogHeaderString();
-	////static bool isImprovedWeaponSwitchingEnabled();
-	//static std::string getDatedBuildStr(); //! like 0.7.2023.09.19.11.09.06 
-	//static std::string getTimeDateStr();
-	//static int getShortModVersionAsInt();
-	//static double getShortModVersionAsDouble();
-	//static std::string getShortModVersionAsString(); //! like 0.7
-	////static void printLogToAllDebugLevels(std::string str);
-	//static bool isSecretMaxVerboseDebugLevel;
-
-	//void loguru_callback(const loguru::CallbackParams& params);
 
 
 };

@@ -49,6 +49,14 @@ static DWORD WINAPI ReinitializeGraphicalHooks(LPVOID lpParam) {
 
 static WNDPROC oWndProc;
 static LRESULT WINAPI WndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+
+    //? 15/8/24: not useful to fix crash in sandbox after loading a level, in fact the crash/freeze doesn't seem related to imgui as the same happens with imgui off in mod settings.
+   /* if (Config::isSandboxModule()) {
+        return CallWindowProc(oWndProc, hWnd, uMsg, wParam, lParam);
+    }*/
+
+
+
     if (uMsg == WM_KEYDOWN ) {                    
 
 

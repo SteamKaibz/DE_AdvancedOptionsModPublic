@@ -50,6 +50,7 @@ void Config::set(ModConfig debugVersion)
 	loguru::FileMode loguruFileMode = loguru::FileMode::Truncate;
 	if (!isFirsTimeSet) {
 		loguruFileMode = loguru::FileMode::Append;
+		logErr("loguruFileMode is being set more than once, mod author should be contacted this is not normal");
 	}
 
 	switch (m_modConfig)
@@ -68,6 +69,7 @@ void Config::set(ModConfig debugVersion)
 		break;
 	case ModConfig::dev:
 		loguru::g_stderr_verbosity = loguru::Verbosity_INFO;
+		//loguru::add_file(MOD_LOG_FILE_NAME.c_str(), loguru::FileMode::Append, loguru::Verbosity_INFO);
 		loguru::add_file(MOD_LOG_FILE_NAME.c_str(), loguruFileMode, loguru::Verbosity_INFO);
 		//loguru::add_file(MOD_LOG_FILE_NAME.c_str(), loguru::Truncate, loguru::Verbosity_INFO);
 		break;
@@ -124,10 +126,8 @@ void Config::printHeaderInLogFile()
 std::string Config::getLogHeaderString()
 {
 	std::string headerStr =
-		"\n\n**********************************************************************************************\nThis is the log file. \nMod Name: " + MOD_FULL_NAME + "\n"
-		+ "Build: " + getModBuildStr() + "\n"
-		+ "Config: " + getModConfigStr() + "\n"
-		+ "Mod Author: Kaibz" + "\n"
+		"\n\n**********************************************************************************************\nThis is the log file.\nGame Exe: "+ getCurrentModuleNameStrToLower() + "\nMod Name : " + MOD_FULL_NAME  
+		+ " (Build: " + getModBuildStr() + "  Config: " + getModConfigStr() + ")\n" 		
 		+ "For more info on how the mod works, configuration, troubleshooting....Check the mod description on the Nexus mod page. " + "\n"
 		+ "**********************************************************************************************" + "\n\n"
 		;
@@ -208,17 +208,49 @@ std::string Config::getModConfigStr()
 	}
 }
 
-std::string Config::getModuleName()
-{
-	return GAME_FILE_NAME;
+
+std::string& Config::getCurrentModuleNameStrToLower() {
+	return m_currentModuleNameStrToLower;
+}
+
+// Setter for m_currentModuleNameStrToLower
+void Config::setCurrentModuleNameStrToLower(const std::string& moduleName) {
+
+	logInfo("setCurrentModuleNameStrToLower: setting m_currentModuleNameStrToLower to: %s", moduleName.c_str());
+	m_currentModuleNameStrToLower = moduleName;
 }
 
 
-
-std::string Config::getGameFileNameToLowerStr()
-{
-	return GAME_FILE_NAME_TO_LOWER;
+bool Config::isSandboxModule() {
+	return m_isSandboxModule;
 }
+
+void Config::setIsSandboxModule(std::string moduleNameStrToLower) {
+
+	if (moduleNameStrToLower == DE_VANILLA_MODULE_NAME_TOLOWER) {
+		m_isSandboxModule = false;
+	}
+	else if (moduleNameStrToLower == DE_SANDBOX_MODULE_NAME_TOLOWER) {
+		m_isSandboxModule = true;
+	}
+	else {
+		logErr("setIsSandboxModule: cur module is not valid, this should not happen!");
+		m_isSandboxModule = false;
+	}
+}
+
+
+//std::string Config::getModuleName()
+//{
+//	return GAME_FILE_NAME;
+//}
+
+
+
+//std::string Config::getGameFileNameToLowerStr()
+//{
+//	return GAME_FILE_NAME_TO_LOWER;
+//}
 
 
 std::string Config::getCreditsStr() {
@@ -239,18 +271,19 @@ std::string Config::getCreditsStr() {
 
 std::string Config::getModInfoTextForGui()
 {
-	std::string result = "";	
+	std::string result = "";
+
+	result += "Game Exe Version: ";
+	result += getCurrentModuleNameStrToLower();
 	result += "Mod Name: ";
 	result += MOD_FULL_NAME;
 	result += "\n\n";
 	result += "Mod Version: ";
 	result += getModConfigStr();
-	result += "\n\n";
+	result += "  ";
 	result += "Mod Build: ";
 	result += getModBuildStr();
-	result += "\n\n";
-	result += "Mod Author: Kaibz";
-	result += "\n\n";
+	result += "\n\n";	
 	result += "For more Info about the mod (changelog, troubleshooting, bug report...)check the mod nexus page";
 	//result += MOD_NEXUS_LINK;
 	result += "\n\n";

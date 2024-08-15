@@ -83,6 +83,9 @@ std::string PlayerStateChecker::getDbgStrForImgui() {
 		logInfo("updatePlayerState:PlayerState is changing from %s to %s", previousStateStr.c_str(), currentStateStr.c_str());		
 		m_lastPlayerState = playerState;
 	}
+
+	//logWarn("updatePlayerState:PlayerState DEBUG HEARTBEAT");
+
 }
 
  bool PlayerStateChecker::isGameLoading() {

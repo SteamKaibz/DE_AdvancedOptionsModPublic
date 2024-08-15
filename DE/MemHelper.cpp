@@ -6,15 +6,33 @@
 
 bool MemHelper::isGameFileNameValid()
 {
-	std::string exeName = GetGameExeNameToLower();
-	if (exeName != doomEternalExeNameToLower) {
-		logErr("MemHelper::isGameFileNameValid(): wrong module name, was expecting %s got: %s.", doomEternalExeNameToLower.c_str(), exeName.c_str());
-		return false;
+	std::string curExeNameToLower = GetGameExeNameToLower();
+
+	if (curExeNameToLower == Config::DE_VANILLA_MODULE_NAME_TOLOWER || curExeNameToLower == Config::DE_SANDBOX_MODULE_NAME_TOLOWER) {
+
+		Config::setCurrentModuleNameStrToLower(curExeNameToLower);
+		Config::setIsSandboxModule(curExeNameToLower);
+		logInfo("isGameFileNameValid: curExeNameToLower: %s is valid", curExeNameToLower.c_str());
+		return true;
 	}
-	
-	logInfo("isGameFileNameValid: succes finding game file: %s", exeName.c_str());
-	return true;
+
+	logErr("isGameFileNameValid: wrong module name, curExeNameToLower is: %s.", curExeNameToLower.c_str());
+	return false;		
 }
+
+
+
+//bool MemHelper::isGameFileNameValid()
+//{
+//	std::string exeName = GetGameExeNameToLower();
+//	if (exeName != doomEternalExeNameToLower) {
+//		logErr("MemHelper::isGameFileNameValid(): wrong module name, was expecting %s got: %s.", doomEternalExeNameToLower.c_str(), exeName.c_str());
+//		return false;
+//	}
+//	
+//	logInfo("isGameFileNameValid: succes finding game file: %s", exeName.c_str());
+//	return true;
+//}
 
 std::string MemHelper::basename(std::string const& pathname)
 {
@@ -23,6 +41,7 @@ std::string MemHelper::basename(std::string const& pathname)
 			MatchPathSeparator()).base(),
 		pathname.end()); 
 }
+
 
 std::string MemHelper::GetGameExeNameToLower()
 {
@@ -331,11 +350,12 @@ DWORD64 MemHelper::ModulePatternScan(std::string scanFriendlyName, const char* s
 	logDebug("ModulePatternScan");
 
 	MODULEINFO mInfo;
-	HMODULE hModule = GetModuleHandleA(doomEternalExeName.c_str());
+	//HMODULE hModule = GetModuleHandleA(doomEternalExeName.c_str());
+	HMODULE hModule = GetModuleHandleA(Config::getCurrentModuleNameStrToLower().c_str());
 
 	if (hModule == nullptr)
 	{
-		logErr("GetModuleHandleA failed to find the module: %s returning", doomEternalExeName.c_str());
+		logErr("GetModuleHandleA failed to find the module: %s returning", Config::getCurrentModuleNameStrToLower().c_str());
 		return 0; // Module not found, return an appropriate value (0 in this case).
 	}
 

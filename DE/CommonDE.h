@@ -22,8 +22,8 @@ static const int intMinusOne = -1;
 
 //! Exe
 
-static const std::string doomEternalExeName = "DOOMEternalx64vk.exe";
-static const std::string doomEternalExeNameToLower = "doometernalx64vk.exe";
+//static const std::string doomEternalExeName = "DOOMEternalx64vk.exe";
+//static const std::string doomEternalExeNameToLower = "doometernalx64vk.exe";
 
 
 
