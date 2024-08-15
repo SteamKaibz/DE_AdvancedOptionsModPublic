@@ -298,47 +298,49 @@ bool InitializeHooks() {
 		logInfo("InitializeHooks: minhook status is: MH_OK ");
 	}
 
-
+	//! commented out for sandbox debug
 	pgetFovTargetValMBTarget = reinterpret_cast<getFovTargetValMB>(MinHookManager::GetGetFovTargetValAddr());
 	if (MH_CreateHook(reinterpret_cast<void**>(pgetFovTargetValMBTarget), &getFovTargetValMB_Hook, reinterpret_cast<void**>(&pgetFovTargetValMB)) != MH_OK) {
 		logErr("failed to create pgetFovTargetValMBTarget");
 		return false;
 	}
 
-
+	//! commented out for sandbox debug
 	pSelectWeaponForSelectionGroupTarget = reinterpret_cast<SelectWeaponForSelectionGroup>(MinHookManager::GetIdPlayerSelectWeaponForSelectionGroupAddr());	
 	if (MH_CreateHook(reinterpret_cast<void**>(pSelectWeaponForSelectionGroupTarget), &SelectWeaponForSelectionGroupHook, reinterpret_cast<void**>(&pSelectWeaponForSelectionGroup)) != MH_OK) {
 		logErr("failed to create pSelectWeaponForSelectionGroupTarget");
 		return false;
 	}
 
-
+	//! commented out for sandbox debug
 	pisKeyPressedTarget = reinterpret_cast<isKeyPressed>(MinHookManager::GetIsKeyPressedAddr());	
 	if (MH_CreateHook(reinterpret_cast<void**>(pisKeyPressedTarget), &isKeyPressedHook, reinterpret_cast<void**>(&pisKeyPressed)) != MH_OK) {
 		logErr("failed to create pisKeyPressedTarget");
 		return false;
 	}
 
-
+	//! commented out for sandbox debug
 	pidMenu_UpdateTarget = reinterpret_cast<idMenu_Update>(MinHookManager::GetIdMenuUpdateAddr());	
 	if (MH_CreateHook(reinterpret_cast<void**>(pidMenu_UpdateTarget), &idMenu_UpdateHook, reinterpret_cast<void**>(&pidMenu_Update)) != MH_OK) {
 		logErr("failed to create pidMenu_UpdateTarget");
 		return false;
 	}
 
-
+	//! commented out for sandbox debug
 	pBindsStrSetTarget = reinterpret_cast<BindsStrSet>(MinHookManager::GetPBindsStrSetAddr());
 	if (MH_CreateHook(reinterpret_cast<void**>(pBindsStrSetTarget), &BindsStrSetHook, reinterpret_cast<void**>(&pBindsStrSet)) != MH_OK) {
 		logErr("failed to create pBindsStrSetTarget");
 		return false;
 	}
 
+	//! commented out for sandbox debug
 	pidHUD_Reticle_SetActiveReticleTarget = reinterpret_cast<idHUD_Reticle_SetActiveReticle>(MinHookManager::GetSetActiveReticleAddr());
 	if (MH_CreateHook(reinterpret_cast<void**>(pidHUD_Reticle_SetActiveReticleTarget), &idHUD_Reticle_SetActiveReticleHook, reinterpret_cast<void**>(&pidHUD_Reticle_SetActiveReticle)) != MH_OK) {
 		logErr("failed to create pidHUD_Reticle_SetActiveReticleTarget");
 		return false;
 	}
 
+	//! commented out for sandbox debug
 	pconvertIdDeclUIColorToidColorTarget = reinterpret_cast<convertIdDeclUIColorToidColor>(MinHookManager::GetConvertIdDeclUIColorToIdColorTargetAddr());	
 	if (MH_CreateHook(reinterpret_cast<void**>(pconvertIdDeclUIColorToidColorTarget), &convertIdDeclUIColorToidColorHook, reinterpret_cast<void**>(&pconvertIdDeclUIColorToidColor)) != MH_OK) {
 		logErr("failed to create pconvertIdDeclUIColorToidColorTarget");
@@ -346,14 +348,15 @@ bool InitializeHooks() {
 	}
 
 	
+	//todo this is where the issue comes from for the sandbox. if we don't create this hook the game will load fine.
+	////! commented out for sandbox debug
+	//psetSpriteInstanceColorTarget = reinterpret_cast<setSpriteInstanceColor>(MinHookManager::GetSetSpriteInstanceAddr());
+	//if (MH_CreateHook(reinterpret_cast<void**>(psetSpriteInstanceColorTarget), &setSpriteInstanceColorHook, reinterpret_cast<void**>(&psetSpriteInstanceColor)) != MH_OK) {
+	//	logErr("failed to create psetSpriteInstanceColorTarget");
+	//	return false;
+	//}
 
-	psetSpriteInstanceColorTarget = reinterpret_cast<setSpriteInstanceColor>(MinHookManager::GetSetSpriteInstanceAddr());
-	if (MH_CreateHook(reinterpret_cast<void**>(psetSpriteInstanceColorTarget), &setSpriteInstanceColorHook, reinterpret_cast<void**>(&psetSpriteInstanceColor)) != MH_OK) {
-		logErr("failed to create psetSpriteInstanceColorTarget");
-		return false;
-	}
-
-
+	//! commented out for sandbox debug
 	pPrintOutlinedStringMB_target = reinterpret_cast<printOutlinedStringMB_func>(MinHookManager::GetPrintOutlinedStringMBFuncAddr());
 	//pPrintOutlinedStringMB_target = reinterpret_cast<printOutlinedStringMB_func>(MemHelper::getFuncAddr(0x4CAD00));
 	if (MH_CreateHook(reinterpret_cast<void**>(pPrintOutlinedStringMB_target), &printOutlinedStringMB_hook, reinterpret_cast<void**>(&pPrintOutlinedStringMB)) != MH_OK) {
@@ -363,20 +366,16 @@ bool InitializeHooks() {
 
 
 
-	/*p_idInventoryCollection_Smth_Target = reinterpret_cast<idInventoryCollection_Smth_t>(MinHookManager::GetIdInventoryCollectionSmthFuncAdd());
-	if (MH_CreateHook(reinterpret_cast<void**>(p_idInventoryCollection_Smth_Target), &idInventoryCollection_Smth_Hook, reinterpret_cast<void**>(&p_idInventoryCollection_Smth)) != MH_OK) {
-		logErr("Failed to create idInventoryCollection_Smth hook.");
-		return false;
-	}*/
+	
 		
-
+	//! commented out for sandbox debug
 	p_customAnimSmth_t_Target = reinterpret_cast<customAnimSmth_t>(MinHookManager::GetCustomAnimSmthFuncAdd());
 	if (MH_CreateHook(reinterpret_cast<void**>(p_customAnimSmth_t_Target), &customAnimSmth_t_Hook, reinterpret_cast<void**>(&p_customAnimSmth_t)) != MH_OK) {
 		logErr("Failed to create p_customAnimSmth_t_Target hook.");
 		return false;
 	}
 	
-
+	//! commented out for sandbox debug
 	p_idHUDMenu_CurrencyConfirmation_t_Target = reinterpret_cast<idHUDMenu_CurrencyConfirmation_t>(MinHookManager::GetIdHUDMenu_CurrencyConfirmationSmthFuncAdd());
 	if (MH_CreateHook(reinterpret_cast<void**>(p_idHUDMenu_CurrencyConfirmation_t_Target), &idHUDMenu_CurrencyConfirmation_t_Hook, reinterpret_cast<void**>(&p_idHUDMenu_CurrencyConfirmation_t)) != MH_OK) {
 		logErr("Failed to create p_idHUDMenu_CurrencyConfirmation_t_Target hook.");
@@ -384,28 +383,28 @@ bool InitializeHooks() {
 	}	
 	
 
-
+	//! commented out for sandbox debug
 	p_StartSync_t_Target = reinterpret_cast<StartSync_t>(MinHookManager::GetStartSyncFuncAdd());
 	if (MH_CreateHook(reinterpret_cast<void**>(p_StartSync_t_Target), &StartSync_t_Hook, reinterpret_cast<void**>(&p_StartSync_t)) != MH_OK) {
 		logErr("Failed to create p_StartSync_t_Target hook.");
 		return false;
 	}
 
-
+	//! commented out for sandbox debug
 	p_idPlayerFovLerp_Target = reinterpret_cast<idPlayerFovLerp_t>(MinHookManager::GetIdPlayerFovLerpFuncAdd());
 	if (MH_CreateHook(reinterpret_cast<void**>(p_idPlayerFovLerp_Target), &idPlayerFovLerp_Hook, reinterpret_cast<void**>(&p_idPlayerFovLerp)) != MH_OK) {
 		logErr("Failed to create p_idPlayerFovLerp_Target hook.");
 		return false;
 	}
 
-
+	//! commented out for sandbox debug
 	p_syncEnd_Target = reinterpret_cast<syncEnd_t>(MinHookManager::GetSyncEndFuncAdd());
 	if (MH_CreateHook(reinterpret_cast<void**>(p_syncEnd_Target), &syncEnd_Hook, reinterpret_cast<void**>(&p_syncEnd)) != MH_OK) {
 		logErr("Failed to create p_syncEnd_Target hook.");
 		return false;
 	}
 
-
+	//! commented out for sandbox debug
 	p_RenderSprite_Target = reinterpret_cast<RenderSprite_t>(MinHookManager::GetRenderSpriteFuncAdd());
 	if (MH_CreateHook(reinterpret_cast<void**>(p_RenderSprite_Target), &RenderSprite_Hook, reinterpret_cast<void**>(&p_RenderSprite_Original)) != MH_OK) {
 		logErr("Failed to create RenderSprite hook.");
@@ -413,7 +412,7 @@ bool InitializeHooks() {
 	}
 
 
-	//p_idUsercmdGenLocalSendBtnPressMB_t_Target = reinterpret_cast<idUsercmdGenLocalSendBtnPressMB_t>(MemHelper::getFuncAddr(0x4C8970));
+	//! commented out for sandbox debug
 	p_idUsercmdGenLocalSendBtnPressMB_t_Target = reinterpret_cast<idUsercmdGenLocalSendBtnPressMB_t>(MinHookManager::GetIdUsercmdGenLocalSendBtnPressFuncAdd());
 	if (MH_CreateHook(reinterpret_cast<void**>(p_idUsercmdGenLocalSendBtnPressMB_t_Target), &idUsercmdGenLocalSendBtnPressMB_Hook, reinterpret_cast<void**>(&p_idUsercmdGenLocalSendBtnPressMB_t)) != MH_OK) {
 		logErr("Failed to create idUsercmdGenLocalSendBtnPressMB_t_Target hook.");
@@ -435,7 +434,7 @@ bool InitializeHooks() {
 	}*/
 
 
-
+	//! commented out for sandbox debug
 	//? this can only be changed by restarting the game mod, as this hook is only enabled in debug mode and if user enables it in menu
 	if ((Config::get() != ModConfig::nexusRelease) && modSettings::isLogConsoleToLogFile()) {
 

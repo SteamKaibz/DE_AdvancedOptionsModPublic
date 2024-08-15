@@ -1614,31 +1614,7 @@ public:
 	char pad_End[23704]; // offset: 476C0h (292544d) size: 23704
 }; // size: 316248
 
-// idPlayer : idActor : idAnimatedEntity : idBloatedEntity : idEntity : idEngineEntity : idEventReceiver : idManagedClass : idClass : idEventArgUser
-//class idPlayer {
-//public:
-//    char pad_0[28472]; // offset: 0h (0d) size: 28472
-//    // idTypesafeTime < long long , gameTimeUnique_t , 999960 >
-//    long long lastDelay; // offset: 6F38h (28472d)  size: 8
-//    // idTypesafeTime < int , millisecondUnique_t , 1000 >
-//    int globalCooldownTimeMS; // offset: 6F40h (28480d)  size: 4
-//    char pad_28484[4]; // offset: 6F44h (28484d) size: 4
-//    idPlayer_equipmentInfo_t equipmentInfo; // offset: 6F48h (28488d)  size: 216
-//    char pad_28704[1008]; // offset: 7020h (28704d) size: 1008
-//    bool wantZoom; // offset: 7410h (29712d)  size: 1
-//    char pad_29713[4244]; // offset: 7411h (29713d) size: 4244
-//    bool hideReticle; // offset: 84A5h (33957d)  size: 1
-//    bool hideHudForCinematic; // offset: 84A6h (33958d)  size: 1
-//    char pad_33959[521]; // offset: 84A7h (33959d) size: 521
-//    bool contextOptionSelected; // offset: 86B0h (34480d)  size: 1
-//    char pad_34481[15]; // offset: 86B1h (34481d) size: 15
-//    int hudFlagsBeforeDemon; // offset: 86C0h (34496d)  size: 4
-//    char pad_34500[60364]; // offset: 86C4h (34500d) size: 60364
-//    idPlayerDashboard dashboard; // offset: 17290h (94864d)  size: 64024
-//    char pad_158888[132648]; // offset: 26CA8h (158888d) size: 132648
-//    idHUD playerHud; // offset: 472D0h (291536d)  size: 1008
-//    char pad_End[23704]; // offset: 476C0h (292544d) size: 23704
-//}; // size: 316248
+
 
 
 struct idHands_idHandsAction {

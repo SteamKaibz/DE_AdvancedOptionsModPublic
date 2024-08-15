@@ -149,8 +149,10 @@ std::string PlayerStateChecker::getDbgStrForImgui() {
 		//idPlayer_t* idPlayer = (idPlayer_t*)IdPlayerAdrr;
 		//! isInPauseMenu a byte but each bit is set independently and the one we want is the 4th one and 8 is 00001000
 		//if ((idPlayer->isInPauseMenu & 0x8) != 0) { 
-		//logInfo("getPauseMenuState: &idPlayer->isInPauseMenu is : %p and idPlayer->isInPauseMenu val: %d", &idPlayer->isInPauseMenu, idPlayer->isInPauseMenu);
+		
 		//if (idPlayerObj->isInPauseMenu) {
+
+		logInfo("getPauseMenuState: (idPlayerObj->playerHud is : %p and idPlayerObj->playerHud.gameWasPaused val: %d", &idPlayerObj->playerHud, idPlayerObj->playerHud.gameWasPaused);
 		if (idPlayerObj->playerHud.gameWasPaused) {
 			pauseMenuSate = PauseMenuState::opened;
 		}

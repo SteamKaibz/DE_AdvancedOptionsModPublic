@@ -23,7 +23,6 @@
 }
 
  GameState idGameSystemLocalManager::getCurrentState() {
-	logDebug("getCurrentState");
 
 	//logInfo("getCurrentState called");
 
