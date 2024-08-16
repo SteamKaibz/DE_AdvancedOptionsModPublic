@@ -218,8 +218,6 @@ void initImguiV2() {
 
 
 
-
-
 void modInit() {
 
 	static bool isFirstTimeInit = true;
@@ -264,7 +262,7 @@ void modInit() {
 
 
 
-	logInfo("Game build Version is: %s (this mod was designed for game build version: %s)", GameVersionInfoManager::getBuildVersionStr().c_str(), GameVersionInfoManager::getExpectedBuildVersionStr().c_str());
+	logInfo("current Game build Version is: %s (this mod version was designed for game build version: %s)", GameVersionInfoManager::getBuildVersionStr().c_str(), GameVersionInfoManager::getExpectedBuildVersionStr().c_str());
 
 	/*if (GameVersionInfoManager::isNewGameUpdateReleased()) {
 		logWarn("This version of the game: %s is different than the version the mod was made for: %s, mod 'may' not work as attended or not work at all.", GameVersionInfoManager::getBuildVersionStr().c_str(), GameVersionInfoManager::getExpectedBuildVersionStr().c_str());
@@ -274,6 +272,9 @@ void modInit() {
 		logInfo("Game build Version is the one this mod was designed for: %s", GameVersionInfoManager::getBuildVersionStr().c_str());
 	}*/
 
+	if (!Config::isModDevMode()) {
+		Config::setLogLevelToInfo(false); //! set logging level to warning if nexus release.
+	}
 
 	isFirstTimeInit = false;
 	
@@ -346,15 +347,14 @@ bool InitializeHooks() {
 		logErr("failed to create pconvertIdDeclUIColorToidColorTarget");
 		return false;
 	}
-
+		
 	
-	//todo this is where the issue comes from for the sandbox. if we don't create this hook the game will load fine.
 	////! commented out for sandbox debug
-	//psetSpriteInstanceColorTarget = reinterpret_cast<setSpriteInstanceColor>(MinHookManager::GetSetSpriteInstanceAddr());
-	//if (MH_CreateHook(reinterpret_cast<void**>(psetSpriteInstanceColorTarget), &setSpriteInstanceColorHook, reinterpret_cast<void**>(&psetSpriteInstanceColor)) != MH_OK) {
-	//	logErr("failed to create psetSpriteInstanceColorTarget");
-	//	return false;
-	//}
+	psetSpriteInstanceColorTarget = reinterpret_cast<setSpriteInstanceColor>(MinHookManager::GetSetSpriteInstanceAddr());
+	if (MH_CreateHook(reinterpret_cast<void**>(psetSpriteInstanceColorTarget), &setSpriteInstanceColorHook, reinterpret_cast<void**>(&psetSpriteInstanceColor)) != MH_OK) {
+		logErr("failed to create psetSpriteInstanceColorTarget");
+		return false;
+	}
 
 	//! commented out for sandbox debug
 	pPrintOutlinedStringMB_target = reinterpret_cast<printOutlinedStringMB_func>(MinHookManager::GetPrintOutlinedStringMBFuncAddr());
@@ -434,9 +434,8 @@ bool InitializeHooks() {
 	}*/
 
 
-	//! commented out for sandbox debug
-	//? this can only be changed by restarting the game mod, as this hook is only enabled in debug mode and if user enables it in menu
-	if ((Config::get() != ModConfig::nexusRelease) && modSettings::isLogConsoleToLogFile()) {
+	//! commented out for sandbox debug	
+	if ((Config::isModDevMode()) && Config::isLogIdConsoleToFile()) {
 
 		pIdLib_PrintfTarget = reinterpret_cast<IdLib_Printf>(MinHookManager::GetConsoleLogFuncAdd());
 		if (MH_CreateHook(reinterpret_cast<void**>(pIdLib_PrintfTarget), &IdLib_PrintfHook, reinterpret_cast<void**>(&pIdLib_Printf)) != MH_OK) {
@@ -490,17 +489,44 @@ DWORD __stdcall EjectThread(LPVOID lpParameter) {
 }
 
 
+void ShowErrorMessageBox(std::string titleStr, std::string message) {
+	MessageBox(NULL,
+		message.c_str(),
+		titleStr.c_str(),
+		MB_OK | MB_ICONERROR);
+}
+
+
+int Exit() {
+	CreateThread(0, 0, EjectThread, 0, 0, 0);
+	FreeLibrary(msimg32.dll);
+	Console::Hide();
+	return 0;
+}
+
+
 
 //? Reminder: the way to load this dll with xenos is simply to change the output name to smth like somedll.dll.
 DWORD WINAPI ModMain() {
 
+	
+	//? IF YOU UPDATE: change mod version in config.h
+	//? AND delete mod folder to make sure file generation works
+	Config::setDevMode(false); //todo always check this before release obviously...
+
+	Config::setLogIdConsoleToFile(false); //! this will only have effect in dev mode btw.
+
+	Config::setLogLevelToInfo(true); //! this func will be called again in modInit()
+
+	
+	if (MemHelper::isCallerSandboxExe()) {
+		ShowErrorMessageBox("Mod Error", "You are using the Vanilla mod version for the Sandbox version of the game. Mod can not work. Check the description page on the mod nexus page for more info");
+		return Exit();
+	}
 
 	//? attempting to close mod if/when idlauncher triggers msimg32.dll 
 	if (!mem.isGameFileNameValid()) {
-		CreateThread(0, 0, EjectThread, 0, 0, 0);
-		FreeLibrary(msimg32.dll);
-		Console::Hide();
-		return 0;
+		return Exit();		
 	}
 	
 
@@ -510,7 +536,6 @@ DWORD WINAPI ModMain() {
 	
 	//! even though we  managed to find a way to change a file logging level at runtime, because the mod will have a release and debug version we don't have to get any "version" from the json settings file..
 	//? IF YOU UPDATE also update mod version AND delete mod folder to make sure file generation works
-	Config::set(ModConfig::dev); // nexusRelease, nexusDebug, dev
 
 	Config::printHeaderInLogFile();
 
@@ -631,7 +656,7 @@ DWORD WINAPI ModMain() {
 
 
 	if (!Config::isModError()) {
-		if (Config::get() != ModConfig::nexusRelease) {
+		if (Config::isModDevMode()) {
 			TTS::addToQueue(L"Mod Load Succes !");
 		}
 			
@@ -640,6 +665,17 @@ DWORD WINAPI ModMain() {
 		TTS::addToQueue(L"Mod Error, check the mod log file in the game folder");
 	}
 
+
+	if (Config::isModDevMode()) {
+		logWarn("");
+		logWarn("THIS IS DEV MODE MAKE SURE THIS IS WHAT YOU WANT");
+		logWarn("THIS IS DEV MODE MAKE SURE THIS IS WHAT YOU WANT");
+		logWarn("THIS IS DEV MODE MAKE SURE THIS IS WHAT YOU WANT");
+		logWarn("THIS IS DEV MODE MAKE SURE THIS IS WHAT YOU WANT");
+		logWarn("THIS IS DEV MODE MAKE SURE THIS IS WHAT YOU WANT");
+		logWarn("");
+
+	}
 	
 
 

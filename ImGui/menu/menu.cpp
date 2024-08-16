@@ -1540,7 +1540,6 @@ namespace Menu {
                 ImGui::Dummy(ImVec2(0.0f, verticalSpacingEndTab));
                 ImGui::Unindent();
                 ImGui::EndTabItem();
-
             }
 
 
@@ -1561,7 +1560,7 @@ namespace Menu {
 
 
 
-            if (Config::get() != ModConfig::nexusRelease) {
+            /*if (Config::get() != ModConfig::nexusRelease) {
 
                 if (ImGui::BeginTabItem("Debug")) {
                    
@@ -1586,7 +1585,7 @@ namespace Menu {
                   
 
                 }
-            }
+            }*/
 
 
            

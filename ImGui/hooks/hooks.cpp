@@ -88,7 +88,8 @@ static LRESULT WINAPI WndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
         }  
 
 
-        else if (Config::get() != ModConfig::nexusRelease) {
+        //! not needed.
+        /*else if (Config::isModDevMode()) {
 
             if (wParam == modSettings::getReloadImguiHooksVk_Key()) {
                 logWarn("WndProc: ReinitializeGraphicalHooks called ");
@@ -98,7 +99,7 @@ static LRESULT WINAPI WndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
                     CloseHandle(hHandle);
                 return 0;
             }
-        }
+        }*/
        
 
        

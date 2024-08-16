@@ -226,14 +226,13 @@ LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 
 
-	if (uMsg == WM_KEYDOWN) {			
-		
+	if (uMsg == WM_KEYDOWN) {		
 		
 
 
-		if (Config::isDevMode()) {
+		if (Config::isModDevMode()) {
 			if (wParam == VK_F1) {
-
+				Beep(500, 500);
 				idCmd::setGameSpeed(gameSpeed_K::defaultSpeed);		
 
 
@@ -246,7 +245,7 @@ LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 			}
 			else if (wParam == VK_F2) {
 				logInfo("HookedWndProc: VK_F2 pressed");
-
+				Beep(500, 500);
 				idCmd::setGameSpeed(gameSpeed_K::maxSpeed);
 
 
@@ -330,6 +329,7 @@ LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 			
 			else if (wParam == VK_F5) {
 				logInfo("HookedWndProc: VK_F5 pressed");
+				Beep(500, 500);
 				Menu::bShowDebugWindow = !Menu::bShowDebugWindow;
 				//cvarInfoGenerator::dumpCvarsListToFile();
 				//cmdInfoGenerator::dumpCmdListToFile();
@@ -340,7 +340,7 @@ LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 			if (wParam == VK_F6) {
 				logInfo("HookedWndProc: VK_F6 pressed");
-
+				Beep(500, 500);
 				//EquipmentManager::useEquipmentItem(equipmentType_t::EQUIPMENT_FRAG_GRENADE);
 				EquipmentManager::switchEquipment(equipmentType_t::EQUIPMENT_FRAG_GRENADE);
 
@@ -382,6 +382,7 @@ LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 
 			else if (wParam == VK_NUMPAD0) {
+				Beep(500, 500);
 				logInfo("HookedWndProc: VK_NUMPAD0 pressed setting g_isCloseModRequestFlag to true");
 				g_isCloseModRequestFlag = true;				
 			}
@@ -389,23 +390,24 @@ LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 			//! this is what you have to press to ouput the cls definitions if game updates someday as this will trigger when you press those keys whether the mod status is allgood or not:
 			else if (wParam == VK_NUMPAD1 ) {
+				Beep(500, 500);
 				logInfo("Debug: user just pressed  VK_NUMPAD1: dumping class defs:");
+
 				TTS::addToQueue(sayGeneratingTypes);
 				EnumsDefFileGenerator::DumpEnumDefs();
 				ClassDefFileGenerator::dumpClassDefs();
 
 				//? this will take a VERY long time only use it if necessary.
-			/*	auto idLib = idLibManager();
-				idLib.generateIdLibFiles();*/
+				auto idLib = idLibManager();
+				idLib.generateIdLibFiles();
 
 				auto evGen = eventsInfoGenerator();
 				evGen.dumpEventsListToFile();
 			}
 
 
-
-
 			else if (wParam == VK_NUMPAD2) {
+				Beep(500, 500);
 				logInfo("HookedWndProc: VK_NUMPAD2 pressed ");
 
 				//? many of those are old....

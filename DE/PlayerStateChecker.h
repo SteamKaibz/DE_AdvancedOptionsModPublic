@@ -32,7 +32,7 @@ private:
 
 	static inline int m_lastMenuState = -10; //! abitraty value
 
-	static inline const __int64 m_currentGameModeStrOffset = UndocumentedOffsets::CurrentGameModeOffset;
+	//static inline const __int64 m_currentGameModeStrOffset = UndocumentedOffsets::CurrentGameModeOffset;
 
 	
 

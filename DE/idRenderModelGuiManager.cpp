@@ -102,7 +102,6 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 }
 
  bool idRenderModelGuiManager::acquirreScreenHeight(__int64 addr) {
-	logDebug("acquirreScreenHeight");
 	if (MemHelper::isBadReadPtr((void*)addr)) {
 		logErr("acquirreScreenHeight: addr is bad ptr: %p", (void*)addr);
 		return false;
@@ -112,6 +111,20 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 	return true;
 
 }
+
+ //bool idRenderModelGuiManager::acquirepackedColorMemberOffset(__int64 offset)
+ //{
+	// if (!offset) {
+	//	 logErr("acquirepackedColorMemberOffset: offset is 0", offset);
+	//	 return false;
+	// }
+
+
+	//
+ //}
+
+
+
 
 //! not sure what that values is supposed to be exactly but it's used in DrawString_623530
 
@@ -139,6 +152,7 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 	return *(float*)m_smallCharHeightAddr;
 }
 
+ //? 2
  float idRenderModelGuiManager::getScreenWidth() {
 	if (!m_screenWidthAddr) {
 		logErr("getScreenWidth m_screenWidthAddr is bad ptr returning 0");
@@ -202,30 +216,33 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 	*(unsigned int*)(idRenderModelGuiAdrr + m_packedColorOffset) = idColor.PackColor();
 }
 
- float idRenderModelGuiManager::getScreenWidth(__int64 idRenderModelGuiAddr) {
-	if (MemHelper::isBadReadPtr((void*)idRenderModelGuiAddr)) {
-		logErr("getScreenWidth: idRenderModelGuiAddr is bad ptr: %p", (void*)idRenderModelGuiAddr);
-		return 0;
-	}
-	//return ((float)(*(int*)(MemHelper::getAddr(0x39AF8BC))));
-	return ((float)(*(int*)(idRenderModelGuiAddr + m_screenWidthOffset)));
-}
+ //? 1
+// float idRenderModelGuiManager::getScreenWidth(__int64 idRenderModelGuiAddr) {
+//	if (MemHelper::isBadReadPtr((void*)idRenderModelGuiAddr)) {
+//		logErr("getScreenWidth: idRenderModelGuiAddr is bad ptr: %p", (void*)idRenderModelGuiAddr);
+//		return 0;
+//	}
+//	//return ((float)(*(int*)(MemHelper::getAddr(0x39AF8BC))));
+//	return ((float)(*(int*)(idRenderModelGuiAddr + m_screenWidthOffset)));
+//}
 
- float idRenderModelGuiManager::getScreenHeigth(__int64 idRenderModelGuiAddr) {
-	if (MemHelper::isBadReadPtr((void*)idRenderModelGuiAddr)) {
-		logErr("getScreenHeigth: idRenderModelGuiAddr is bad ptr: %p", (void*)idRenderModelGuiAddr);
-		return 0;
-	}
-	//return ((float)(*(int*)(MemHelper::getAddr(0x39AF8BC))));
-	return ((float)(*(int*)(idRenderModelGuiAddr + m_screenHeighthOffset)));
-}
+// float idRenderModelGuiManager::getScreenHeigth(__int64 idRenderModelGuiAddr) {
+//	if (MemHelper::isBadReadPtr((void*)idRenderModelGuiAddr)) {
+//		logErr("getScreenHeigth: idRenderModelGuiAddr is bad ptr: %p", (void*)idRenderModelGuiAddr);
+//		return 0;
+//	}
+//	//return ((float)(*(int*)(MemHelper::getAddr(0x39AF8BC))));
+//	return ((float)(*(int*)(idRenderModelGuiAddr + m_screenHeighthOffset)));
+//}
 
  float idRenderModelGuiManager::getCenterX(__int64 idRenderModelGuiAddr) {
-	return getScreenWidth(idRenderModelGuiAddr) / 2.0f;
+	//return getScreenWidth(idRenderModelGuiAddr) / 2.0f;
+	return getScreenWidth() / 2.0f;
 }
 
  float idRenderModelGuiManager::getCenterY(__int64 idRenderModelGuiAddr) {
-	return getScreenHeigth(idRenderModelGuiAddr) / 2.0f;
+	//return getScreenHeigth(idRenderModelGuiAddr) / 2.0f;
+	return getScreenHeight() / 2.0f;
 }
 
  void idRenderModelGuiManager::drawDrawStretchPicTest5(__int64 idRenderModelGuiAdrr, float x, float y, float width, float height, __int64 matPtr) {
@@ -334,7 +351,8 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 	//rect.y -= rect.h;
 	if (isDebug) {
 		debugDrawColoredRect(idRenderModelGuiAdr, rect.x, rect.y, rect.w, rect.h, colorOrange);
-		debugDrawString(idRenderModelGuiAdr, colorPurple, idFontManager::getCurrentFontAsStr().c_str(), getScreenWidth(idRenderModelGuiAdr) / 2, getScreenHeigth(idRenderModelGuiAdr) / 2, 2);
+		debugDrawString(idRenderModelGuiAdr, colorPurple, idFontManager::getCurrentFontAsStr().c_str(), getScreenWidth() / 2, getScreenHeight() / 2, 2);
+		//debugDrawString(idRenderModelGuiAdr, colorPurple, idFontManager::getCurrentFontAsStr().c_str(), getScreenWidth(idRenderModelGuiAdr) / 2, getScreenHeigth(idRenderModelGuiAdr) / 2, 2);
 	}
 	float computedTextScale = idRenderModelGuiManager::getFontScaleFromWidthV3(rect, textStr.size());
 	//logInfo("computedTextScale: %.2f", computedTextScale);
@@ -353,7 +371,8 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 	//rect.y -= rect.h;
 	if (isDebug) {
 		debugDrawColoredRect(idRenderModelGuiAdr, rect.x, rect.y, rect.w, rect.h, colorOrange);
-		debugDrawString(idRenderModelGuiAdr, colorPurple, idFontManager::getCurrentFontAsStr().c_str(), getScreenWidth(idRenderModelGuiAdr) / 2, getScreenHeigth(idRenderModelGuiAdr) / 2, 2);
+		debugDrawString(idRenderModelGuiAdr, colorPurple, idFontManager::getCurrentFontAsStr().c_str(), getScreenWidth() / 2, getScreenHeight() / 2, 2);
+		//debugDrawString(idRenderModelGuiAdr, colorPurple, idFontManager::getCurrentFontAsStr().c_str(), getScreenWidth(idRenderModelGuiAdr) / 2, getScreenHeigth(idRenderModelGuiAdr) / 2, 2);
 	}
 	float computedTextScale = idRenderModelGuiManager::getFontScaleFromWidthV3(rect, textStr.size());
 	//logInfo("computedTextScale: %.2f", computedTextScale);
@@ -373,7 +392,8 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 	rect.y -= rect.h;
 	if (isDebug) {
 		debugDrawColoredRect(idRenderModelGuiAdr, rect.x, rect.y, rect.w, rect.h, colorOrange);
-		debugDrawString(idRenderModelGuiAdr, colorPurple, idFontManager::getCurrentFontAsStr().c_str(), getScreenWidth(idRenderModelGuiAdr) / 2, getScreenHeigth(idRenderModelGuiAdr) / 2, 2);
+		debugDrawString(idRenderModelGuiAdr, colorPurple, idFontManager::getCurrentFontAsStr().c_str(), getScreenWidth() / 2, getScreenHeight() / 2, 2);
+		//debugDrawString(idRenderModelGuiAdr, colorPurple, idFontManager::getCurrentFontAsStr().c_str(), getScreenWidth(idRenderModelGuiAdr) / 2, getScreenHeigth(idRenderModelGuiAdr) / 2, 2);
 	}
 	float computedTextScale = idRenderModelGuiManager::getFontScaleFromWidthV3(rect, textStr.size());
 	//logInfo("computedTextScale: %.2f", computedTextScale);
@@ -442,15 +462,20 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 	drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, BigSwfRect, matr, colorGreen);
 	drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, Big2SwfRect, matr, colorPurple);
 
-	debugDrawString(idRenderModelGuiAdrr, colorOrange, materialNameStr.c_str(), 50.0f, getScreenHeigth(idRenderModelGuiAdrr) - 100, 1.0f);
+	debugDrawString(idRenderModelGuiAdrr, colorOrange, materialNameStr.c_str(), 50.0f, getScreenHeight() - 100, 1.0f);
+	//debugDrawString(idRenderModelGuiAdrr, colorOrange, materialNameStr.c_str(), 50.0f, getScreenHeigth(idRenderModelGuiAdrr) - 100, 1.0f);
 
-}
+ }
 
  void idRenderModelGuiManager::drawIceIcon(__int64 idRenderModelGuiAdrr, CustomIceNadeIconUIData& data) {
-	if (MemHelper::isBadReadPtr((void*)idRenderModelGuiAdrr)) {
+	
+	
+	 if (MemHelper::isBadReadPtr((void*)idRenderModelGuiAdrr)) {
 		logErr("drawIceIcon: idRenderModelGuiAdrr is bad ptr: %p not drawing (how did that happen???)", (void*)idRenderModelGuiAdrr);
 		return;
-	}
+	 }
+	
+
 	drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, data.outerIconBounds, data.extraBorderMrt, data.extraBorderColor);
 	drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, data.outerIconBounds, data.backgroundMrt, data.backgroundColor);
 	drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, data.outerIconBounds, data.borderMrt, data.borderColor);
@@ -459,8 +484,8 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 		drawIceNadeCooldownTextWithOutline(idRenderModelGuiAdrr, colorLtGrey, data.cooldownText, idVec4(data.innerIconBounds), .8f, 1.0f, false);
 
 	}
-	//logInfo("drawIceIcon debug 2");
-}
+	
+ }
 
  void idRenderModelGuiManager::drawDrawStretchPicSwfRect(__int64 idRenderModelGuiAdrr, swfRect_t swfRect, __int64 matPtr, const idColor& idColor, bool isMiroredX, bool isMiroredY) {
 

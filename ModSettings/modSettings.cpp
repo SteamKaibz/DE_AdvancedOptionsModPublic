@@ -163,7 +163,7 @@ void modSettings::loadSettings()
 
         //! mod settings
         m_isUseImgui = j.value("m_isUseImgui", modSettingsDefault::g_defaulIsUseImgui);
-        m_isLogGameConsoleToLogFile = j.value("m_isLogGameConsoleToLogFile", modSettingsDefault::g_defaulIsLogConsoleToLogFile);
+        //m_isLogGameConsoleToLogFile = j.value("m_isLogGameConsoleToLogFile", modSettingsDefault::g_defaulIsLogConsoleToLogFile);
 
         //! debug:
         m_reloadImguiHooksKeyName = j.value("m_reloadImguiHooksKeyName", modSettingsDefault::g_defaultReloadImguiHooksKeyName);
@@ -312,7 +312,7 @@ void modSettings::saveSettings()
 
     //! mod settings   
     j["m_isUseImgui"] = m_isUseImgui;
-    j["m_isLogGameConsoleToLogFile"] = m_isLogGameConsoleToLogFile;
+    //j["m_isLogGameConsoleToLogFile"] = m_isLogGameConsoleToLogFile;
 
 
     //! mod debug
@@ -326,12 +326,12 @@ void modSettings::saveSettings()
 
     if (serializedData != lastSerializedData) {
 
-        if (lastSerializedData == "") {           
-            logModSettings("First time save");
-        }
-        else {//! first time saving
-            logModSettings("Settings have changed");
-        }
+        //if (lastSerializedData == "") {           
+        //    logModSettings("First time save");
+        //}
+        //else {//! first time saving
+        //    logModSettings("Settings have changed");
+        //}
 
         // Write JSON to file
         std::ofstream file(filePath);
@@ -1303,15 +1303,15 @@ bool modSettings::getIsUseImgui()
 }
 
 //? not used atm
-bool modSettings::isLogConsoleToLogFile()
-{
-    return m_isLogGameConsoleToLogFile;
-}
-
-void modSettings::setIsLogConsoleToLogFile(bool isLogConsole)
-{
-    m_isLogGameConsoleToLogFile = isLogConsole;
-}
+//bool modSettings::isLogConsoleToLogFile()
+//{
+//    return m_isLogGameConsoleToLogFile;
+//}
+//
+//void modSettings::setIsLogConsoleToLogFile(bool isLogConsole)
+//{
+//    m_isLogGameConsoleToLogFile = isLogConsole;
+//}
 
 unsigned int modSettings::getReloadImguiHooksVk_Key()
 {
@@ -1347,17 +1347,17 @@ void modSettings::setReloadImguiHooksVkKey() {
 
 
 
-void modSettings::logModSettings(std::string reasonStr)
-{
-    logInfo("logModSettings: reason: %s", reasonStr.c_str());
-
-
-    logInfo("m_isUseImgui: %s", m_isUseImgui ? "true" : "false");
-
-    logInfo("m_isLogGameConsoleToLogFile: %s", m_isLogGameConsoleToLogFile ? "true" : "false");
-    
-    logInfo("");
-}
+//void modSettings::logModSettings(std::string reasonStr)
+//{
+//    logInfo("logModSettings: reason: %s", reasonStr.c_str());
+//
+//
+//    logInfo("m_isUseImgui: %s", m_isUseImgui ? "true" : "false");
+//
+//    logInfo("m_isLogGameConsoleToLogFile: %s", m_isLogGameConsoleToLogFile ? "true" : "false");
+//    
+//    logInfo("");
+//}
 
 
 //idColor modSettings::ConvertIntToIdColor(int colorInt) {

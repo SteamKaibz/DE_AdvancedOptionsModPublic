@@ -152,7 +152,7 @@ std::string PlayerStateChecker::getDbgStrForImgui() {
 		
 		//if (idPlayerObj->isInPauseMenu) {
 
-		logInfo("getPauseMenuState: (idPlayerObj->playerHud is : %p and idPlayerObj->playerHud.gameWasPaused val: %d", &idPlayerObj->playerHud, idPlayerObj->playerHud.gameWasPaused);
+		//logInfo("getPauseMenuState: (idPlayerObj->playerHud is : %p and idPlayerObj->playerHud.gameWasPaused val: %d", &idPlayerObj->playerHud, idPlayerObj->playerHud.gameWasPaused);
 		if (idPlayerObj->playerHud.gameWasPaused) {
 			pauseMenuSate = PauseMenuState::opened;
 		}

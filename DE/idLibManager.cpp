@@ -10,7 +10,7 @@ void idLibManager::generateIdLibFiles()
     int enumCounter = 0;
 
 
-    logInfo("generateIdLibFiles: starting...");
+    logWarn("generateIdLibFiles: starting, this might take a while...");
 
 
     std::filesystem::path idaStringsFile = m_idaIdbStringsFileName;

@@ -34,11 +34,12 @@ private:
 
 
 
+	static inline const unsigned int m_packedColorOffset = UndocumentedOffsets::RenderModelGui_PackedColorOffset;
+	//static inline const unsigned int m_packedColorOffset = 0x4D0;
 
-
-	static inline const unsigned int m_packedColorOffset = 0x4D0;
-	static inline const unsigned int m_screenWidthOffset = 0x4568;
-	static inline const unsigned int m_screenHeighthOffset = 0x456C;
+	//? why do we have those as we have m_screenWidthAddr below ?????
+	/*static inline const unsigned int m_screenWidthOffset = 0x4568;
+	static inline const unsigned int m_screenHeighthOffset = 0x456C;*/
 
 
 	//idRenderModelGuiManager::idRenderModelGui_DrawString idRenderModelGuiManager::m_pidRenderModelGui_DrawString = reinterpret_cast<idRenderModelGui_DrawString>(MemHelper::getFuncAddr(0x623530));
@@ -95,7 +96,6 @@ public:
 
 	static bool acquirreDrawStretchPicFuncAdd(__int64 fAdd);
 
-
 	static bool acquirreDrawStringFuncAdd(__int64 fAdd);
 
 	static bool acquirreSmallCharWidhtAddr(__int64 addr);
@@ -107,6 +107,8 @@ public:
 	static bool acquirreScreenWidthAddr(__int64 addr);
 
 	static bool acquirreScreenHeight(__int64 addr);
+
+	//static bool acquirepackedColorMemberOffset(__int64 addr);
 
 
 	
@@ -136,9 +138,10 @@ public:
 	static void setColor(__int64 idRenderModelGuiAdrr, const idColor& idColor);
 
 
-	static float getScreenWidth(__int64 idRenderModelGuiAddr);
+	//? getting rid of those cause it looks we can get those using other means
+	//static float getScreenWidth(__int64 idRenderModelGuiAddr);
 
-	static float getScreenHeigth(__int64 idRenderModelGuiAddr);
+	//static float getScreenHeigth(__int64 idRenderModelGuiAddr);
 
 	static float getCenterX(__int64 idRenderModelGuiAddr);
 

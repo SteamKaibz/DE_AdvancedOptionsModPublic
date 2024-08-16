@@ -6,7 +6,7 @@
 
  bool Scanner::scanForAddrs() {
 
-	 logInfo("scanForAddrs: Pattern Scans for %s Started...", Config::isSandboxModule() ? "Sandbox module" : "Vanilla module");	
+	 logInfo("scanForAddrs: Pattern Scans for %s Started...", Config::getCurrentModuleNameStrToLower().c_str());	
 
 	//! TYPEINFO
 	if (!TypeInfoManager::acquireTypeInfoTools(MemHelper::FindPtrFromRelativeOffset(((uintptr_t)MemHelper::ModulePatternScan("GetTypeInfoToolsSig", GetTypeInfoToolsSig)), 3, 7))) {
@@ -37,12 +37,8 @@
 		return false;
 	}
 
-	//! may be a band aid but because there is now two binaries for DE (vanilla and sandbox) the sigs have to change...great...
-	std::string idInternalCVarSetSig = "48 89 5C 24 08 57 48 83 EC 20 48 8B FA 48 8B D9 45 84 C0 75 7F";
-	if (Config::isSandboxModule()) {
-		idInternalCVarSetSig = "E8 ? ? ? ? FF C7 48 83 C3 60";
-	}
-	if (!idCvarManager::acquireSetInternalFuncAddr((uintptr_t)MemHelper::ModulePatternScan("idInternalCVarSetSig", idInternalCVarSetSig.c_str()))) {
+	
+	if (!idCvarManager::acquireSetInternalFuncAddr((uintptr_t)MemHelper::ModulePatternScan("idInternalCVar_SetSig", idInternalCVar_SetSig))) {
 		logErr("scanForAddrs failed for idInternalCVarSetSig");
 		return false;
 	}
@@ -177,6 +173,15 @@
 		return false;
 	}
 
+	/*if(idRenderModelGuiManager::acquirepackedColorMemberOffset((uintptr_t)MemHelper::ModulePatternScan("renderModelGuiPackecColorOffsetSig", renderModelGuiPackecColorOffsetSig)))*/
+
+	/*if (!idHudEventManager::acquireBroadcastHudEventFp((uintptr_t)MemHelper::ModulePatternScan("broadcastHudEvent2ArgsSig", broadcastHudEvent2ArgsSig))) {
+		logErr("scanForAddrs failed for broadcastHudEvent2ArgsSig");
+		return false;
+	}*/
+
+
+
 	/*if (!idRenderModelGuiManager::acquireStaticWhiteMaterialAddr(MemHelper::FindPtrFromRelativeOffset(((uintptr_t)MemHelper::ModulePatternScan("idMaterial2_WhiteSig", idMaterial2_WhiteSig)), 3, 7))) {
 		logErr("scanForAddrs failed for idMaterial2_WhiteSig");
 		return false;
@@ -204,11 +209,11 @@
 	}
 
 
-	std::string getGlyphDataFuncSig = "89 54 24 10 53 48 83 EC 20 48 8B D9 48 8B 49 58";
-	if (Config::isSandboxModule()) {
+	//std::string getGlyphDataFuncSig = "89 54 24 10 53 48 83 EC 20 48 8B D9 48 8B 49 58";
+	/*if (Config::isSandboxModule()) {
 		getGlyphDataFuncSig = "89 54 24 10 57 48 83 EC 30 48 8B F9 48 8B 49 58";
-	}	
-	if (!idFontManager::acquirreIdFontGetGlyphDataFuncAddr((uintptr_t)MemHelper::ModulePatternScan("getGlyphDataFuncSig", getGlyphDataFuncSig.c_str()))) {
+	}	*/
+	if (!idFontManager::acquirreIdFontGetGlyphDataFuncAddr((uintptr_t)MemHelper::ModulePatternScan("getGlyphDataFuncSig", getGlyphDataFuncSig))) {
 		logErr("scanForAddrs failed for getGlyphDataFuncSig");
 		return false;
 	}

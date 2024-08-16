@@ -191,7 +191,7 @@ private:
 	
 	//! mod settings
 	static inline bool m_isUseImgui = modSettingsDefault::g_defaulIsUseImgui;
-	static inline bool m_isLogGameConsoleToLogFile = modSettingsDefault::g_defaulIsLogConsoleToLogFile;
+	//static inline bool m_isLogGameConsoleToLogFile = modSettingsDefault::g_defaulIsLogConsoleToLogFile;
 	//? not using a debug var cause it's just better to have 2 version of the mod trust me.
 	//static inline int m_isDebugMode = modSettingsDefault::g_defaultisDebugMode;
 	//? don't need that as it's only available for the dev/debug version
@@ -532,8 +532,8 @@ public:
 	//! mod settings 
 	static bool getIsUseImgui();
 
-	static bool isLogConsoleToLogFile();
-	static void setIsLogConsoleToLogFile(bool isLogConsole);	
+	//static bool isLogConsoleToLogFile();
+	//static void setIsLogConsoleToLogFile(bool isLogConsole);	
 
 
 	//! mod debug
@@ -541,7 +541,7 @@ public:
 	static void setReloadImguiHooksVkKey();
 
 
-	static void logModSettings(std::string reasonStr);
+	//static void logModSettings(std::string reasonStr);
 
 	//static idColor ConvertIntToIdColor(int colorInt);
 

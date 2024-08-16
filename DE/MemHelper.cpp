@@ -3,21 +3,31 @@
 
 
 
+bool MemHelper::isCallerSandboxExe() {
 
-bool MemHelper::isGameFileNameValid()
-{
 	std::string curExeNameToLower = GetGameExeNameToLower();
 
-	if (curExeNameToLower == Config::DE_VANILLA_MODULE_NAME_TOLOWER || curExeNameToLower == Config::DE_SANDBOX_MODULE_NAME_TOLOWER) {
-
-		Config::setCurrentModuleNameStrToLower(curExeNameToLower);
-		Config::setIsSandboxModule(curExeNameToLower);
-		logInfo("isGameFileNameValid: curExeNameToLower: %s is valid", curExeNameToLower.c_str());
+	if (curExeNameToLower == Config::DE_SANDBOX_MODULE_NAME_TOLOWER) {
+		
+		logErr("isCallerSandboxExe: ERROR: wrong mod version, caller is: %s", curExeNameToLower.c_str());
 		return true;
 	}
+	return false;
+}
 
-	logErr("isGameFileNameValid: wrong module name, curExeNameToLower is: %s.", curExeNameToLower.c_str());
-	return false;		
+//todo we could have a pop up here that checks if it's sandbox and pop up an error if it is
+bool MemHelper::isGameFileNameValid()
+{
+	std::string curExeNameToLower = GetGameExeNameToLower();	
+
+	if (curExeNameToLower != Config::DE_VANILLA_MODULE_NAME_TOLOWER) {
+		logErr("isGameFileNameValid: ERROR: curExeNameToLower is %s and it should be %s mod is closing", curExeNameToLower.c_str(), Config::DE_VANILLA_MODULE_NAME_TOLOWER.c_str());
+		return false;
+	}
+
+	Config::setCurrentModuleNameStrToLower(curExeNameToLower);
+	logInfo("isGameFileNameValid: curExeNameToLower is %s all 'should' good...", Config::getCurrentModuleNameStrToLower().c_str());
+	return true;
 }
 
 

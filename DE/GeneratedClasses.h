@@ -12,6 +12,8 @@
 //? THIS IS NOT GENERATED THIS IS MANUALLY MADE/ADDED ATM KEEP THAT IN MIND
 //? THIS IS NOT GENERATED THIS IS MANUALLY MADE/ADDED ATM KEEP THAT IN MIND
 
+//todo if the game updates, you have to not only generate all these structs (autamatically and manually) and you have to check update UndocumentedOffsets in CommonDE. This could be wayyyyy more efficient but too much work atm so it will have to do...
+
 //F declarations
 class idWeapon;
 class idDeclWeaponReticle;
@@ -104,21 +106,19 @@ public:
 	bool isHudFlash = false;
 	ImU32 hudFlashColor = modSettingsDefault::g_defaultkaibzHudWhiteColorImU32;
 
-	ImU32 crosshairHealthColorImU32 = modSettingsDefault::g_defaultkaibzHudDisabledColorImU32;
-	
+	ImU32 crosshairHealthColorImU32 = modSettingsDefault::g_defaultkaibzHudDisabledColorImU32;	
 
 };
 
 
 
 
-
-
 //? Game Cls
+
 
 struct Win32Vars_t {
 	char pad0[0x23];
-	bool isGameFocused;
+	bool isGameFocused; //! 16/8/24 not really used atm but could be later on.
 };
 
 
@@ -246,17 +246,30 @@ public:
 //}; // size: 5528
 
 
-
+//! updated for rev3
 // idDeclGlobalShell : idDeclTypeInfo : idDecl : idResource
 class idDeclGlobalShell {
 public:
-    char pad_0[336]; // offset: 0h (0d) size: 336
-    idDeclCampaign* mainCampaignDecl; // offset: 150h (336d)  size: 8
-    char pad_344[104]; // offset: 158h (344d) size: 104
-    // idList < const idDeclUIColor * , TAG_IDLIST , false >
-    idList colorProfile; // offset: 1C0h (448d)  size: 24
-    char pad_End[344]; // offset: 1D8h (472d) size: 344
-}; // size: 816
+	char pad_0[328]; // offset: 0h (0d) size: 328
+	idDeclCampaign* mainCampaignDecl; // offset: 148h (328d)  size: 8
+	char pad_336[104]; // offset: 150h (336d) size: 104
+	// idList < const idDeclUIColor * , TAG_IDLIST , false >
+	idList colorProfile; // offset: 1B8h (440d)  size: 24
+	char pad_End[336]; // offset: 1D0h (464d) size: 336
+}; // size: 800
+
+
+//! rev2
+// idDeclGlobalShell : idDeclTypeInfo : idDecl : idResource
+//class idDeclGlobalShell {
+//public:
+//    char pad_0[336]; // offset: 0h (0d) size: 336
+//    idDeclCampaign* mainCampaignDecl; // offset: 150h (336d)  size: 8
+//    char pad_344[104]; // offset: 158h (344d) size: 104
+//    // idList < const idDeclUIColor * , TAG_IDLIST , false >
+//    idList colorProfile; // offset: 1C0h (448d)  size: 24
+//    char pad_End[344]; // offset: 1D8h (472d) size: 344
+//}; // size: 816
 
 //// idDeclGlobalShell : idDeclTypeInfo : idDecl : idResource
 //class idDeclGlobalShell {
@@ -415,7 +428,7 @@ public:
 
 
 
-
+//! manual def
 class idSWFSpriteInstance {
 public:
     char pad_0[24]; // offset: 0h (0d) size: 24
@@ -753,32 +766,6 @@ struct idHUD_ExtraLives {
 
 
 
-//// idHUD_AbilityIndicators : idHUDElement : idUIElement : idClass : idEventArgUser
-//class idHUD_AbilityIndicators {
-//public:
-//    char pad_0[312]; // offset: 0h (0d) size: 312
-//    idSWFWidget* grenadeWidget; // offset: 138h (312d)  size: 8
-//    char pad_320[32]; // offset: 140h (320d) size: 32
-//    idSWFWidget* iceGrenadeWidget; // offset: 160h (352d)  size: 8
-//    char pad_360[8]; // offset: 168h (360d) size: 8
-//    idSWFWidget* iceGrenadeHollowPipWidget; // offset: 170h (368d)  size: 8
-//    idHUD_AbilityIndicators_elementState_t elementState; // offset: 178h (376d)  size: 4
-//    int updateFlags; // offset: 17Ch (380d)  size: 4
-//    float bloodPunchCharge; // offset: 180h (384d)  size: 4
-//    float chainsawCharge; // offset: 184h (388d)  size: 4
-//    char pad_392[20]; // offset: 188h (392d) size: 20
-//    float iceGrenadeCharge; // offset: 19Ch (412d)  size: 4
-//    char pad_416[7]; // offset: 1A0h (416d) size: 7
-//    bool grenadeShowing; // offset: 1A7h (423d)  size: 1
-//    bool iceGrenadeShowing; // offset: 1A8h (424d)  size: 1
-//    char pad_425[5]; // offset: 1A9h (425d) size: 5
-//    bool icegrenadeHollowPipShowing; // offset: 1AEh (430d)  size: 1
-//    char pad_431[1]; // offset: 1AFh (431d) size: 1
-//    bool inCampaign; // offset: 1B0h (432d)  size: 1
-//    bool fragEquipped; // offset: 1B1h (433d)  size: 1
-//    char pad_End[6]; // offset: 1B2h (434d) size: 6
-//}; // size: 440
-
 
 
 // Inheritance: idHUDElement: idUIElement: idClass: idEventArgUser
@@ -912,28 +899,6 @@ public:
 
 
 
-//// idHUD_WeaponInfo : idHUDElement : idUIElement : idClass : idEventArgUser
-//class idHUD_WeaponInfo {
-//public:
-//	char pad_0[248]; // offset: 0h (0d) size: 248
-//	int updateFlags; // offset: F8h (248d)  size: 4
-//	char pad_252[4]; // offset: FCh (252d) size: 4
-//	idDeclWeapon* currentWeapon; // offset: 100h (256d)  size: 8
-//	char pad_264[84]; // offset: 108h (264d) size: 84
-//	int chainsawAmmo; // offset: 15Ch (348d)  size: 4
-//	int chainsawMaxAmmo; // offset: 160h (352d)  size: 4
-//	char pad_356[4]; // offset: 164h (356d) size: 4
-//	bool crucibleEquipped; // offset: 168h (360d)  size: 1
-//	bool crucibleShown; // offset: 169h (361d)  size: 1
-//	char pad_362[2]; // offset: 16Ah (362d) size: 2
-//	int crucibleCharge; // offset: 16Ch (364d)  size: 4
-//	int crucibleMaxCharges; // offset: 170h (368d)  size: 4
-//	char pad_372[4]; // offset: 174h (372d) size: 4
-//	idDeclInventory* equipmentItem; // offset: 178h (376d)  size: 8
-//	char pad_384[80]; // offset: 180h (384d) size: 80
-//	idSWFWidget_EquipmentItem* equipmentWidget; // offset: 1D0h (464d)  size: 8
-//	char pad_End[216]; // offset: 1D8h (472d) size: 216
-//}; // size: 688
 
 
 
@@ -961,14 +926,6 @@ public:
 }; // size: 32
 
 
-//class idDeclHUDElement_idHudSWFInfo_t {
-//public:
-//    char pad_0[16]; // offset: 0h (0d) size: 16
-//    float nonPerspectiveScale; // offset: 10h (16d)  size: 4
-//    char pad_20[20]; // offset: 14h (20d) size: 20
-//    float swfScale; // offset: 28h (40d)  size: 4
-//    char pad_End[36]; // offset: 2Ch (44d) size: 36
-//}; // size: 80
 
 
 
@@ -1042,26 +999,26 @@ public:
 
 
 //? this was so wrong, offsets were bs.
-class idHUD_OLD {
-public:
-    char pad_0[12]; // offset: 0h (0d) size: 12
-    unsigned short broadcastSystemId; // offset: Ch (12d)  size: 2
-    char pad_14[2]; // offset: Eh (14d) size: 2
-    // idGrowableList < idHUDElement * , 20 , TAG_IDLIST >
-    void* idGrowableList_elements; // offset: 10h (16d)  size: 184
-    char pad_200[720]; // offset: C8h (200d) size: 720 
-    // idList < idMenu * , TAG_IDLIST , false >
-    idList menus; // offset: 398h (920d)  size: 24
-    int pauseMenuIndex; // offset: 3B0h (944d)  size: 4
-    bool isPOIVisible; // offset: 3B4h (948d)  size: 1
-    bool readyForMapStart; // offset: 3B5h (949d)  size: 1
-    char pad_950[50]; // offset: 3B6h (950d) size: 50
-    int currentHudMode; // offset: 3E8h (1000d)  size: 4
-    bool gameWasPaused; // offset: 3ECh (1004d)  size: 1
-    bool inScope; // offset: 3EDh (1005d)  size: 1
-    bool prevShowMenuVisibilityMask; // offset: 3EEh (1006d)  size: 1
-    char pad_End[1]; // offset: 3EFh (1007d) size: 1
-}; // size: 1008
+//class idHUD_OLD {
+//public:
+//    char pad_0[12]; // offset: 0h (0d) size: 12
+//    unsigned short broadcastSystemId; // offset: Ch (12d)  size: 2
+//    char pad_14[2]; // offset: Eh (14d) size: 2
+//    // idGrowableList < idHUDElement * , 20 , TAG_IDLIST >
+//    void* idGrowableList_elements; // offset: 10h (16d)  size: 184
+//    char pad_200[720]; // offset: C8h (200d) size: 720 
+//    // idList < idMenu * , TAG_IDLIST , false >
+//    idList menus; // offset: 398h (920d)  size: 24
+//    int pauseMenuIndex; // offset: 3B0h (944d)  size: 4
+//    bool isPOIVisible; // offset: 3B4h (948d)  size: 1
+//    bool readyForMapStart; // offset: 3B5h (949d)  size: 1
+//    char pad_950[50]; // offset: 3B6h (950d) size: 50
+//    int currentHudMode; // offset: 3E8h (1000d)  size: 4
+//    bool gameWasPaused; // offset: 3ECh (1004d)  size: 1
+//    bool inScope; // offset: 3EDh (1005d)  size: 1
+//    bool prevShowMenuVisibilityMask; // offset: 3EEh (1006d)  size: 1
+//    char pad_End[1]; // offset: 3EFh (1007d) size: 1
+//}; // size: 1008
 
 
 

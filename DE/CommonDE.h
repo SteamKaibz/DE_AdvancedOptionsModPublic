@@ -196,12 +196,13 @@ namespace ConflictingApps {
 //! offset we could not find through typeInfo or otherwise. is game is updated and crashes for unknow reason, recheck  those:
 namespace UndocumentedOffsets {
 
-	const int IdPlayer_1_Offset = 0x1AF8;
-	const __int64 IdGameTimeManagerLocalOffset = 0x125A60;
-	const __int64 CurrentGameModeOffset = 0x6B07DB5;
+	const int IdPlayer_1_Offset = 0x1AF8; //! check ida: return idPlayer::CastTo_2125F50(*(_QWORD *)(idGameLocal_a1 + 8i64 * a2 + 0x1AF8)); in ida rev2
+	const __int64 IdGameTimeManagerLocalOffset = 0x125A60; //! check rev2 in ida: idGameTimeManagerLocal_GetGameMs_D06DD0((__int64)
+	//const __int64 CurrentGameModeOffset = 0x6B07DB5; //! not used anymore.
 	const int CvarFindInternalVtbFuncOffset = 0x20;
 	const int CmdExecuteFuncAddrOffset = 0x40;
 	const int idPlayerPlaySoundVtbOffset = 0x118;
+	const int RenderModelGui_PackedColorOffset = 0x4D0; //! sig: 8B 87 ? ? ? ? 4B 8D 0C 40 F3 0F 10 AD or check 622D11 in ida rev2.
 }
 
 namespace WeaponIdStr {

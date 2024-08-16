@@ -46,8 +46,8 @@ private:
 
 	
 
-	std::string basename(std::string const& pathname);
-	std::string GetGameExeNameToLower();
+	static std::string basename(std::string const& pathname);
+	static std::string GetGameExeNameToLower();
 
 
 
@@ -87,6 +87,7 @@ public:
 	static uintptr_t FindPtrAddress(uintptr_t addr, std::vector<unsigned int>& offsets);
 	static __int64 FindPtrFromRelativeOffset(uintptr_t funcStartAddress, int instructionOffset1, int instructionOffset2);
 	static int FindHardcodedOffset(uintptr_t funcStartAddress, const int instructionOffset);
+	static bool isCallerSandboxExe();
 	//static __int64 getIdHud_WeaponInfoPtr();
 	bool isGameFileNameValid();	
 	static uintptr_t getModuleBaseAddr();

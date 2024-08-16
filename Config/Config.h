@@ -57,31 +57,33 @@
 //};
 
 
-enum class ModConfig
-{
-	nexusRelease,
-	nexusDebug,
-	dev,
-	MAX_VERSIONS
-
-};
+//enum class ModConfig
+//{
+//	nexusRelease,
+//	nexusDebug,
+//	dev,
+//	MAX_VERSIONS
+//
+//};
 
 class Config
 {
 private:
 
-	static inline ModConfig m_modConfig;
+	static inline bool m_isDevMode = false;
+	static inline bool m_isLogIdConsoleToFile = false;
+
 	static inline FILE* fp;
 	static inline bool m_isModError;
 
 	static inline std::string m_gameDirectoryStr;
 	static inline std::string m_currentModuleNameStrToLower;
-	static inline bool m_isSandboxModule = false;
+	//static inline bool m_isSandboxModule = false;
 	
 
 public:
 
-	static const inline float MOD_VERSION_F = 2.3f;
+	static const inline float MOD_VERSION_F = 2.31f;
 
 	static const inline std::string MOD_FOLDER_NAME = "DE_AdvancedOptionsMod";
 
@@ -119,13 +121,14 @@ public:
 	static void setModError(std::string erroMsg);
 
 	loguru::Verbosity VerbosityForFile(const loguru::Verbosity& verbosity);
-
 	
-	static void set(ModConfig config);
-	static ModConfig get();
+	static void setLogLevelToInfo(bool islogLevelInfo);
 
-	//static std::string getModuleName();
-	//static std::string getGameFileNameToLowerStr();
+	static void setDevMode(bool isDevMode);
+	static bool isModDevMode();
+
+	static void setLogIdConsoleToFile(bool isLogIdConsoleToFile);
+	static bool isLogIdConsoleToFile();
 
 	static std::string getModBuildStr();
 	static std::string getModConfigStr();
@@ -133,10 +136,10 @@ public:
 	static std::string& getCurrentModuleNameStrToLower();
 	static void setCurrentModuleNameStrToLower(const std::string& moduleName);
 
-	static bool isSandboxModule();
-	static void setIsSandboxModule(std::string moduleNameStrToLower);
+	//static bool isSandboxModule();
+	//static void setIsSandboxModule(std::string moduleNameStrToLower);
 
-	static bool isDevMode();
+	//static bool isDevMode();
 
 	static std::string getCreditsStr();
 

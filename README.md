@@ -1,8 +1,10 @@
 # DE_AdvancedOptionsMod
 
 
-Source for: https://www.nexusmods.com/doometernal/mods/1255
+This is the source code for Advanced Options mod for Doom Eternal Vanilla: https://www.nexusmods.com/doometernal/mods/1255
 
-If you to help making the mod's performance better, please let me know.
+Another source for the Sandbox version will be uploaded soon but atm, those are 2 different projects.
 
-15/8/24: This codebase will undergo a complete rewrite soon as some of the code is not as efficient/elegant as it could be .
+If you to help making the mod better, please let me know.
+
+15/8/24: This mod started as a experimental project, thus, most of the code is not elegant/efficient. But This codebase will undergo a complete rewrite soon if time allows it.
