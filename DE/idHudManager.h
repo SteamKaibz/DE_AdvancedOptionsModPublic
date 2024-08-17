@@ -28,6 +28,8 @@ private:
 
    static inline isWorldMenuAtIndexActive_t m_isWorldMenuAtIndexActiveFp = nullptr;
 
+   static inline std::unordered_map<std::string, idHUDElement*> m_elementCache;
+
 public:
 
 
