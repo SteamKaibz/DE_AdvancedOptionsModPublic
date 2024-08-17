@@ -60,10 +60,18 @@ bool idHudManager::acquireIsWorldMenuAtIndexActiveFuncAddr(__int64 faddr)
 
 
 idHUDElement* idHudManager::getIdHud_Element(std::string requestedHudElementName) {
-
+    static idPlayer* lastIdPlayerObj = idMapInstanceLocalManager::getIdPlayer();
     idPlayer* idPlayerObj = idMapInstanceLocalManager::getIdPlayer();
+
+    if (lastIdPlayerObj != idPlayerObj) {
+        m_elementCache.clear();
+        lastIdPlayerObj = idPlayerObj;
+    }
+    else if (m_elementCache.contains(requestedHudElementName)) {
+        return m_elementCache.at(requestedHudElementName);
+    }
+
     idList* IdHud_Elements_ListPtr = (idList*)&idPlayerObj->playerHud.idGrowableList_idHUDElement_elements;
-    //idList* IdHud_Elements_ListPtr = (idList*)&idPlayerObj->playerHud.idGrowableList_elements;
 
     if (!IdHud_Elements_ListPtr || MemHelper::isBadReadPtr(IdHud_Elements_ListPtr)) {
         logErr("getIdHud_Element: IdHud_Elements_ListPtr is null or badPtr");
@@ -79,11 +87,10 @@ idHUDElement* idHudManager::getIdHud_Element(std::string requestedHudElementName
 
         idDeclHUDElement* declElement = IdHud_Element->decl;
 
-
         std::string idHud_ElementNameStr = idResourceManager::getDeclHudElementName(declElement);
 
-
         if (idHud_ElementNameStr == requestedHudElementName) {
+            m_elementCache[requestedHudElementName] = IdHud_Element;
 
             return IdHud_Element;
         }
