@@ -27,7 +27,8 @@ private:
     //! this is a func used inside one of the hooks:
     static inline uintptr_t m_initRenderModelGuiMbFuncAdd = 0;
     static inline uintptr_t m_setFontAndPrintStringMBFuncAdd = 0;
-    static inline uintptr_t m_customAnimSmthFuncAdd = 0;
+    //static inline uintptr_t m_customAnimSmthFuncAdd = 0;
+    static inline uintptr_t m_setMovementDuringCustomAnimFAdd = 0;
     static inline uintptr_t m_idInventoryCollectionSmthFuncAdd = 0;
     static inline uintptr_t m_idHUDMenu_CurrencyConfirmationSmthFuncAdd = 0;
     static inline uintptr_t m_StartSyncFuncAdd = 0;
@@ -87,8 +88,11 @@ public:
     static uintptr_t GetGetFovTargetValAddr();
     static bool SetGetFovTargetValAddr(uintptr_t value);
 
-    static uintptr_t GetCustomAnimSmthFuncAdd();
-    static bool SetCustomAnimSmthFuncAdd(uintptr_t value);
+    /*static uintptr_t GetCustomAnimSmthFuncAdd();
+    static bool SetCustomAnimSmthFuncAdd(uintptr_t value);*/
+
+    //static uintptr_t Get_SetMovementDuringCustomAnimFAdd();
+    //static bool Set_SetMovementDuringCustomAnimFAdd(uintptr_t value);
 
     static uintptr_t GetIdInventoryCollectionSmthFuncAdd();
     static bool SetIdInventoryCollectionSmthFuncAdd(uintptr_t value);

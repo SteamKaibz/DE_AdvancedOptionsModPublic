@@ -417,13 +417,14 @@ namespace Menu {
 
                 ImGui::NewLine();
 
-                static bool isSkipCustomAnimations = modSettings::getIsSkipCustomAnimations();
-                ImGui::Checkbox("Disable Blocking Animations", &isSkipCustomAnimations);
-                guiHelper::insertToolTipSameLine("Checked: will disabled blocking animations like finding a secret, battery cell...\nIf you witness any bugs when this feature is on let me know \nUnchecked: defaut game behaviour");
+                //? 21/8/24 this feature is too buggy atm check reminder file
+               /* static bool isSkipCustomAnimations = modSettings::getIsSkipCustomAnimations();
+                ImGui::Checkbox("Prevent locked in place when Findind secrets", &isSkipCustomAnimations);
+                guiHelper::insertToolTipSameLine("Checked: will not lock the slayer in place when he finds a secret\nUnchecked: defaut game behaviour");
 
                 modSettings::setIsSkipCustomAnimations(isSkipCustomAnimations);
 
-                ImGui::NewLine();
+                ImGui::NewLine();*/
 
 
                 bool isUnlockGameFOVMenu = modSettings::getIsGameFovMenuUnlocked();

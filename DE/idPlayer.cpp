@@ -43,19 +43,20 @@ std::string idPlayer_K::getDbgStrForImgui() {
         resultStr += "\t" + LastDebugTimeStampMsStr + "\n";
 
 
-        //? check this doesnt seem right....
-        std::string idHandsStr = "idHandsStr: XXXX";
+        //? NO STATIC POINTERS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
+       /* std::string idHandsStr = "idHandsStr: XXXX";
         idHands_idHandsAction* pendingAction = (idHands_idHandsAction*)((__int64)idPlayerPtr + 0x15F98);
         idHandsStr = "idHands: pendingAction addr: " + K_Utils::ptrToHexString(pendingAction);
-        resultStr += "\t" + idHandsStr + "\n";
+        resultStr += "\t" + idHandsStr + "\n";*/
 
 
-        std::string InteractStr = "InteractStr: XXXX";
+       /* std::string InteractStr = "InteractStr: XXXX";
         idPlayer_playerUseState_t useState = (idPlayer_playerUseState_t) *(int*)((__int64)idPlayerPtr + 0x7D60);
         idManagedClassPtr_idSyncEntity* idSyncEnt_MC = (idManagedClassPtr_idSyncEntity*) ((__int64)idPlayerPtr + 0x8440);
         InteractStr = "useState: " + K_Utils::intToHexString(useState) + " idSyncEntity ptr: " + K_Utils::ptrToHexString(idSyncEnt_MC->idSyncEntity_ptr);
 
-        resultStr += "\t" + InteractStr + "\n";
+        resultStr += "\t" + InteractStr + "\n";*/
         
 
 

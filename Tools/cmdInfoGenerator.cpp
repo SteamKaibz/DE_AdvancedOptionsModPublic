@@ -74,14 +74,24 @@ std::string cmdInfoGenerator::getCmdInfoAsTest(commandDef_s* cmdDefPtr) {
 		return result;
 	}
 
-	result += cmdDefPtr->name;
+	if (cmdDefPtr->name) {
+		result += cmdDefPtr->name;
+	}
+	else {
+		result += " ERROR: FAILED TO FIND CMD NAME";
+	}
 	result += "\n";
 
 	result += getCmdStaticOffsetAsStr(cmdDefPtr);
 	result += "\n";
 
 	result += "Description: ";
-	result += cmdDefPtr->description;
+	if (!cmdDefPtr->description) {
+		result += "(Bad ptr) No Description";
+	}
+	else {
+		result += cmdDefPtr->description;
+	}
 	result += "\n";
 	result += "\n";
 

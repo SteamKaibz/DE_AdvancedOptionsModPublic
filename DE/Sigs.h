@@ -144,7 +144,10 @@ static const char dashEffectToggleSig[] = "0F 84 ? ? ? ? 48 8B CE E8 ? ? ? ? 84 
 static const char broadcastHudEvent2ArgsSig[] = "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC 20 41 0F B7 F0";
 
 static const char isWorldMenuAtIndexActiveFaddrSig[] = "48 89 5C 24 ? 57 48 83 EC 20 48 63 DA 48 8B F9 8B D3 E8 ? ? ? ? 48 85 C0 74 12";
-static const char skipCustomAnimFpSig[] = "44 89 4C 24 ? 44 89 44 24 ? 48 89 54 24 ? 53 55";
+//static const char skipCustomAnimFpSig[] = "44 89 4C 24 ? 44 89 44 24 ? 48 89 54 24 ? 53 55";
+
+//! new 21/8/24
+static const char setMovementDuringCustomAnimFpSig[] = "48 89 5C 24 ? 48 89 6C 24 ? 56 48 83 EC 20 48 8B 05 ? ? ? ? 41 0F B6 F1";
 
 static const char idInventoryCollectionSmthFpSig[] = "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 56 48 83 EC 20 33 FF 48 8B EA 4C 8B F1 39 79 08 7E 5F";
 

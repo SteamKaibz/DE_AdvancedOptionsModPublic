@@ -194,19 +194,33 @@ bool  MinHookManager::SetGetFovTargetValAddr(uintptr_t value) {
     return true;
 }
 
-uintptr_t MinHookManager::GetCustomAnimSmthFuncAdd()
-{
-    return m_customAnimSmthFuncAdd;
-}
+//uintptr_t MinHookManager::GetCustomAnimSmthFuncAdd()
+//{
+//    return m_customAnimSmthFuncAdd;
+//}
+//
+//bool MinHookManager::SetCustomAnimSmthFuncAdd(uintptr_t value)
+//{
+//    if (MemHelper::isBadReadPtr((void*)value)) {
+//        return false;
+//    }
+//    m_customAnimSmthFuncAdd = value;
+//    return true;
+//}
 
-bool MinHookManager::SetCustomAnimSmthFuncAdd(uintptr_t value)
-{
-    if (MemHelper::isBadReadPtr((void*)value)) {
-        return false;
-    }
-    m_customAnimSmthFuncAdd = value;
-    return true;
-}
+//uintptr_t MinHookManager::Get_SetMovementDuringCustomAnimFAdd() {
+//
+//    return m_setMovementDuringCustomAnimFAdd;
+//}
+//
+//bool MinHookManager::Set_SetMovementDuringCustomAnimFAdd(uintptr_t value) {
+//    if (MemHelper::isBadReadPtr(reinterpret_cast<void*>(value))) {
+//        return false;
+//    }
+//    m_setMovementDuringCustomAnimFAdd = value;
+//    return true;
+//}
+
 
 
 uintptr_t MinHookManager::GetIdInventoryCollectionSmthFuncAdd()

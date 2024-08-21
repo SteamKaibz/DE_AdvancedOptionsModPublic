@@ -363,17 +363,25 @@ bool InitializeHooks() {
 		logErr("failed to create pPrintOutlinedStringMB_target");
 		return false;
 	}	
-
-
-
-	
+			
 		
-	//! commented out for sandbox debug
-	p_customAnimSmth_t_Target = reinterpret_cast<customAnimSmth_t>(MinHookManager::GetCustomAnimSmthFuncAdd());
+	
+	/*p_customAnimSmth_t_Target = reinterpret_cast<customAnimSmth_t>(MinHookManager::GetCustomAnimSmthFuncAdd());
 	if (MH_CreateHook(reinterpret_cast<void**>(p_customAnimSmth_t_Target), &customAnimSmth_t_Hook, reinterpret_cast<void**>(&p_customAnimSmth_t)) != MH_OK) {
 		logErr("Failed to create p_customAnimSmth_t_Target hook.");
 		return false;
-	}
+	}*/
+
+
+	/*p_AnimEvent_SetMovementDuringCustomAnim_Target = reinterpret_cast<AnimEvent_SetMovementDuringCustomAnim_t>(MinHookManager::Get_SetMovementDuringCustomAnimFAdd());
+	if (MH_CreateHook(reinterpret_cast<void**>(p_AnimEvent_SetMovementDuringCustomAnim_Target),
+		&AnimEvent_SetMovementDuringCustomAnim_Hook,
+		reinterpret_cast<void**>(&p_AnimEvent_SetMovementDuringCustomAnim)) != MH_OK) {
+		logErr("Failed to create p_AnimEvent_SetMovementDuringCustomAnim_Target hook.");
+		return false;
+	}*/
+
+
 	
 	//! commented out for sandbox debug
 	p_idHUDMenu_CurrencyConfirmation_t_Target = reinterpret_cast<idHUDMenu_CurrencyConfirmation_t>(MinHookManager::GetIdHUDMenu_CurrencyConfirmationSmthFuncAdd());

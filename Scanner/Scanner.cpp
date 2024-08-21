@@ -303,10 +303,16 @@
 		return false;
 	}
 
-	if (!MinHookManager::SetCustomAnimSmthFuncAdd((uintptr_t)MemHelper::ModulePatternScan("skipCustomAnimFpSig", skipCustomAnimFpSig))) {
+	//? not good enough
+	/*if (!MinHookManager::SetCustomAnimSmthFuncAdd((uintptr_t)MemHelper::ModulePatternScan("skipCustomAnimFpSig", skipCustomAnimFpSig))) {
 		logErr("scanForAddrs failed for skipCustomAnimFpSig");
 		return false;
-	}
+	}*/
+	//? not good enough
+	//if (!MinHookManager::Set_SetMovementDuringCustomAnimFAdd((uintptr_t)MemHelper::ModulePatternScan("setMovementDuringCustomAnimFpSig", setMovementDuringCustomAnimFpSig))) {
+	//	logErr("scanForAddrs failed for setMovementDuringCustomAnimFpSig");
+	//	return false;
+	//}
 
 	if (!MinHookManager::SetIdInventoryCollectionSmthFuncAdd((uintptr_t)MemHelper::ModulePatternScan("idInventoryCollectionSmthFpSig", idInventoryCollectionSmthFpSig))) {
 		logErr("scanForAddrs failed for idInventoryCollectionSmthFpSig");

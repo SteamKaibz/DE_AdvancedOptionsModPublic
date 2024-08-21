@@ -397,12 +397,15 @@ LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 				EnumsDefFileGenerator::DumpEnumDefs();
 				ClassDefFileGenerator::dumpClassDefs();
 
-				//? this will take a VERY long time only use it if necessary.
-				auto idLib = idLibManager();
-				idLib.generateIdLibFiles();
+				cvarInfoGenerator::dumpCvarsListToFile();
+				cmdInfoGenerator::dumpCmdListToFile();				
 
 				auto evGen = eventsInfoGenerator();
 				evGen.dumpEventsListToFile();
+
+				//? this will take a VERY long time only use it if necessary.
+				/*auto idLib = idLibManager();
+				idLib.generateIdLibFiles();*/
 			}
 
 
@@ -565,22 +568,39 @@ char __fastcall syncEnd_Hook(__int64 a1, __int64 a2, int a3, unsigned int a4, un
 
 
 
+//? Update 21/8/24: this is not working as intended because even if it does indeed prevents the find secret animation from playing it will also cause the bug where the hands hold an invisible weapon. The bug Will only happen AFTER you find the first secret which caused wrong assumption this mod feature was working as intended.
+////! returning from this will disable custom animations like when finding secret or some specific items 
+////! char __fastcall customAnimSmth_19DA8A0(__int64 idHands_a1, const char *str_a2, int a3, int a4, int a5)
+//typedef char(__fastcall* customAnimSmth_t)(__int64 idHands_a1, const char* str_a2, int a3, int a4, int a5);
+//customAnimSmth_t p_customAnimSmth_t = nullptr;
+//customAnimSmth_t p_customAnimSmth_t_Target = nullptr;
+//
+//char __fastcall customAnimSmth_t_Hook(__int64 idHands_a1, const char* str_a2, int a3, int a4, int a5) {
+//
+//	if (modSettings::getIsSkipCustomAnimations()) {
+//		return 0;
+//	}
+//	//logWarn("customAnimSmth_t_Hook returning 0");	
+//
+//	return p_customAnimSmth_t(idHands_a1, str_a2, a3, a4, a5);
+//}
 
-//! returning from this will disable custom animations like secret find, battery cell find animations
-//! char __fastcall customAnimSmth_19DA8A0(__int64 idHands_a1, const char *str_a2, int a3, int a4, int a5)
-typedef char(__fastcall* customAnimSmth_t)(__int64 idHands_a1, const char* str_a2, int a3, int a4, int a5);
-customAnimSmth_t p_customAnimSmth_t = nullptr;
-customAnimSmth_t p_customAnimSmth_t_Target = nullptr;
 
-char __fastcall customAnimSmth_t_Hook(__int64 idHands_a1, const char* str_a2, int a3, int a4, int a5) {
-
-	if (modSettings::getIsSkipCustomAnimations()) {
-		return 0;
-	}
-	//logWarn("customAnimSmth_t_Hook returning 0");	
-
-	return p_customAnimSmth_t(idHands_a1, str_a2, a3, a4, a5);
-}
+//? 21/8/24 no, not good either will create the bug for example when acquiring the grenade and trying to grab the monkey bar after that
+//typedef __int64(__fastcall* AnimEvent_SetMovementDuringCustomAnim_t)(__int64 idHands_a1, __int64 a2, __int64 a3, bool isDisableMovement_a4);
+//AnimEvent_SetMovementDuringCustomAnim_t p_AnimEvent_SetMovementDuringCustomAnim = nullptr;
+//AnimEvent_SetMovementDuringCustomAnim_t p_AnimEvent_SetMovementDuringCustomAnim_Target = nullptr;
+//
+//__int64 __fastcall AnimEvent_SetMovementDuringCustomAnim_Hook(__int64 idHands_a1, __int64 a2, __int64 a3, bool isDisableMovement_a4) {
+//
+//	//! will not actually skip custom animation but at least player will be able to move once he finds a secret.
+//	//! this system could be made better but it will do for now.
+//	if (modSettings::getIsSkipCustomAnimations() && isDisableMovement_a4) {
+//		isDisableMovement_a4 = false;
+//	}
+//
+//	return p_AnimEvent_SetMovementDuringCustomAnim(idHands_a1, a2, a3, isDisableMovement_a4);
+//}
 
 
 
@@ -1041,7 +1061,7 @@ void __fastcall setSpriteInstanceColorHook(__int64 idSWFSpriteInstance_a1, unsig
 	//GameHudColorsManager::debugPrintfullPathHashIfIsColorId(idSWFSpriteInstance_a1, SWF_NAMED_COLOR_HUD_EQUIPMENT_FRAG_ICON);
 
 
-	//? 30/4/24 removing this just 5 min for testing....
+	
 	namedColorId_a2 = GameHudColorsManager::getColor(idSWFSpriteInstance_a1, namedColorId_a2);
 
 
