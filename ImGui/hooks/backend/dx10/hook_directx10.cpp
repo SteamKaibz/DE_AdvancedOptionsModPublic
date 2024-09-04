@@ -292,7 +292,7 @@ static void RenderImGui_DX10(IDXGISwapChain* pSwapChain) {
 }
 #else
 #include <Windows.h>
-#include "../../../../Config/Config.h"
+#include "../../../../Config.h"
 namespace DX10 {
     void Hook(HWND hwnd) { logInfo("[!] DirectX10 backend is not enabled!\n"); }
     void Unhook( ) { }

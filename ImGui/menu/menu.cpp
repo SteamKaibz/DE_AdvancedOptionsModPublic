@@ -12,8 +12,14 @@ namespace Menu {
 
 
     void InitializeContext(HWND hwnd) {
+
+       /* logInfo("InitializeContext called");*/
+
         if (ig::GetCurrentContext())
             return;
+
+        //! InitializeContext is called ALL THE TIME but will (should) only get to this point once. 
+        logInfo("InitializeContext is past ig::GetCurrentContext()");
 
         ImGui::CreateContext();
         ImGui_ImplWin32_Init(hwnd);
@@ -249,7 +255,7 @@ namespace Menu {
       //! disabling the game mouse input while in imgui so we can use the mouse:
       if (bShowMenu && fastCvarManager::isMouseInputEnabled()) {
           idCmd::SetInMouseEnabled(false);
-          lastInMouseDisabledMs = EpochMillis();
+          lastInMouseDisabledMs = K_Utils::EpochMillis();
       }
       else if (!bShowMenu && !fastCvarManager::isMouseInputEnabled()) {
           idCmd::SetInMouseEnabled(true);
@@ -272,7 +278,7 @@ namespace Menu {
 
       if (bShowMenu) {
           //! adding a delay which solve the bug of the mouse randomly not moving in mod menu:
-          if (EpochMillis() - lastInMouseDisabledMs > 100) {
+          if (K_Utils::EpochMillis() - lastInMouseDisabledMs > 100) {
               showModMenu();
           }
           return;
@@ -1527,7 +1533,7 @@ namespace Menu {
                 ImGui::TextColored(WhiteColorImVec4, "Mod Menu Font Size: ");
                 ImGui::SameLine();
                 ImGui::TextColored(YellowColorImVec4, "(Requires Restart)");
-                int modMenuFontSize = (int)modSettings::getEternalFontSize();
+                int modMenuFontSize = (int)modSettings::getRobotoFontSize();
                 ImGui::SliderInt("Menu Font Size", &modMenuFontSize, 4, 48);
                 ImGui::SameLine();
                 if (ImGui::Button("RESET##MmodMenuFontSize")) {

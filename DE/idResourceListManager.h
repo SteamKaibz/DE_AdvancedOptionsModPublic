@@ -4,9 +4,10 @@
 #include <Windows.h>
 #include <vector>
 #include "MemHelper.h"
-#include "idLib.h"
-#include "GeneratedClasses.h"
-#include "../K_Utils/K_Utils.h"
+#include "idLib_Dynamic.h"
+#include "../Common/K_Utils.h"
+#include "idResourceManager.h"
+
 
 //#include "CustomizedWeaponManager.h"
 

@@ -2,14 +2,13 @@
 #include <Windows.h>
 #include <string>
 #include "CommonDE.h"
-#include "UtilsDE.h"
 #include <vector>
 #include <chrono>
-#include "../Config/Config.h"
+#include "../Config.h"
 #include <queue>
 //#include "Weapon.h"
 //#include "idInventory.h"
-#include "../ModSettings/modSettings.h"	
+#include "modSettings.h"	
 #include "idInventoryManager.h"
 #include "idPlayer.h"
 #include "idWeaponManager.h"
@@ -327,6 +326,8 @@ public:
     //    }
     //}
    
+
+    void playWeaponSwitchOverideSound();
 
     void setWeaponEnumToResend();
 

@@ -7,7 +7,8 @@
 //#include "MaterialInfo.h"
 #include "MemHelper.h"
 #include "idDeclInfo.h"
-#include "GeneratedEnums.h"
+#include "idLib_Dynamic.h"
+#include "enumsCustom.h"
 
 class MaterialLib {
 

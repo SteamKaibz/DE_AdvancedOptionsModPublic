@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CommonDE.h"
-#include "../ModSettings/modSettings.h"
+#include "modSettings.h"	
 //#include "GameHudColorsManager.h"
 
 

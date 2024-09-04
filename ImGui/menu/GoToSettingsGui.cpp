@@ -2,74 +2,129 @@
 
 
 
-
-
+//! rectangle in bg of text:
 void GoToSettingsGui::showModKeyShortcutText(bool* p_open)
-{ 
-
-    //static ImVec4 textColor = guiHelper::lightgrayColor;
-    //static unsigned int lastToggleModSettingsVkCode = -1;
-
+{
     ImGuiIO& io = ImGui::GetIO();
     ImGuiViewport* viewport = ImGui::GetMainViewport();
 
-    //! this is what prevent the text not being showed if game is not focused when mod loads.
     if (viewport->Size.x <= 0 || viewport->Size.y <= 0) {
-        // Delay rendering the window until the viewport size becomes valid
         return;
     }
 
+    static std::string ToggleModTextStr;
+    static ImU32 TextBgRectColorImU32 = Menu::TranparentImU32;
 
-    static std::string ToggleModTextStr = "KAIBZ MOD [???]";
-    ToggleModTextStr = "KAIBZ MOD [" + std::string(guiHelper::getAllowedKeyName(modSettings::getToggleModSettingsVkCode())) + "]";   
+    if (Config::isDevMode()) {
+        ToggleModTextStr = "DEV MODE - KAIBZ MOD [";
+        TextBgRectColorImU32 = Menu::BlueVioletColorImU32;
+    }
+    else if (Config::isDebugMode()) {
+        ToggleModTextStr = "DEBUG MODE - KAIBZ MOD [";
+        TextBgRectColorImU32 = Menu::RedColorImU32;
+    }
+    else {
+        ToggleModTextStr = "KAIBZ MOD [";
+        TextBgRectColorImU32 = Menu::TranparentImU32;
+    }
+
+    ToggleModTextStr += std::string(guiHelper::getAllowedKeyName(modSettings::getToggleModSettingsVkCode())) + "]";
 
 
     ImVec2 textSize = ImGui::CalcTextSize(ToggleModTextStr.c_str(), nullptr, true);
-    float textPaddingX = 1.05f; //! manually adjusted
-    float textPaddingY = 1.3f; //! manually adjusted
 
-    //logInfo("showModKeyShortcutText: textSize.x %.3f textSize.y %.3f", textSize.x, textSize.y);
+    // Rectangle size slightly larger than text
+    ImVec2 rectSize = ImVec2(textSize.x + 2, textSize.y + 2);
 
-    // Set window size to match viewport size
+    // Calculate text position relative to window size
     ImVec2 windowSize = ImVec2(viewport->Size.x, viewport->Size.y);
+    ImVec2 textPos = ImVec2(windowSize.x - (textSize.x * 1.05f), windowSize.y - (textSize.y * 1.3f));
 
-    //logInfo("showModKeyShortcutText: viewport->Size.x %.3f viewport->Size.y %.3f", viewport->Size.x, viewport->Size.y);
+    // Rectangle position (centered on the text)
+    ImVec2 rectPos = ImVec2(textPos.x - 1, textPos.y - 1);
 
-    float windowPosX = viewport->Pos.x;
-    float windowPosY = viewport->Pos.y;
+    // Set the next window position and size
+    ImGui::SetNextWindowPos(ImVec2(viewport->Pos.x, viewport->Pos.y), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(viewport->Size);
 
-   /* logInfo("showModKeyShortcutText: windowPosX %.3f windowPosY %.3f", windowPosX, windowPosY);*/
+    ImGui::Begin("GoToSettingsGui", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoScrollbar);
 
-    ImGui::SetNextWindowPos(ImVec2(windowPosX, windowPosY), ImGuiCond_Always);
+    // Draw the filled rectangle (red color)
+    ImDrawList* draw_list = ImGui::GetWindowDrawList();
+    //draw_list->AddRectFilled(rectPos, ImVec2(rectPos.x + rectSize.x, rectPos.y + rectSize.y), IM_COL32(255, 0, 0, 255));
+    draw_list->AddRectFilled(rectPos, ImVec2(rectPos.x + rectSize.x, rectPos.y + rectSize.y), TextBgRectColorImU32);
 
-    ImGui::Begin("GoToSettingsGui", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBringToFrontOnFocus |        ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoScrollbar);
-
-    // Calculate text position relative to windowSize to allow free movement within viewport
-    ImVec2 textPos = ImVec2(windowSize.x - textSize.x * textPaddingX, windowSize.y - textSize.y * textPaddingY);
+    // Draw the text
     ImGui::SetCursorPos(textPos);
-
-    //logInfo("showModKeyShortcutText: textPos.x %.3f textPos.y %.3f", textPos.x, textPos.y);
-
-
-   /* if (modSettings::getModSettingsShortcutTextColorInt() != lastModSettingsColorInt) {
-
-        textColor = modSettings::ConvertIntToImVec4Color(modSettings::getModSettingsShortcutTextColorInt());
-        lastModSettingsColorInt = modSettings::getModSettingsShortcutTextColorInt();
-    }*/
-  
-    ImGui::PushFont(Menu::customHud_Eternal1font); // Set the custom font
-    //ImGui::PushStyleColor(ImGuiCol_Text, textColor);
-   //ImGui::PushStyleColor(ImGuiCol_Text, Menu::shortcutTextColorImVec4);
+    ImGui::PushFont(Menu::customHud_Eternal1font);
     ImGui::PushStyleColor(ImGuiCol_Text, ImGui::ColorConvertU32ToFloat4(modSettings::getModSettingsShortcutTextColorImU32()));
-
     ImGui::Text(ToggleModTextStr.c_str());
+    ImGui::PopFont();
+    ImGui::PopStyleColor();
 
-    ImGui::PopFont(); // Restore default font
-    ImGui::PopStyleColor();  // Restore text color
-
-    ImGui::End();    
-
+    ImGui::End();
 }
+
+
+
+//! orig
+//void GoToSettingsGui::showModKeyShortcutText(bool* p_open)
+//{ 
+//   
+//    ImGuiIO& io = ImGui::GetIO();
+//    ImGuiViewport* viewport = ImGui::GetMainViewport();
+//
+//    //! this is what prevent the text not being showed if game is not focused when mod loads.
+//    if (viewport->Size.x <= 0 || viewport->Size.y <= 0) {
+//        // Delay rendering the window until the viewport size becomes valid
+//        return;
+//    }
+//
+//
+//    static std::string ToggleModTextStr = "KAIBZ MOD [???]";
+//    ToggleModTextStr = "KAIBZ MOD [" + std::string(guiHelper::getAllowedKeyName(modSettings::getToggleModSettingsVkCode())) + "]";   
+//
+//
+//    ImVec2 textSize = ImGui::CalcTextSize(ToggleModTextStr.c_str(), nullptr, true);
+//    float textPaddingX = 1.05f; //! manually adjusted
+//    float textPaddingY = 1.3f; //! manually adjusted
+//
+//
+//    // Set window size to match viewport size
+//    ImVec2 windowSize = ImVec2(viewport->Size.x, viewport->Size.y);
+//
+//
+//    float windowPosX = viewport->Pos.x;
+//    float windowPosY = viewport->Pos.y;
+//
+//
+//    ImGui::SetNextWindowPos(ImVec2(windowPosX, windowPosY), ImGuiCond_Always);
+//
+//    ImGui::Begin("GoToSettingsGui", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBringToFrontOnFocus |        ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoScrollbar);
+//
+//    // Calculate text position relative to windowSize to allow free movement within viewport
+//    ImVec2 textPos = ImVec2(windowSize.x - textSize.x * textPaddingX, windowSize.y - textSize.y * textPaddingY);
+//    ImGui::SetCursorPos(textPos);
+//      
+//  
+//    ImGui::PushFont(Menu::customHud_Eternal1font); // Set the custom font   
+//    ImGui::PushStyleColor(ImGuiCol_Text, ImGui::ColorConvertU32ToFloat4(modSettings::getModSettingsShortcutTextColorImU32()));
+//
+//    ImGui::Text(ToggleModTextStr.c_str());
+//
+//    ImGui::PopFont(); // Restore default font
+//    ImGui::PopStyleColor();  // Restore text color
+//
+//    ImGui::End();    
+//
+//}
+
+
+
+
+
+
+
 
 
 

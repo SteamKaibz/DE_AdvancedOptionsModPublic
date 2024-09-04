@@ -1,7 +1,8 @@
 #pragma once
-#include "GeneratedClasses.h"
-#include "../Config/Config.h"
+#include "idLib_Dynamic.h"
+#include "../Config.h"
 #include "MemHelper.h"
+
 
 
 class idDeclWeaponReticleManager {

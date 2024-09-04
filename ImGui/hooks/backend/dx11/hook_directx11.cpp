@@ -302,7 +302,7 @@ static void RenderImGui_DX11(IDXGISwapChain* pSwapChain) {
 }
 #else
 #include <Windows.h>
-#include "../../../../Config/Config.h"
+#include "../../../../Config.h"
 namespace DX11 {
     void Hook(HWND hwnd) { logInfo("[!] DirectX11 backend is not enabled!\n"); }
     void Unhook( ) { }

@@ -61,7 +61,7 @@ std::string PlayerStateChecker::getDbgStrForImgui() {
 		else if (pauseMenuState == PauseMenuState::unknown) {
 			playerState = PlayerState::unknown;
 		}
-		else if ((EpochMillis() - m_lastReticleRefreshMs) < m_reticleRefreshTimeOutDelayMs) {
+		else if ((K_Utils::EpochMillis() - m_lastReticleRefreshMs) < m_reticleRefreshTimeOutDelayMs) {
 			playerState = PlayerState::inGameReticleActive;
 		}
 		else {
@@ -174,7 +174,7 @@ std::string PlayerStateChecker::getDbgStrForImgui() {
 }
 
  void PlayerStateChecker::updateLastReticleRefresh() {
-	m_lastReticleRefreshMs = EpochMillis();
+	m_lastReticleRefreshMs = K_Utils::EpochMillis();
 	//updatePlayerState();
 }
 

@@ -1,7 +1,8 @@
 #pragma once
 #include "CommonDE.h"
-#include "GeneratedClasses.h"
+#include "idLib_Dynamic.h"
 #include "MemHelper.h"
+#include "enumsCustom.h"
 
 class idInventoryItemManager {
 

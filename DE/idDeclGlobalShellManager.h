@@ -1,8 +1,8 @@
 #pragma once
-#include "../Config/Config.h"
+#include "../Config.h"
 #include "MemHelper.h"
-#include "GeneratedClasses.h"
-#include "../K_Utils/K_Utils.h"
+#include "idLib_Dynamic.h"
+#include "../Common/K_Utils.h"
 #include "idResourceListManager.h"
 #include "fastCvarManager.h"
 

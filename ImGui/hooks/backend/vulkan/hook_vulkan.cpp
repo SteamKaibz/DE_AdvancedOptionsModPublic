@@ -22,7 +22,7 @@
 
 #include "../../../menu/menu.hpp"
 #include <MinHook.h>
-#include "../../../../Config/Config.h"
+#include "../../../../Config.h"
 
 static VkAllocationCallbacks* g_Allocator = NULL;
 static VkInstance g_Instance = VK_NULL_HANDLE;

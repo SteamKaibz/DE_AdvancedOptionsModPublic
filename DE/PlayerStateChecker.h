@@ -1,10 +1,9 @@
 #pragma once
 
-#include "UtilsDE.h"
-#include "../Config/Config.h"
+#include "../Config.h"
 #include "MemHelper.h"
 #include "idGameSystemLocalManager.h"
-#include "GeneratedClasses.h"
+#include "idLib_Dynamic.h"
 #include "idMapInstanceLocalManager.h"
 
 

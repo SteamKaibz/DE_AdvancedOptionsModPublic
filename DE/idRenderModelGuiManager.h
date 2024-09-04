@@ -1,13 +1,13 @@
 #pragma once
 
-#include "idLib.h"
+#include "idLib_Static.h"
 #include "idColor.h"
 #include "GameHudColorsManager.h"
 #include "idMapInstanceLocalManager.h"
 #include "idFontManager.h"
 #include "MaterialLib.h"
 #include "UserColorSet.h"
-#include "../Hud/CustomIceNadeIconUIData.h"
+#include "CustomIceNadeIconUIData.h"
 
 
 

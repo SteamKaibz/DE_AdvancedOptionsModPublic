@@ -1,6 +1,6 @@
 #pragma once
 #include "TypeInfoManager.h"
-
+#include "idLib_Dynamic.h"
 
 
 

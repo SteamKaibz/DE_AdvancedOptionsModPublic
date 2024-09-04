@@ -69,7 +69,7 @@ namespace GL {
 } // namespace GL
 #else
 #include <Windows.h>
-#include "../../../../Config/Config.h"
+#include "../../../../Config.h"
 namespace GL {
     void Hook(HWND hwnd) { logInfo("[!] OpenGL backend is not enabled!\n"); }
     void Unhook( ) { }

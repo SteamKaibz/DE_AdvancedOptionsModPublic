@@ -4,11 +4,11 @@
 #include <Windows.h>
 #include "../dependencies/imgui/imgui.h"
 #include "menu.hpp"
-#include "../../Debug/ImGuiDebugWin.h"
-#include "../../K_Utils/K_Utils.h"
+#include "../ImGuiDebugWin.h"
+#include "../../Common/K_Utils.h"
 #include "../../DE/idInventoryManager.h"
-#include "../../Hud/CustomCrosshairManager.h"
-#include "../../Hud/KaibzHudManager.h"
+#include "../../DE/CustomCrosshairManager.h"
+#include "../../DE/KaibzHudManager.h"
 
 
 class KaibzHud

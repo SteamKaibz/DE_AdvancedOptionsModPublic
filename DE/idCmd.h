@@ -4,11 +4,11 @@
 #include <emmintrin.h> // This should make the __m128i type available 
 #include "MemHelper.h"
 //#include "Scanner.h"
-#include "Common.h"
+//#include "Common.h"
 #include "TypeInfoManager.h"
 #include "idCvarManager.h"
 #include "fastCvarManager.h"
-
+#include "enumsCustom.h"
 
 //! meathook struts:
 struct idListVoid

@@ -1,7 +1,8 @@
 #pragma once
-#include "../Config/Config.h"
+#include "../Config.h"
 #include "MemHelper.h"
 #include "idInventoryItemManager.h"
+#include <../Common/K_Utils.h>
 
 class idWeaponManager {
 private:

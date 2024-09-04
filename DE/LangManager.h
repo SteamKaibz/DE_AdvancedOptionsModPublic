@@ -2,7 +2,7 @@
 #include <cstdint>
 #include "MemHelper.h"
 #include "CommonDE.h"
-#include "../Config/Config.h"
+#include "../Config.h"
 
 #include "LocalizedBindStringData.h"
 #include "fastCvarManager.h"

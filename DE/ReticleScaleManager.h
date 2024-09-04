@@ -1,6 +1,6 @@
 #pragma once
-#include "Types.h"
-#include "../IniFile/IniFileData.h"
+//#include "Types.h"
+//#include "../IniFile/IniFileData.h"
 #include "idPlayer.h"
 
 class ReticleScaleManager {

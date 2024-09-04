@@ -2,13 +2,14 @@
 
 #include <Windows.h>
 #include "../dependencies/imgui/imgui.h"
-#include "../../Config/Config.h"
+#include "../../Config.h"
 #include "../Fonts/font_awesome.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <vector>
+#include "../DE/CommonDE.h"
 
 
 //#include "../../DE/customizedWeapon.h"

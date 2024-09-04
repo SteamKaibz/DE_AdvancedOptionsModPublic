@@ -176,7 +176,7 @@ static void RenderImGui_DX9(IDirect3DDevice9* pDevice) {
 }
 #else
 #include <Windows.h>
-#include "../../../../Config/Config.h"
+#include "../../../../Config.h"
 namespace DX9 {
     void Hook(HWND hwnd) { logInfo("[!] DirectX9 backend is not enabled!\n"); }
     void Unhook( ) { }

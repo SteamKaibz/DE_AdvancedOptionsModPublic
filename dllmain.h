@@ -3,7 +3,6 @@
 //? atm the order and includs in this file is important to be able to build, we need to sanatize all this....
 
 #include <windows.h>
-
 #include <thread>
 #include <intrin.h>
 #include <string>
@@ -13,17 +12,17 @@
 #include <sstream> //for std::stringstream 
 #include <vector>
 #include <cstring>
-#include "SWIP.h"
+//#include "SWIP.h"
 
 
-#include "DE/MemHelper.h"
+#include "Common/MemHelper.h"
 
 #include "DE/WeaponSettings.h"
 #include "DE/WeaponSwitcher.h"
 #include "DE/PlayerStateChecker.h"
 #include "DE/ButtonCheck.h"
 //#include "DE/StringChanger.h"
-#include "IniFile/IniFileData.h"
+
 //#include "DE/GameStateChecker.h"
 #include "DE/LangManager.h"
 #include "DE/BindLabelChanger.h"
@@ -39,13 +38,13 @@
 #include "DE/idHudEventManager.h"
 #include "DE/GameHudColorsManager.h"
 //#include "DE/Debug.h"
-#include "IniFile/IniFileData.h"
+
 //#include "DE/HudManager.h"
 //#include "Hud/HudManager.h"
-#include "IniFile/IniFile.h"
-#include "Voice/Voice.h"
-#include "Config/Config.h"
-#include "../System/FileWatcher.h"
+
+#include "Common/Voice.h"
+#include "Config.h"
+#include "Common/FileWatcher.h"
 #include "DE/idWeaponManager.h"
 //#include "DE/idHUD_ReticleManager.h"
 //#include "DE/SpriteInstanceManager.h"
@@ -54,7 +53,7 @@
 #include "DE/idSWFSpriteInstanceManager.h"
 #include "DE/idDeclWeaponReticleManager.h"
 #include "DE/idSWFWidgetManager.h"
-#include "MinHookManager/MinHookManager.h"
+#include "MinHookManager.h"
 #include "DE/idConsoleLocalManager.h"
 //#include "Hud/HudDataBuffer.h"
 #include "DE/Debug.h"
@@ -62,39 +61,50 @@
 #include "DE/GameHudColorsManager.h"
 #include "DE/MaterialLib.h"
 #include "DE/MaterialDebug.h"
-#include "Hud/CustomIceNadeIconManager.h"
+#include "DE/CustomIceNadeIconManager.h"
 #include "DE/LoadingScreenManager.h"
 
 #include "ImGui/console/console.hpp"
 #include "ImGui/hooks/hooks.hpp"
 #include "ImGui/utils/utils.hpp"
 #include "ImGui/dependencies/minhook/MinHook.h"
+#include "ImGui/ImGuiUserConfig.h"
+#include "ImGui/dependencies/imgui/imconfig.h"
 
 #include "DE/ImGuiManager.h"
 
-#include "DE/idLibManager.h"
-#include "ModSettings/modSettings.h"
+#include "DE/modSettings.h"	
 
-#include "Scanner/Scanner.h"
-#include "MD5/HashManager.h"
-#include "Tools/cvarInfoGenerator.h"
-#include "Tools/cmdInfoGenerator.h"
+#include "DE/Scanner.h"
+#include "HashManager.h"
 #include "ImGui/menu/menu.hpp"
 #include "DE/ColorManager.h"
 #include "DE/idEventManager.h"
-#include "Tools/eventsInfoGenerator.h"
-#include "TypeGenerator/EnumsDefFileGenerator.h"
-#include "TypeGenerator/ClassDefFileGenerator.h"
 //#include "DE/CustomizedWeaponManager.h"
 #include "DE/idDeclUIColorManager.h"
-#include "Hud/CustomCrosshairManager.h"
+#include "DE/CustomCrosshairManager.h"
 #include "DE/EquipmentManager.h"
 #include "DE/playerSoundManager.h"
 #include "DE/weaponFovManager.h"
+#include "DE/idCmd.h"
+//#include "DE/HudAmmoData.h"
+#include"DE/Sigs.h"
+//#include "Debug/idPlayerDebug.h"
+//#include "Debug/idInventoryManagerDebug.h"
+#include "DE/idFxManager.h"
+//#include "Rtti/Rtti_Helper.h"
+#include "DE/ReticleColorManager.h"
+//#include "Debug/ReticleSettingsDebug.h"
+#include "DE/GameVersionInfoManager.h"
+#include "DE/idHudManager.h"
+#include "DE/idPlayerMetricsManager.h"
+#include "DE/idLib_Dynamic.h"
+#include "DE/idDebugManager.h"
 
 
 
 
+#define GAME_VERSION_A
 
 
 //#include "Asm/GetRBPValueWithRAxPreserved.asm"
@@ -226,11 +236,9 @@ LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 
 
-	if (uMsg == WM_KEYDOWN) {		
-		
+	if (uMsg == WM_KEYDOWN) {
 
-
-		if (Config::isModDevMode()) {
+		if (Config::isDevMode()) {
 			if (wParam == VK_F1) {
 				Beep(500, 500);
 				idCmd::setGameSpeed(gameSpeed_K::defaultSpeed);		
@@ -382,7 +390,7 @@ LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 
 			else if (wParam == VK_NUMPAD0) {
-				Beep(500, 500);
+				//Beep(500, 500);
 				logInfo("HookedWndProc: VK_NUMPAD0 pressed setting g_isCloseModRequestFlag to true");
 				g_isCloseModRequestFlag = true;				
 			}
@@ -390,27 +398,14 @@ LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 			//! this is what you have to press to ouput the cls definitions if game updates someday as this will trigger when you press those keys whether the mod status is allgood or not:
 			else if (wParam == VK_NUMPAD1 ) {
-				Beep(500, 500);
-				logInfo("Debug: user just pressed  VK_NUMPAD1: dumping class defs:");
+				//Beep(500, 100);
+				logInfo("Debug: user just pressed  VK_NUMPAD1:");
 
-				TTS::addToQueue(sayGeneratingTypes);
-				EnumsDefFileGenerator::DumpEnumDefs();
-				ClassDefFileGenerator::dumpClassDefs();
-
-				cvarInfoGenerator::dumpCvarsListToFile();
-				cmdInfoGenerator::dumpCmdListToFile();				
-
-				auto evGen = eventsInfoGenerator();
-				evGen.dumpEventsListToFile();
-
-				//? this will take a VERY long time only use it if necessary.
-				/*auto idLib = idLibManager();
-				idLib.generateIdLibFiles();*/
-			}
+							}
 
 
 			else if (wParam == VK_NUMPAD2) {
-				Beep(500, 500);
+				//Beep(500, 100);
 				logInfo("HookedWndProc: VK_NUMPAD2 pressed ");
 
 				//? many of those are old....
@@ -444,6 +439,14 @@ LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 				/*auto colorProfileListAddr = idDeclGlobalShellManager::getColorProfileColorsListAddr();
 				logInfo("debug: colorProfileListAddr: %p", (void*)colorProfileListAddr);*/
 			}
+
+			else if (wParam == VK_NUMPAD3) {
+				
+				logInfo("HookedWndProc: VK_NUMPAD3 pressed ");				
+				
+
+			}
+
 		}		
 	}
 	return CallWindowProc(pOriginalWndProc, hwnd, uMsg, wParam, lParam);

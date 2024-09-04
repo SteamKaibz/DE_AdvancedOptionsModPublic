@@ -9,7 +9,7 @@
 		return;
 	}
 
-	m_lastIdWeaponGetMs = EpochMillis();
+	m_lastIdWeaponGetMs = K_Utils::EpochMillis();
 	//if (idWeaponObj != m_currentIdWeapon) {
 	//	//idWeapon* currentIdWeapon = (idWeapon*)idWeaponAddr;
 	//	m_lastIdWeaponGetMs = EpochMillis();
@@ -27,7 +27,7 @@
 }
 
  weaponSlot_t idWeaponManager::getCurWeaponSlot() {
-	if (EpochMillis() - m_lastIdWeaponGetMs > m_idWeaponGetTimeoutMs) {
+	if (K_Utils::EpochMillis() - m_lastIdWeaponGetMs > m_idWeaponGetTimeoutMs) {
 		if (!m_isWeaponUndefinedWarning) {
 			logWarn("m_lastIdWeaponGetMs is too old returning weaponSlot_t::UNDEFINED");
 			m_isWeaponUndefinedWarning = true;

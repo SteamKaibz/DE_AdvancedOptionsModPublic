@@ -1,8 +1,8 @@
 #pragma once
 #include <cstdint>
 #include "MemHelper.h"
-#include "GeneratedClasses.h"
-#include "../K_Utils/K_Utils.h"
+#include "idLib_Dynamic.h"
+#include "../Common/K_Utils.h"
 
 
 

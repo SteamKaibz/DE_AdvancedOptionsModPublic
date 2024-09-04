@@ -1,7 +1,7 @@
 #pragma once
 
 #include "MemHelper.h"
-#include "GeneratedClasses.h"
+#include "idLib_Dynamic.h"
 #include "idMapInstanceLocalManager.h"
 
 struct idEventDefInterfaceLocal;

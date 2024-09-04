@@ -1,7 +1,7 @@
 #pragma once
 #include "MemHelper.h"
 #include "TypeInfoManager.h"
-#include "GeneratedClasses.h"
+#include "idLib_Dynamic.h"
 #include "idCmd.h"
 #include "fastCvarManager.h"
 

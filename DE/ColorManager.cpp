@@ -1,4 +1,5 @@
 #include "ColorManager.h"
+#include "../Common/K_Utils.h"
 
 
 bool ColorManager::acquirreReapplySwfColorsFuncAddr(__int64 reapplySwfColorsFuncAddr) {
@@ -20,12 +21,12 @@ void ColorManager::reapplySwfColors() {
 	}
 
 	reapplySwfColorsFp();
-	m_lastReapplySwfColorCallMs = EpochMillis();
+	m_lastReapplySwfColorCallMs = K_Utils::EpochMillis();
 
 }
 
 void ColorManager::autoReapplySwfColors() {
-	if (EpochMillis() - m_lastReapplySwfColorCallMs > m_autoReapplyColorFrequenceMs) {
+	if (K_Utils::EpochMillis() - m_lastReapplySwfColorCallMs > m_autoReapplyColorFrequenceMs) {
 		reapplySwfColors();		
 	}
 }

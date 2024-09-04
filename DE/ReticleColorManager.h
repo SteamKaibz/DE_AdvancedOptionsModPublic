@@ -6,7 +6,7 @@
 #include "MemHelper.h"
 #include "idCmd.h"
 #include "idSWFWidget_Hud_ReticleManager.h"
-#include "GeneratedClasses.h"
+#include "idLib_Dynamic.h"
 #include "idSWFSpriteInstanceManager.h"
 #include "idDeclWeaponReticleManager.h"
 #include "idPlayer.h"

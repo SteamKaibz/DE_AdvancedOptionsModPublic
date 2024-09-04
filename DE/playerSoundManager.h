@@ -1,5 +1,6 @@
 #pragma once
-#include "GeneratedClasses.h"
+
+#include "idLib_Dynamic.h"
 #include "idMapInstanceLocalManager.h"
 
 

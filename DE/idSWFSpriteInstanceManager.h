@@ -1,9 +1,8 @@
 #pragma once
 #include "CommonDE.h"
 #include "MemHelper.h"
-#include "Types.h"
-#include "idLib.h"
-#include "GeneratedClasses.h"
+//#include "Types.h"
+#include "idLib_Dynamic.h"
 #include "idResourceManager.h"
 
 

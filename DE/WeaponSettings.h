@@ -16,7 +16,7 @@
 //#include "../Debug/Tests.h"
 #include "idResourceListManager.h"
 #include "idResourceManager.h"
-#include "../ModSettings/modSettings.h"	
+#include "modSettings.h"	
 
 
 /// <summary>

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <string>
-#include "../Config/Config.h"
+#include "../Config.h"
 #include "idColor.h"
-#include "idLib.h"
+#include "idLib_Static.h"
 #include "MemHelper.h"
 #include "idDeclUIColorManager.h"
 

@@ -71,7 +71,8 @@ idHUDElement* idHudManager::getIdHud_Element(std::string requestedHudElementName
         return m_elementCache.at(requestedHudElementName);
     }
 
-    idList* IdHud_Elements_ListPtr = (idList*)&idPlayerObj->playerHud.idGrowableList_idHUDElement_elements;
+    idList* IdHud_Elements_ListPtr = (idList*)&idPlayerObj->playerHud.elements;
+    //idList* IdHud_Elements_ListPtr = (idList*)&idPlayerObj->playerHud.idGrowableList_idHUDElement_elements;
 
     if (!IdHud_Elements_ListPtr || MemHelper::isBadReadPtr(IdHud_Elements_ListPtr)) {
         logErr("getIdHud_Element: IdHud_Elements_ListPtr is null or badPtr");
@@ -155,7 +156,8 @@ bool idHudManager::isWorldMenuActive(hudMenuID_t hudMenuID) {
          if (idHUD_ReticlePtr) {            
              idDeclWeapon* currentWeapDecl = idHUD_ReticlePtr->currentReticleData.currentWeaponDecl;
              if (currentWeapDecl) {
-                 std::string declName = currentWeapDecl->getNameStr();
+                 std::string declName = idResourceManager::getDeclWeaponName(currentWeapDecl);
+                 //std::string declName = currentWeapDecl->getNameStr();
                  declWeaponInfoStr = " currentWeapDecl name: "  + declName;
              }
          }
@@ -254,8 +256,9 @@ bool idHudManager::isWorldMenuActive(hudMenuID_t hudMenuID) {
      logDebug("debugPrintAllHud_ElementsAddr");
 
      idPlayer* idPlayerObj = idMapInstanceLocalManager::getIdPlayer();
-     idList* IdHud_Elements_ListPtr = (idList*)&idPlayerObj->playerHud.idGrowableList_idHUDElement_elements;
-     //idList* IdHud_Elements_ListPtr = (idList*)&idPlayerObj->playerHud.idGrowableList_elements;
+     //idList* IdHud_Elements_ListPtr = (idList*)&idPlayerObj->playerHud.idGrowableList_idHUDElement_elements;
+     idList* IdHud_Elements_ListPtr = (idList*)&idPlayerObj->playerHud.elements;
+     
 
      if (!IdHud_Elements_ListPtr || MemHelper::isBadReadPtr(IdHud_Elements_ListPtr)) {
          logErr("debugPrintAllHud_ElementsAddr: IdHud_Elements_ListPtr is null or badPtr");

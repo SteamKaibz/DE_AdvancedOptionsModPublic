@@ -2,8 +2,8 @@
 
 #include "MemHelper.h"
 #include "idCvarManager.h"
-#include "GeneratedClasses.h"
-
+#include "idLib_Dynamic.h"
+#include "enumsCustom.h"
 
 
 /// <summary>

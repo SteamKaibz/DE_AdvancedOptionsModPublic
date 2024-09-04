@@ -3,7 +3,7 @@
 #include <vector>
 #include "ControllerLayout.h"
 #include "MemHelper.h"
-#include "../Config/Config.h"
+#include "../Config.h"
 #include "LocalizedBindStringData.h"
 
 class BindLabelChanger

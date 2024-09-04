@@ -5,8 +5,8 @@
 #include "utils.hpp"
 
 #include "../console/console.hpp"
-#include "../../Loguru/loguru.hpp"
-#include "../../Config/Config.h"
+#include "../../Common/loguru.hpp"
+#include "../../Config.h"
 
 #define RB2STR(x) case x: return #x
 

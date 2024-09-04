@@ -3,34 +3,12 @@
 //? atm the order and includs in this file is important to be able to build, we need to sanatis
 
 
-#include "stdafx.h"
-#include "Common.h"
-#include "SWIP.h"
-#include "Utils.h"
+//#include "stdafx.h"
+
 #include "dllmain.h"
 
-//#include "spdlog/spdlog.h"
-//#include "spdlog/sinks/basic_file_sink.h"
 
-//#include <iostream>
-#include "DE/idCmd.h"
-//#include "DE/HudAmmoData.h"
-#include"DE/Sigs.h"
-//#include "Debug/idPlayerDebug.h"
-//#include "Debug/idInventoryManagerDebug.h"
-#include "DE/idFxManager.h"
-#include "Rtti/Rtti_Helper.h"
-#include "DE/ReticleColorManager.h"
-//#include "Debug/ReticleSettingsDebug.h"
-#include "DE/GameVersionInfoManager.h"
-#include "DE/idHudManager.h"
-#include "DE/idPlayerMetricsManager.h"
-#include "DE/GeneratedClasses.h"
-#include "TypeGenerator/ClassDefFileGenerator.h"
-#include "TypeGenerator/EnumsDefFileGenerator.h"
-#include "DE/idDebugManager.h"
-#include "ImGui/ImGuiUserConfig.h"
-#include "ImGui/dependencies/imgui/imconfig.h"
+
 
 
 
@@ -64,8 +42,6 @@ void setupFunctions() {
 	msimg32.ovSetDdrawflag = GetProcAddress(msimg32.dll, "vSetDdrawflag");
 }
 #pragma endregion
-
-
 
 
 
@@ -272,8 +248,8 @@ void modInit() {
 		logInfo("Game build Version is the one this mod was designed for: %s", GameVersionInfoManager::getBuildVersionStr().c_str());
 	}*/
 
-	if (!Config::isModDevMode()) {
-		Config::setLogLevelToInfo(false); //! set logging level to warning if nexus release.
+	if (!Config::isDevMode() && !Config::isDebugMode()) {
+		Config::setLoggerLevel(LogVerbose::Warn); //! set logging level to warning if nexus release to prevent clutering of log file.		
 	}
 
 	isFirstTimeInit = false;
@@ -299,50 +275,49 @@ bool InitializeHooks() {
 		logInfo("InitializeHooks: minhook status is: MH_OK ");
 	}
 
-	//! commented out for sandbox debug
-	pgetFovTargetValMBTarget = reinterpret_cast<getFovTargetValMB>(MinHookManager::GetGetFovTargetValAddr());
+
+	//pgetFovTargetValMBTarget = reinterpret_cast<getFovTargetValMB>(MinHookManager::GetGetFovTargetValAddr());
+	pgetFovTargetValMBTarget = reinterpret_cast<getFovTargetValMB>(Scanner::SetGetFovTargetValAddr);
 	if (MH_CreateHook(reinterpret_cast<void**>(pgetFovTargetValMBTarget), &getFovTargetValMB_Hook, reinterpret_cast<void**>(&pgetFovTargetValMB)) != MH_OK) {
 		logErr("failed to create pgetFovTargetValMBTarget");
 		return false;
 	}
 
-	//! commented out for sandbox debug
-	pSelectWeaponForSelectionGroupTarget = reinterpret_cast<SelectWeaponForSelectionGroup>(MinHookManager::GetIdPlayerSelectWeaponForSelectionGroupAddr());	
+
+	pSelectWeaponForSelectionGroupTarget = reinterpret_cast<SelectWeaponForSelectionGroup>(Scanner::IdPlayerSelectWeaponForSelectionGroupAddr);
 	if (MH_CreateHook(reinterpret_cast<void**>(pSelectWeaponForSelectionGroupTarget), &SelectWeaponForSelectionGroupHook, reinterpret_cast<void**>(&pSelectWeaponForSelectionGroup)) != MH_OK) {
 		logErr("failed to create pSelectWeaponForSelectionGroupTarget");
 		return false;
 	}
 
-	//! commented out for sandbox debug
-	pisKeyPressedTarget = reinterpret_cast<isKeyPressed>(MinHookManager::GetIsKeyPressedAddr());	
+	pisKeyPressedTarget = reinterpret_cast<isKeyPressed>(Scanner::GetIsKeyPressedAddr);
 	if (MH_CreateHook(reinterpret_cast<void**>(pisKeyPressedTarget), &isKeyPressedHook, reinterpret_cast<void**>(&pisKeyPressed)) != MH_OK) {
 		logErr("failed to create pisKeyPressedTarget");
 		return false;
 	}
 
-	//! commented out for sandbox debug
-	pidMenu_UpdateTarget = reinterpret_cast<idMenu_Update>(MinHookManager::GetIdMenuUpdateAddr());	
+	pidMenu_UpdateTarget = reinterpret_cast<idMenu_Update>(Scanner::GetIdMenuUpdateAddr);
 	if (MH_CreateHook(reinterpret_cast<void**>(pidMenu_UpdateTarget), &idMenu_UpdateHook, reinterpret_cast<void**>(&pidMenu_Update)) != MH_OK) {
 		logErr("failed to create pidMenu_UpdateTarget");
 		return false;
 	}
 
 	//! commented out for sandbox debug
-	pBindsStrSetTarget = reinterpret_cast<BindsStrSet>(MinHookManager::GetPBindsStrSetAddr());
+	pBindsStrSetTarget = reinterpret_cast<BindsStrSet>(Scanner::GetPBindsStrSetAddr);
 	if (MH_CreateHook(reinterpret_cast<void**>(pBindsStrSetTarget), &BindsStrSetHook, reinterpret_cast<void**>(&pBindsStrSet)) != MH_OK) {
 		logErr("failed to create pBindsStrSetTarget");
 		return false;
 	}
 
 	//! commented out for sandbox debug
-	pidHUD_Reticle_SetActiveReticleTarget = reinterpret_cast<idHUD_Reticle_SetActiveReticle>(MinHookManager::GetSetActiveReticleAddr());
+	pidHUD_Reticle_SetActiveReticleTarget = reinterpret_cast<idHUD_Reticle_SetActiveReticle>(Scanner::GetSetActiveReticleAddr);
 	if (MH_CreateHook(reinterpret_cast<void**>(pidHUD_Reticle_SetActiveReticleTarget), &idHUD_Reticle_SetActiveReticleHook, reinterpret_cast<void**>(&pidHUD_Reticle_SetActiveReticle)) != MH_OK) {
 		logErr("failed to create pidHUD_Reticle_SetActiveReticleTarget");
 		return false;
 	}
 
 	//! commented out for sandbox debug
-	pconvertIdDeclUIColorToidColorTarget = reinterpret_cast<convertIdDeclUIColorToidColor>(MinHookManager::GetConvertIdDeclUIColorToIdColorTargetAddr());	
+	pconvertIdDeclUIColorToidColorTarget = reinterpret_cast<convertIdDeclUIColorToidColor>(Scanner::GetConvertIdDeclUIColorToIdColorTargetAddr);
 	if (MH_CreateHook(reinterpret_cast<void**>(pconvertIdDeclUIColorToidColorTarget), &convertIdDeclUIColorToidColorHook, reinterpret_cast<void**>(&pconvertIdDeclUIColorToidColor)) != MH_OK) {
 		logErr("failed to create pconvertIdDeclUIColorToidColorTarget");
 		return false;
@@ -350,14 +325,14 @@ bool InitializeHooks() {
 		
 	
 	////! commented out for sandbox debug
-	psetSpriteInstanceColorTarget = reinterpret_cast<setSpriteInstanceColor>(MinHookManager::GetSetSpriteInstanceAddr());
+	psetSpriteInstanceColorTarget = reinterpret_cast<setSpriteInstanceColor>(Scanner::SetSpriteInstanceAddr);
 	if (MH_CreateHook(reinterpret_cast<void**>(psetSpriteInstanceColorTarget), &setSpriteInstanceColorHook, reinterpret_cast<void**>(&psetSpriteInstanceColor)) != MH_OK) {
 		logErr("failed to create psetSpriteInstanceColorTarget");
 		return false;
 	}
 
 	//! commented out for sandbox debug
-	pPrintOutlinedStringMB_target = reinterpret_cast<printOutlinedStringMB_func>(MinHookManager::GetPrintOutlinedStringMBFuncAddr());
+	pPrintOutlinedStringMB_target = reinterpret_cast<printOutlinedStringMB_func>(Scanner::PrintOutlinedStringMBFuncAddr);
 	//pPrintOutlinedStringMB_target = reinterpret_cast<printOutlinedStringMB_func>(MemHelper::getFuncAddr(0x4CAD00));
 	if (MH_CreateHook(reinterpret_cast<void**>(pPrintOutlinedStringMB_target), &printOutlinedStringMB_hook, reinterpret_cast<void**>(&pPrintOutlinedStringMB)) != MH_OK) {
 		logErr("failed to create pPrintOutlinedStringMB_target");
@@ -366,25 +341,8 @@ bool InitializeHooks() {
 			
 		
 	
-	/*p_customAnimSmth_t_Target = reinterpret_cast<customAnimSmth_t>(MinHookManager::GetCustomAnimSmthFuncAdd());
-	if (MH_CreateHook(reinterpret_cast<void**>(p_customAnimSmth_t_Target), &customAnimSmth_t_Hook, reinterpret_cast<void**>(&p_customAnimSmth_t)) != MH_OK) {
-		logErr("Failed to create p_customAnimSmth_t_Target hook.");
-		return false;
-	}*/
-
-
-	/*p_AnimEvent_SetMovementDuringCustomAnim_Target = reinterpret_cast<AnimEvent_SetMovementDuringCustomAnim_t>(MinHookManager::Get_SetMovementDuringCustomAnimFAdd());
-	if (MH_CreateHook(reinterpret_cast<void**>(p_AnimEvent_SetMovementDuringCustomAnim_Target),
-		&AnimEvent_SetMovementDuringCustomAnim_Hook,
-		reinterpret_cast<void**>(&p_AnimEvent_SetMovementDuringCustomAnim)) != MH_OK) {
-		logErr("Failed to create p_AnimEvent_SetMovementDuringCustomAnim_Target hook.");
-		return false;
-	}*/
-
-
-	
 	//! commented out for sandbox debug
-	p_idHUDMenu_CurrencyConfirmation_t_Target = reinterpret_cast<idHUDMenu_CurrencyConfirmation_t>(MinHookManager::GetIdHUDMenu_CurrencyConfirmationSmthFuncAdd());
+	p_idHUDMenu_CurrencyConfirmation_t_Target = reinterpret_cast<idHUDMenu_CurrencyConfirmation_t>(Scanner::IdHUDMenu_CurrencyConfirmationSmthFuncAdd);
 	if (MH_CreateHook(reinterpret_cast<void**>(p_idHUDMenu_CurrencyConfirmation_t_Target), &idHUDMenu_CurrencyConfirmation_t_Hook, reinterpret_cast<void**>(&p_idHUDMenu_CurrencyConfirmation_t)) != MH_OK) {
 		logErr("Failed to create p_idHUDMenu_CurrencyConfirmation_t_Target hook.");
 		return false;
@@ -392,28 +350,28 @@ bool InitializeHooks() {
 	
 
 	//! commented out for sandbox debug
-	p_StartSync_t_Target = reinterpret_cast<StartSync_t>(MinHookManager::GetStartSyncFuncAdd());
+	p_StartSync_t_Target = reinterpret_cast<StartSync_t>(Scanner::StartSyncFuncAdd);
 	if (MH_CreateHook(reinterpret_cast<void**>(p_StartSync_t_Target), &StartSync_t_Hook, reinterpret_cast<void**>(&p_StartSync_t)) != MH_OK) {
 		logErr("Failed to create p_StartSync_t_Target hook.");
 		return false;
 	}
 
 	//! commented out for sandbox debug
-	p_idPlayerFovLerp_Target = reinterpret_cast<idPlayerFovLerp_t>(MinHookManager::GetIdPlayerFovLerpFuncAdd());
+	p_idPlayerFovLerp_Target = reinterpret_cast<idPlayerFovLerp_t>(Scanner::IdPlayerFovLerpFuncAdd);
 	if (MH_CreateHook(reinterpret_cast<void**>(p_idPlayerFovLerp_Target), &idPlayerFovLerp_Hook, reinterpret_cast<void**>(&p_idPlayerFovLerp)) != MH_OK) {
 		logErr("Failed to create p_idPlayerFovLerp_Target hook.");
 		return false;
 	}
 
 	//! commented out for sandbox debug
-	p_syncEnd_Target = reinterpret_cast<syncEnd_t>(MinHookManager::GetSyncEndFuncAdd());
+	p_syncEnd_Target = reinterpret_cast<syncEnd_t>(Scanner::SyncEndFuncAdd);
 	if (MH_CreateHook(reinterpret_cast<void**>(p_syncEnd_Target), &syncEnd_Hook, reinterpret_cast<void**>(&p_syncEnd)) != MH_OK) {
 		logErr("Failed to create p_syncEnd_Target hook.");
 		return false;
 	}
 
 	//! commented out for sandbox debug
-	p_RenderSprite_Target = reinterpret_cast<RenderSprite_t>(MinHookManager::GetRenderSpriteFuncAdd());
+	p_RenderSprite_Target = reinterpret_cast<RenderSprite_t>(Scanner::RenderSpriteFuncAdd);
 	if (MH_CreateHook(reinterpret_cast<void**>(p_RenderSprite_Target), &RenderSprite_Hook, reinterpret_cast<void**>(&p_RenderSprite_Original)) != MH_OK) {
 		logErr("Failed to create RenderSprite hook.");
 		return false;
@@ -421,31 +379,16 @@ bool InitializeHooks() {
 
 
 	//! commented out for sandbox debug
-	p_idUsercmdGenLocalSendBtnPressMB_t_Target = reinterpret_cast<idUsercmdGenLocalSendBtnPressMB_t>(MinHookManager::GetIdUsercmdGenLocalSendBtnPressFuncAdd());
+	p_idUsercmdGenLocalSendBtnPressMB_t_Target = reinterpret_cast<idUsercmdGenLocalSendBtnPressMB_t>(Scanner::IdUsercmdGenLocalSendBtnPressFuncAdd);
 	if (MH_CreateHook(reinterpret_cast<void**>(p_idUsercmdGenLocalSendBtnPressMB_t_Target), &idUsercmdGenLocalSendBtnPressMB_Hook, reinterpret_cast<void**>(&p_idUsercmdGenLocalSendBtnPressMB_t)) != MH_OK) {
 		logErr("Failed to create idUsercmdGenLocalSendBtnPressMB_t_Target hook.");
 		return false;
 	}
 
 
-	/*p_idHud_PerspectiveSmth_t_Target = reinterpret_cast<idHud_PerspectiveSmth_t>(MemHelper::getFuncAddr(0x1549D80));
-	if (MH_CreateHook(reinterpret_cast<void**>(p_idHud_PerspectiveSmth_t_Target), &idHud_PerspectiveSmth_t_Hook, reinterpret_cast<void**>(&p_idHud_PerspectiveSmth_t)) != MH_OK) {
-		logErr("Failed to create p_idHud_PerspectiveSmth_t_Target hook.");
-		return false;
-	}*/
+	if ((Config::isDevMode()) && Config::isLogIdConsoleToFile()) {
 
-	
-	/*p_hud_drawPerspectiveSmth_t_Target = reinterpret_cast<hud_drawPerspectiveSmth_t>(MemHelper::getFuncAddr(0x1549A70));
-	if (MH_CreateHook(reinterpret_cast<void**>(p_hud_drawPerspectiveSmth_t_Target), &hud_drawPerspectiveSmth_t_Hook, reinterpret_cast<void**>(&p_hud_drawPerspectiveSmth_t)) != MH_OK) {
-		logErr("Failed to create p_hud_drawPerspectiveSmth_t_Target hook.");
-		return false;
-	}*/
-
-
-	//! commented out for sandbox debug	
-	if ((Config::isModDevMode()) && Config::isLogIdConsoleToFile()) {
-
-		pIdLib_PrintfTarget = reinterpret_cast<IdLib_Printf>(MinHookManager::GetConsoleLogFuncAdd());
+		pIdLib_PrintfTarget = reinterpret_cast<IdLib_Printf>(Scanner::ConsoleLogFuncAdd);
 		if (MH_CreateHook(reinterpret_cast<void**>(pIdLib_PrintfTarget), &IdLib_PrintfHook, reinterpret_cast<void**>(&pIdLib_Printf)) != MH_OK) {
 			logErr("Failed to create pIdLib_Printf hook.");
 			return false;
@@ -514,38 +457,52 @@ int Exit() {
 
 
 
-//? Reminder: the way to load this dll with xenos is simply to change the output name to smth like somedll.dll.
+//! Reminder: the way to load this dll with xenos is simply to change the output name to smth like somedll.dll.
 DWORD WINAPI ModMain() {
-
 	
-	//? IF YOU UPDATE: change mod version in config.h
-	//? AND delete mod folder to make sure file generation works
-	Config::setDevMode(false); //todo always check this before release obviously...
+	//! IF YOU UPDATE: change mod version in config.h/? AND delete mod folder to make sure file generation works
+	//? Remember you have to define/undefine GAME_VERSION_SANDBOX in config.h	
 
+	//todo we should just make this a setting in the mod options as we can just restart the mod/game if we need it and we set it manually in the json file. 
 	Config::setLogIdConsoleToFile(false); //! this will only have effect in dev mode btw.
 
-	Config::setLogLevelToInfo(true); //! this func will be called again in modInit()
-
+	Config::setLoggerLevel(LogVerbose::Info); //! Info here so users will always have lots of verbose in their log file until the mod is loaded. this func will be called again in modInit()
 	
-	if (MemHelper::isCallerSandboxExe()) {
-		ShowErrorMessageBox("Mod Error", "You are using the Vanilla mod version for the Sandbox version of the game. Mod can not work. Check the description page on the mod nexus page for more info");
+	std::string curExeNameToLower = MemHelper::GetGameExeNameToLower();
+	Config::setCurrentModuleNameStrToLower(curExeNameToLower);
+
+	//! closing mod when idlauncher triggers msimg32.dll (it always happens first)
+	if (curExeNameToLower != Config::DE_VANILLA_MODULE_NAME_TOLOWER && curExeNameToLower != Config::DE_SANDBOX_MODULE_NAME_TOLOWER) {
+
 		return Exit();
 	}
 
-	//? attempting to close mod if/when idlauncher triggers msimg32.dll 
-	if (!mem.isGameFileNameValid()) {
-		return Exit();		
-	}
-	
 
-	//? if you want to enable/ disable the console just comment/uncomment the DISABLE_LOGGING_CONSOLE line in console.cpp. i haven't tested with imgui so it migth create issues...
+	if (Config::isModSandboxVersion()) {
+
+		if (curExeNameToLower == Config::DE_VANILLA_MODULE_NAME_TOLOWER) {
+			ShowErrorMessageBox("Mod Error", "You are using the Sandbox mod version for the Vanilla version of the game. Mod can not work. Check the description page on the mod nexus page for more info");
+			return Exit();
+		}		
+	}
+
+	else { //! vanilla mod version
+		if (curExeNameToLower == Config::DE_SANDBOX_MODULE_NAME_TOLOWER) {
+			ShowErrorMessageBox("Mod Error", "You are using the Vanilla mod version for the Sandbox version of the game. Mod can not work. Check the description page on the mod nexus page for more info");
+			return Exit();
+		}
+	}	
+
+		
+
+	//? if you want to enable/ disable the debug console just comment/uncomment the DISABLE_LOGGING_CONSOLE line in console.cpp. i haven't tested with imgui so it migth create issues...
 	Console::Enable();
    
 	
 	//! even though we  managed to find a way to change a file logging level at runtime, because the mod will have a release and debug version we don't have to get any "version" from the json settings file..
 	//? IF YOU UPDATE also update mod version AND delete mod folder to make sure file generation works
 
-	Config::printHeaderInLogFile();
+	
 
 	if (HashManager::isPreviousModVersionInGameFolder()) {
 		TTS::addToQueue(L"ERROR. Found previous version of this mod in the game folder, please check the log file.");
@@ -589,6 +546,9 @@ DWORD WINAPI ModMain() {
 			modSettings::saveSettings();
 		}		
 	}
+
+
+	Config::printHeaderInLogFile();
 
 
 	//? this actually works even if we don't need it atm. KEEP IT
@@ -664,7 +624,7 @@ DWORD WINAPI ModMain() {
 
 
 	if (!Config::isModError()) {
-		if (Config::isModDevMode()) {
+		if (Config::isDevMode() || Config::isDebugMode()) {
 			TTS::addToQueue(L"Mod Load Succes !");
 		}
 			
@@ -674,7 +634,7 @@ DWORD WINAPI ModMain() {
 	}
 
 
-	if (Config::isModDevMode()) {
+	/*if (Config::isModDevMode()) {
 		logWarn("");
 		logWarn("THIS IS DEV MODE MAKE SURE THIS IS WHAT YOU WANT");
 		logWarn("THIS IS DEV MODE MAKE SURE THIS IS WHAT YOU WANT");
@@ -683,8 +643,7 @@ DWORD WINAPI ModMain() {
 		logWarn("THIS IS DEV MODE MAKE SURE THIS IS WHAT YOU WANT");
 		logWarn("");
 
-	}
-	
+	}*/
 
 
 
@@ -831,11 +790,11 @@ DWORD WINAPI ModMain() {
 		}		
 
 
-		if (EpochMillis() - lastAACheckMs > 1000) {
+		if (K_Utils::EpochMillis() - lastAACheckMs > 1000) {
 
 			idCmd::setAntiAliasingState(modSettings::getIsDisableAA());
 
-			lastAACheckMs = EpochMillis();
+			lastAACheckMs = K_Utils::EpochMillis();
 		}	
 
 
@@ -845,7 +804,7 @@ DWORD WINAPI ModMain() {
 		if (PlayerStateChecker::isPlayingAndActive()) { //? means not in cutscene too
 
 
-			if ((EpochMillis() - lastPlayerFlagUpdateMs) > 200) {
+			if ((K_Utils::EpochMillis() - lastPlayerFlagUpdateMs) > 200) {
 
 				//logInfo("PlayerStateChecker::isPlayingAndActive() .......");
 
@@ -863,20 +822,20 @@ DWORD WINAPI ModMain() {
 				isInScope = idPlayer_K::isInScope();
 
 
-				lastPlayerFlagUpdateMs = EpochMillis();
+				lastPlayerFlagUpdateMs = K_Utils::EpochMillis();
 			}
 
 
-			if (EpochMillis() - lastWeaponFovCheckMs > 50) {
+			if (K_Utils::EpochMillis() - lastWeaponFovCheckMs > 50) {
 
 				weaponFovManager::update();
 
-				lastWeaponFovCheckMs = EpochMillis();
+				lastWeaponFovCheckMs = K_Utils::EpochMillis();
 			}
 
 
-			if (modSettings::isImprovedWeaponSwitching() && isSlayerActiveFlag && (EpochMillis() - lastWeaponSwitchCheckMs) > 100) {
-				lastWeaponSwitchCheckMs = EpochMillis();
+			if (modSettings::isImprovedWeaponSwitching() && isSlayerActiveFlag && (K_Utils::EpochMillis() - lastWeaponSwitchCheckMs) > 100) {
+				lastWeaponSwitchCheckMs = K_Utils::EpochMillis();
 				switcher.checkWeaponSwitchV2();
 			}
 
@@ -887,15 +846,15 @@ DWORD WINAPI ModMain() {
 			//}
 
 			//! this is used to check if a weapon or a nade is owned. 500ms should be good enough.
-			if (EpochMillis() - lastIdInventoryGetMs > 400 && isSlayerInTheWorldFlag) {				
+			if (K_Utils::EpochMillis() - lastIdInventoryGetMs > 400 && isSlayerInTheWorldFlag) {				
 				idInventoryCollectionManager::updateCustomInventory();
-				lastIdInventoryGetMs = EpochMillis();
+				lastIdInventoryGetMs = K_Utils::EpochMillis();
 				//idInventoryCollectionManager::updateOwnedItemsIds();
 			}
 
 
 			//! custom Hud			
-			if (EpochMillis() - lastCustomHudcheckMs > 200) {
+			if (K_Utils::EpochMillis() - lastCustomHudcheckMs > 200) {
 
 				//logInfo("hello?????: isSlayerActiveFlag: %d", isSlayerActiveFlag);
 
@@ -903,12 +862,12 @@ DWORD WINAPI ModMain() {
 
 				Menu::bShowKaibzHudWindow = modSettings::getIsUseKaibzHud() && (isSlayerActiveFlag || isDemonActiveFlag);		
 
-				lastCustomHudcheckMs = EpochMillis();
+				lastCustomHudcheckMs = K_Utils::EpochMillis();
 			}
 
 			//? it doesn't work.....
 			// enforcing frag just to be absolutely sure there is no way ice can be selected when dedicated nade key is enabled
-			if (EpochMillis() - lastFragSelectedCheckMs > 1000) {
+			if (K_Utils::EpochMillis() - lastFragSelectedCheckMs > 1000) {
 
 				if (modSettings::getIsUseDedicatedNadeKeys() && idPlayer_K::getSelectedGrenadeType() == equipmentType_t::EQUIPMENT_ICE_BOMB) {
 
@@ -916,14 +875,14 @@ DWORD WINAPI ModMain() {
 					EquipmentManager::switchEquipment(equipmentType_t::EQUIPMENT_FRAG_GRENADE);
 				}
 
-				lastFragSelectedCheckMs = EpochMillis();
+				lastFragSelectedCheckMs = K_Utils::EpochMillis();
 			}
 
 			
 			
 
 			//! Game hud Ice Nade Icon:			
-			if (EpochMillis() - lastCustomIceNadeIconCheckMs > 200) {		
+			if (K_Utils::EpochMillis() - lastCustomIceNadeIconCheckMs > 200) {
 
 				//logInfo("isFragNadeOwned in lskdjf is: %d and isIceNadeOwned: %d", isFragNadeOwned, isIceNadeOwned);
 				//! we don't render if frag is not owned cause if player uses console to give himself ice and not frag at game start it will show double ice icon and as a side note when using the ice in that config the icon shows up while reloading and then disappears, certainly cause it's not meant to be this way.
@@ -944,8 +903,8 @@ DWORD WINAPI ModMain() {
 					CustomIceNadeIconManager::updateCoords();
 				}
 				//! may be overkill but safety first.
-				else if (PlayerStateChecker::getPlayerState() != g_debug_lastPlayerState || (EpochMillis() - lastIceIconCoordsUpdateCheckMs) > 1000) {
-					lastIceIconCoordsUpdateCheckMs = EpochMillis();
+				else if (PlayerStateChecker::getPlayerState() != g_debug_lastPlayerState || (K_Utils::EpochMillis() - lastIceIconCoordsUpdateCheckMs) > 1000) {
+					lastIceIconCoordsUpdateCheckMs = K_Utils::EpochMillis();
 					g_debug_lastPlayerState = PlayerStateChecker::getPlayerState();
 
 					CustomIceNadeIconManager::updateCoords();
@@ -957,20 +916,20 @@ DWORD WINAPI ModMain() {
 				//CustomIceNadeIconManager::updateMaterials();
 				CustomIceNadeIconManager::updateCooldownTimeLeftStr(); // will only update data is ice on cooldown
 
-				lastCustomIceNadeIconCheckMs = EpochMillis();
+				lastCustomIceNadeIconCheckMs = K_Utils::EpochMillis();
 			}
 
 
 
 			//! making sure the debugHud is active even if user tries to disable the debug string somehow through console cmd.
-			if (EpochMillis() - lastForceDebugStringCheckMs > 5000) {
-				lastForceDebugStringCheckMs = EpochMillis();
+			if (K_Utils::EpochMillis() - lastForceDebugStringCheckMs > 5000) {
+				lastForceDebugStringCheckMs = K_Utils::EpochMillis();
 				idCmd::forceDebug_hud_string();
 			}
 
 
 
-			if (EpochMillis() - lastHudColorsUpdateCheckMs > 200 && !idPlayer_K::isPlayerDemon()) {
+			if (K_Utils::EpochMillis() - lastHudColorsUpdateCheckMs > 200 && !idPlayer_K::isPlayerDemon()) {
 				//! i know it's not elegant but i'd rather be sure that i triggers for now		
 				
 
@@ -1001,14 +960,14 @@ DWORD WINAPI ModMain() {
 				//! reaapplying swf colors every seconds or so to make sure the hud is updated as i noticed, rarely the grenade arrow being not always accurate. This function will not callreapplySwfColorsCmd all the time but has an internal check with epochmillis:
 				//ColorManager::autoReapplySwfColors(); //! <= on a timer
 
-				lastHudColorsUpdateCheckMs = EpochMillis();
+				lastHudColorsUpdateCheckMs = K_Utils::EpochMillis();
 			}
 
 
 
 			//! this is not great but this is a way to make sure user will see a crosshair in the immersive weapons ads otherwiser he might think the feature is broken because there are no crosshair anywhere and think that this feature need the None crosshair mode to work. We can't just do a check in the iniFile load cause user can change the in game Crosshair mode at any tim
-			if (EpochMillis() - lastinGameReticleModeCheckMs > 300) {
-				lastinGameReticleModeCheckMs = EpochMillis();
+			if (K_Utils::EpochMillis() - lastinGameReticleModeCheckMs > 300) {
+				lastinGameReticleModeCheckMs = K_Utils::EpochMillis();
 
 				if (!idPlayer_K::isPlayerDemon() && modSettings::isImmersiveCrosshairModeEnabled()) {
 					//if (idCmd::getReticleMode() == UI_ReticleMode::None) {
@@ -1069,7 +1028,6 @@ DWORD WINAPI ModMain() {
 	CreateThread(0, 0, EjectThread, 0, 0, 0);	
 	return 0;	
 }
-
 
 
 DWORD WINAPI OnProcessDetach(LPVOID lpParam) {

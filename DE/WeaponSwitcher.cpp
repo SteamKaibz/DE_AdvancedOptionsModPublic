@@ -4,13 +4,13 @@
 {
     logDebug("updateIdplayerProcessInputTimeStamp");
 
-    m_lastIdplayerProcessInputTimeStampMs = EpochMillis();
+    m_lastIdplayerProcessInputTimeStampMs = K_Utils::EpochMillis();
 }
 
  bool WeaponSwitcher::isPlayerInGame()
 {
     logDebug("isPlayerInGame");
-    return ((EpochMillis() - m_lastIdplayerProcessInputTimeStampMs) < m_IdplayerProcessInputMaxTimeNoDataMs);
+    return ((K_Utils::EpochMillis() - m_lastIdplayerProcessInputTimeStampMs) < m_IdplayerProcessInputMaxTimeNoDataMs);
 }
 
 //! this should be triggered by SelectWeaponForSelectionGroupHook which itself is trigger when user presses a weapon key
@@ -24,7 +24,7 @@
     //static weaponSlot_t lastUserRequestedWeaponIndex = weaponSlot_t::UNDEFINED;
 
 
-    m_lastWeaponInputPressMs = EpochMillis();
+    m_lastWeaponInputPressMs = K_Utils::EpochMillis();
 
     m_UserRequestedWeaponIndex = (weaponSlot_t)weaponIndex;
 
@@ -77,7 +77,7 @@
 
     static weaponSlot_t lastCurrentWeaponSlot = weaponSlot_t::UNDEFINED;
 
-    uint64_t epochNowMs = EpochMillis();
+    uint64_t epochNowMs = K_Utils::EpochMillis();
 
 
     //! strangly enough idPlayer_K::getcurrentWeaponSlotIndex is 'faster to get the current slot by 100ms but that's ofc because of polling rate and when the idWeaponManager hook is triggered by the game, but idWeaponManager is good enough
@@ -119,6 +119,11 @@
             //playWeaponSwitchOverideSoundAsync();
         }
     }
+}
+
+
+ void WeaponSwitcher::playWeaponSwitchOverideSound() {
+	Beep(1500, 50);
 }
 
  void WeaponSwitcher::setWeaponEnumToResend() {

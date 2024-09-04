@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Windows.h>
-#include "../../Config/Config.h"
+#include "../../Config.h"
 
 #include "guiHelpers.h"
 #include "DebugGui.h"
@@ -85,6 +85,10 @@ namespace Menu {
     inline ImVec4 CriticalColorImVec4 = BlackColorImVec4;
     inline ImVec4 DisabledColorImVec4 = BlackColorImVec4;
 
+
+    inline const ImU32 RedColorImU32 = IM_COL32(255, 0, 0, 255); 
+    inline const ImU32 BlueVioletColorImU32 = IM_COL32(138, 43, 226, 255); 
+    inline const ImU32 TranparentImU32 = IM_COL32(0, 0, 0, 0); 
    
 
     //? doesn't help:

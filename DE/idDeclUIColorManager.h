@@ -1,7 +1,7 @@
 #pragma once
-#include "GeneratedClasses.h"
+#include "idLib_Dynamic.h"
 #include "idDeclGlobalShellManager.h"
-#include "../ModSettings/modSettings.h"
+#include "modSettings.h"	
 #include "idPlayer.h"
 #include "../ImGui/dependencies/imgui/imgui_internal.h"
 

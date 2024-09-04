@@ -23,7 +23,7 @@
 //#include "../ModSettings/ModSettingsManager.h"
 
 
-#include "../Config/Config.h"
+#include "../Config.h"
 
 
 

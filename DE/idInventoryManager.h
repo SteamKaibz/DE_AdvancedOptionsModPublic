@@ -3,15 +3,15 @@
 #include<iostream>
 #include <vector>
 #include <string>
-#include "Common.h"
-#include "Utils.h"
-#include "Types.h"
-#include "../Config/Config.h"
+//#include "Common.h"
+//#include "Utils.h"
+//#include "Types.h"
+#include "../Config.h"
 #include "PlayerInventory.h"
 #include "idMapInstanceLocalManager.h"
-#include "GeneratedClasses.h"
+#include "idLib_Dynamic.h"
 #include "idResourceManager.h"
-#include "../ModSettings/modSettings.h"
+#include "modSettings.h"	
 
 
 

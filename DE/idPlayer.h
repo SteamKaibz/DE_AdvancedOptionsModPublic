@@ -2,15 +2,18 @@
 
 #include "CommonDE.h"
 #include "MemHelper.h"
-#include "../Config/Config.h"
-#include "Types.h"
+#include "../Config.h"
+//#include "Types.h"
 #include "idCmd.h"
-#include <Logger.h>
+//#include <Logger.h>
 #include "idHudManager.h"
-#include "GeneratedClasses.h"
+#include "idLib_Dynamic.h"
 #include "idMapInstanceLocalManager.h"
 #include "idSWFSpriteInstanceManager.h"
 #include "PlayerStateChecker.h"
+#include "enumsCustom.h"
+
+
 
 //#include "../VarName.h"
 //#include <Logger.h>

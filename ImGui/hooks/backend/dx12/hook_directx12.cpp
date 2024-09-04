@@ -401,7 +401,7 @@ static void RenderImGui_DX12(IDXGISwapChain3* pSwapChain) {
 }
 #else
 #include <Windows.h>
-#include "../../../../Config/Config.h"
+#include "../../../../Config.h"
 namespace DX12 {
     void Hook(HWND hwnd) { logInfo("[!] DirectX12 backend is not enabled!\n"); }
     void Unhook( ) { }

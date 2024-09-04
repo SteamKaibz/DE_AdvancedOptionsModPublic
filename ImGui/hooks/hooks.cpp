@@ -18,7 +18,7 @@
 
 #include "../dependencies/minhook/MinHook.h"
 #include <MinHook.h>
-#include "../../Config/Config.h"
+#include "../../Config.h"
 #include "../dependencies/imgui/imgui.h"
 #include "../ImGuiDebug.h"
 //#include "../ImGuiDebug.h"

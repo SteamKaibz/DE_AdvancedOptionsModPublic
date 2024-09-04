@@ -280,7 +280,8 @@ std::string idPlayer_K::getDbgStrForImgui() {
              return false;
          }
 
-         hudElementFlags_t currentHudState = idPlayerObj->playerHud.currentHudMode;
+         //! keep in mind we don't set the type of currentHudMode to hudElementFlags_t in the cls because it would make the lib gen overly more complex than it is atm to do that so we cast it here and it's fine.
+         hudElementFlags_t currentHudState = (hudElementFlags_t)idPlayerObj->playerHud.currentHudMode;
          if (currentHudState & HUD_ELEMENT_MODE_DEAD) return false;
          if (currentHudState & HUD_ELEMENT_MODE_DEMON) return false;
          if (currentHudState & HUD_ELEMENT_MODE_IN_WORLD_MENU) return false;
@@ -299,7 +300,7 @@ std::string idPlayer_K::getDbgStrForImgui() {
              return false;
          }
 
-         hudElementFlags_t currentHudState = idPlayerObj->playerHud.currentHudMode;
+         hudElementFlags_t currentHudState = (hudElementFlags_t)idPlayerObj->playerHud.currentHudMode;
          if (currentHudState & HUD_ELEMENT_MODE_DEAD) return false;         
          if (currentHudState & HUD_ELEMENT_MODE_IN_WORLD_MENU) return false;
 
@@ -313,7 +314,7 @@ std::string idPlayer_K::getDbgStrForImgui() {
      idPlayer* idPlayerObj = idMapInstanceLocalManager::getIdPlayer();
      if (idPlayerObj) {       
 
-         hudElementFlags_t currentHudState = idPlayerObj->playerHud.currentHudMode;
+         hudElementFlags_t currentHudState = (hudElementFlags_t)idPlayerObj->playerHud.currentHudMode;
          if (currentHudState & HUD_ELEMENT_MODE_DEAD) return false;
          if (currentHudState & HUD_ELEMENT_MODE_DEMON) return false;
          if (currentHudState & HUD_ELEMENT_MODE_IN_WORLD_MENU) return false;
@@ -342,7 +343,7 @@ std::string idPlayer_K::getDbgStrForImgui() {
      idPlayer* idPlayerObj = idMapInstanceLocalManager::getIdPlayer();
      if (idPlayerObj) {     
 
-         hudElementFlags_t currentHudState = idPlayerObj->playerHud.currentHudMode;       
+         hudElementFlags_t currentHudState = (hudElementFlags_t)idPlayerObj->playerHud.currentHudMode;
          if (currentHudState & HUD_ELEMENT_MODE_DEMON) return true;      
 
      }

@@ -2,8 +2,7 @@
 #include "MemHelper.h"
 #include "Patcher.h"
 #include "CommonDE.h"
-#include "idLib.h"
-#include "GeneratedClasses.h"
+#include "idLib_Dynamic.h"
 #include "TypeInfoManager.h"
 
 

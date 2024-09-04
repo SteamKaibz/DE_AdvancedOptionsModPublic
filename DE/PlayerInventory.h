@@ -1,5 +1,5 @@
 #pragma once
-#include "../Config/Config.h"
+#include "../Config.h"
 
 //! -1 should mean not owned as 0 could be the current count of item like 0 ammo should not mean we don't own the ammo.
 class PlayerInventory {

@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "../Config/Config.h"
+#include "../Config.h"
 #include "idDeclInfo.h"
 #include "idResourceListManager.h"
 

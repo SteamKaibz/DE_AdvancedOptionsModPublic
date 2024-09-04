@@ -1,10 +1,70 @@
-# DE_AdvancedOptionsMod
+# DE Advanced Options Mod
 
 
-This is the source code for Advanced Options mod for Doom Eternal Vanilla: https://www.nexusmods.com/doometernal/mods/1255
+## Project Description
+DE Advanced Options Mod provides additional customization options for Doom Eternal. 
+Options list:  https://www.nexusmods.com/doometernal/mods/1255
 
-Another source for the Sandbox version will be uploaded soon but atm, those are 2 different projects.
 
-If you to help making the mod better, please let me know.
+## Prerequisites
+- Visual Studio 2022 or later
 
-15/8/24: This mod started as a experimental project, thus, most of the code is not elegant/efficient. But This codebase will undergo a complete rewrite soon if time allows it.
+
+## How to Build
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/SteamKaibz/DE_AdvancedOptionsModPublic.git
+   ```
+
+2. **Open the solution**:
+   Open the `.sln` file in Visual Studio.
+
+3. **Set up Precompiled Headers**:
+   - In Solution Explorer -> Right-click on the project -> Properties
+   - Navigate to **C/C++** -> **Precompiled Headers**
+   - Set it to **Not Using Precompiled Headers**
+
+4. **Set the Target Name**:
+   - In Solution Explorer -> Right-click on the project -> Properties
+   - Navigate to **General** -> **Target Name**
+   - Ensure it's set to `msimg32`
+
+5. **Select Configuration**:
+   - Use the drop-down in the toolbar to select either `Vanilla` or `Sandbox` from the Solution Configuration.
+
+6. **Build the Project**:
+   - Press `Ctrl + Shift + B` or go to `Build` -> `Build Solution`.
+
+
+## Usage Instructions
+After building the DLL, place it in the appropriate directory as follows:
+- For Vanilla: ...Steam\steamapps\common\DOOMEternal
+- For Sandbox: ...Steam\steamapps\common\DOOMEternal\doomSandBox
+
+Launch the game and access the mod's options using the shortcut shown bottom right of the screen.
+
+
+## How to generate game data (classes, enums, events...)
+I would recommend using meathook mod https://github.com/brongo/m3337ho0o0ok/releases and use the available commands to generate what you need.
+
+
+## Contribution Guidelines
+Contributions and Pull Requests are welcome! 
+For major changes, please open an issue first to discuss what you would like to change.
+
+
+## License
+This project is licensed under the BSD-2-Clause license.
+
+
+## Acknowledgments
+- [UniversalHookX](https://github.com/bruhmoment21/UniversalHookX) - Used for Imgui implementation
+- [MinHook](https://github.com/TsudaKageyu/minhook) - Used for functions hooking
+- [nlohmann Json](https://github.com/nlohmann/json) - Json library
+
+- Thanks to https://github.com/belazr for UniversalHook fixes and general contributions
+- Thanks to https://github.com/Decimation for advices and improvements
+- Thanks to MethanHydrat for getting me into modding and his work/advices
+- Thanks to Chrispy for his work on Meathook mod.
+- Thanks to Sunbeam for all the knowledge he shared

@@ -2,11 +2,11 @@
 
 #include "TypeInfoManager.h"
 #include "idPlayer.h"
-#include "idLib.h"
+#include "idLib_Static.h"
 #include "idResourceManager.h"
-#include "GeneratedClasses.h"
-#include "../K_Utils/K_Utils.h"
 
+#include "../Common/K_Utils.h"
+#include "idLib_Dynamic.h"
 //#include "idHUDElementManager.h"
 //#include "idHUD_ReticleManager.h"
 

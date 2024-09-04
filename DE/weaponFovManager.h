@@ -1,10 +1,10 @@
 #pragma once
 
-#include "GeneratedEnums.h"
+#include "idLib_Dynamic.h"
 #include "idWeaponManager.h"
 #include "fastCvarManager.h"
 #include "idCmd.h"
-#include "../ModSettings/modSettings.h"
+#include "modSettings.h"	
 
 
 

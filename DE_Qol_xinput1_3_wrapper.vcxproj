@@ -1,6 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug_Sandbox|Win32">
+      <Configuration>Debug_Sandbox</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_Sandbox|x64">
+      <Configuration>Debug_Sandbox</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_Vanilla|Win32">
+      <Configuration>Debug_Vanilla</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug_Vanilla|x64">
+      <Configuration>Debug_Vanilla</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -9,12 +25,44 @@
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Dev_Sandbox|Win32">
+      <Configuration>Dev_Sandbox</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Dev_Sandbox|x64">
+      <Configuration>Dev_Sandbox</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Dev_Vanilla|Win32">
+      <Configuration>Dev_Vanilla</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Dev_Vanilla|x64">
+      <Configuration>Dev_Vanilla</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Sandbox|Win32">
+      <Configuration>Sandbox</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Sandbox|x64">
+      <Configuration>Sandbox</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Vanilla|Win32">
+      <Configuration>Vanilla</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Vanilla|x64">
+      <Configuration>Vanilla</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -33,7 +81,63 @@
     <PlatformToolset>v143</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Sandbox|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Vanilla|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Sandbox|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Vanilla|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Sandbox|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Vanilla|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Sandbox|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Vanilla|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
@@ -47,7 +151,35 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Vanilla|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Sandbox|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Vanilla|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Sandbox|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -61,13 +193,49 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Sandbox|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Vanilla|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Sandbox|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Vanilla|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Sandbox|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Vanilla|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Sandbox|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Vanilla|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Vanilla|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Sandbox|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Vanilla|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Sandbox|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -76,15 +244,77 @@
     <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Sandbox|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Vanilla|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Sandbox|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Vanilla|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)include;$(VULKAN_SDK)\Include;$(SolutionDir)Json;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)include;$(VULKAN_SDK)\Include;$(IncludePath);</IncludePath>
+    <TargetName>msimg32</TargetName>
+    <LibraryPath>$(VC_LibraryPath_x64);$(VULKAN_SDK)\Lib;$(WindowsSDK_LibraryPath_x64);$(SolutionDir)MinHookLibX64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Sandbox|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)include;$(VULKAN_SDK)\Include;$(IncludePath);</IncludePath>
+    <TargetName>msimg32</TargetName>
+    <LibraryPath>$(VC_LibraryPath_x64);$(VULKAN_SDK)\Lib;$(WindowsSDK_LibraryPath_x64);$(SolutionDir)MinHookLibX64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Vanilla|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)include;$(VULKAN_SDK)\Include;$(IncludePath);</IncludePath>
+    <TargetName>msimg32</TargetName>
+    <LibraryPath>$(VC_LibraryPath_x64);$(VULKAN_SDK)\Lib;$(WindowsSDK_LibraryPath_x64);$(SolutionDir)MinHookLibX64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Sandbox|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)include;$(VULKAN_SDK)\Include;$(IncludePath);</IncludePath>
+    <TargetName>msimg32</TargetName>
+    <LibraryPath>$(VC_LibraryPath_x64);$(VULKAN_SDK)\Lib;$(WindowsSDK_LibraryPath_x64);$(SolutionDir)MinHookLibX64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Vanilla|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)include;$(VULKAN_SDK)\Include;$(IncludePath);</IncludePath>
     <TargetName>msimg32</TargetName>
     <LibraryPath>$(VC_LibraryPath_x64);$(VULKAN_SDK)\Lib;$(WindowsSDK_LibraryPath_x64);$(SolutionDir)MinHookLibX64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Vanilla|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Sandbox|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
@@ -95,7 +325,23 @@
     <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
     <TargetName>msimg32</TargetName>
     <LibraryPath>$(VC_LibraryPath_x64);$(VULKAN_SDK)\Lib;$(WindowsSDK_LibraryPath_x64);$(SolutionDir)MinHookLibX64;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)include;$(VULKAN_SDK)\Include;$(SolutionDir)Json;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)include;$(VULKAN_SDK)\Include;$(IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Vanilla|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
+    <TargetName>msimg32</TargetName>
+    <LibraryPath>$(VC_LibraryPath_x64);$(VULKAN_SDK)\Lib;$(WindowsSDK_LibraryPath_x64);$(SolutionDir)MinHookLibX64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)include;$(VULKAN_SDK)\Include;$(IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Sandbox|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
+    <TargetName>msimg32</TargetName>
+    <LibraryPath>$(VC_LibraryPath_x64);$(VULKAN_SDK)\Lib;$(WindowsSDK_LibraryPath_x64);$(SolutionDir)MinHookLibX64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)include;$(VULKAN_SDK)\Include;$(IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -111,7 +357,127 @@
       <ModuleDefinitionFile>xinput1_3_wrapper.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Sandbox|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;XINPUT1_3_WRAPPER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>xinput1_3_wrapper.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Vanilla|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;XINPUT1_3_WRAPPER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>xinput1_3_wrapper.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Sandbox|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;XINPUT1_3_WRAPPER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>xinput1_3_wrapper.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Vanilla|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;XINPUT1_3_WRAPPER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>xinput1_3_wrapper.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;XINPUT1_3_WRAPPER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>msimg32.def</ModuleDefinitionFile>
+      <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Sandbox|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;XINPUT1_3_WRAPPER_EXPORTS;%(PreprocessorDefinitions);GAME_VERSION_SANDBOX</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>msimg32.def</ModuleDefinitionFile>
+      <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Vanilla|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>;WIN32;_DEBUG;_WINDOWS;_USRDLL;XINPUT1_3_WRAPPER_EXPORTS;%(PreprocessorDefinitions);DE_DEV</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>msimg32.def</ModuleDefinitionFile>
+      <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dev_Sandbox|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;XINPUT1_3_WRAPPER_EXPORTS;%(PreprocessorDefinitions);GAME_VERSION_SANDBOX; DE_DEV</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>msimg32.def</ModuleDefinitionFile>
+      <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Vanilla|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -148,6 +514,48 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Vanilla|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;XINPUT1_3_WRAPPER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>xinput1_3_wrapper.def</ModuleDefinitionFile>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Sandbox|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;XINPUT1_3_WRAPPER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>xinput1_3_wrapper.def</ModuleDefinitionFile>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -155,7 +563,51 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;XINPUT1_3_WRAPPER_EXPORTS;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;XINPUT1_3_WRAPPER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>msimg32.def</ModuleDefinitionFile>
+      <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Vanilla|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;XINPUT1_3_WRAPPER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>msimg32.def</ModuleDefinitionFile>
+      <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Sandbox|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;XINPUT1_3_WRAPPER_EXPORTS;%(PreprocessorDefinitions);GAME_VERSION_SANDBOX</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>$(SolutionDir)\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
@@ -171,19 +623,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Hud\CustomIceNadeIconUIData.h" />
+    <ClInclude Include="DE\enumsCustom.h" />
+    <ClInclude Include="DE\CustomIceNadeIconUIData.h" />
     <ClInclude Include="DE\ColorManager.h" />
-    <ClInclude Include="Debug\ImGuiDebugWin.h" />
+    <ClInclude Include="DE\idLib_Dynamic.h" />
+    <ClInclude Include="DE\idLib_Sandbox.h" />
+    <ClInclude Include="DE\idLib_Vanilla.h" />
+    <ClInclude Include="ImGui\ImGuiDebugWin.h" />
     <ClInclude Include="DE\idCvarManager.h" />
     <ClInclude Include="DE\fastCvarManager.h" />
     <ClInclude Include="DE\idEventManager.h" />
     <ClInclude Include="DE\idDeclUIColorManager.h" />
     <ClInclude Include="DE\EquipmentManager.h" />
+    <ClInclude Include="DE\KaibzHudData.h" />
     <ClInclude Include="ImGui\Fonts\icomoonDoomEternal.h" />
     <ClInclude Include="ImGui\menu\KaibzHud.h" />
-    <ClInclude Include="Hud\KaibzHudManager.h" />
+    <ClInclude Include="DE\KaibzHudManager.h" />
     <ClInclude Include="DE\playerSoundManager.h" />
-    <ClInclude Include="Tools\eventsInfoGenerator.h" />
     <ClInclude Include="ImGui\menu\GoToSettingsGui.h" />
     <ClInclude Include="ImGui\menu\guiHelpers.h" />
     <ClInclude Include="ImGui\Fonts\font_awesome.h" />
@@ -191,10 +647,6 @@
     <ClInclude Include="ImGui\menu\DebugGui.h" />
     <ClInclude Include="DE\playerPropsManager.h" />
     <ClInclude Include="ImGui\menu\KaibzCrosshair.h" />
-    <ClInclude Include="Tools\cmdInfoGenerator.h" />
-    <ClInclude Include="Common\Utils.h" />
-    <ClInclude Include="Config\LogConfig.h" />
-    <ClInclude Include="Tools\cvarInfoGenerator.h" />
     <ClInclude Include="DE\Debug.h" />
     <ClInclude Include="DE\idDeclGlobalShellManager.h" />
     <ClInclude Include="DE\idDeclInfo.h" />
@@ -205,11 +657,10 @@
     <ClInclude Include="DE\ImGuiManager.h" />
     <ClInclude Include="DE\LoadingScreenManager.h" />
     <ClInclude Include="DE\MaterialDebug.h" />
-    <ClInclude Include="FileOp\FileOp.h" />
-    <ClInclude Include="MD5\HashManager.h" />
-    <ClInclude Include="Hud\CustomCrosshairManager.h" />
-    <ClInclude Include="Hud\CustomIceNadeIconManager.h" />
-    <ClInclude Include="DE\idLibManager.h" />
+    <ClInclude Include="Common\FileOp.h" />
+    <ClInclude Include="Common\HashManager.h" />
+    <ClInclude Include="DE\CustomCrosshairManager.h" />
+    <ClInclude Include="DE\CustomIceNadeIconManager.h" />
     <ClInclude Include="ImGui\backend.hpp" />
     <ClInclude Include="ImGui\console\console.hpp" />
     <ClInclude Include="ImGui\dependencies\imgui\imconfig.h" />
@@ -246,26 +697,21 @@
     <ClInclude Include="ImGui\menu\menu.hpp" />
     <ClInclude Include="ImGui\utils\utils.hpp" />
     <ClInclude Include="include\MinHook.h" />
-    <ClInclude Include="Json\nlohmann\json.hpp" />
-    <ClInclude Include="Json\nlohmann\json_fwd.hpp" />
-    <ClInclude Include="K_Utils\K_Utils.h" />
-    <ClInclude Include="ModSettings\modSettings.h" />
-    <ClInclude Include="TypeGenerator\ClassDef.h" />
-    <ClInclude Include="TypeGenerator\ClassDefContainer.h" />
-    <ClInclude Include="TypeGenerator\EnumsDefFileGenerator.h" />
-    <ClInclude Include="TypeGenerator\varInfoCustom.h" />
+    <ClInclude Include="Common\json.hpp" />
+    <ClInclude Include="Common\json_fwd.hpp" />
+    <ClInclude Include="Common\K_Utils.h" />
+    <ClInclude Include="DE\modSettings.h" />
     <ClInclude Include="DE\BindLabelChanger.h" />
     <ClInclude Include="DE\ButtonCheck.h" />
     <ClInclude Include="DE\CommonDE.h" />
-    <ClInclude Include="Config\Config.h" />
+    <ClInclude Include="Config.h" />
     <ClInclude Include="DE\ControllerLayout.h" />
     <ClInclude Include="DE\CustomWeapon.h" />
     <ClInclude Include="DE\GameVersionInfoManager.h" />
-    <ClInclude Include="DE\GeneratedEnums.h" />
     <ClInclude Include="DE\idFxManager.h" />
     <ClInclude Include="DE\idGameSystemLocalManager.h" />
     <ClInclude Include="DE\idHudManager.h" />
-    <ClInclude Include="DE\idLib.h" />
+    <ClInclude Include="DE\idLib_Static.h" />
     <ClInclude Include="DE\idMapInstanceLocalManager.h" />
     <ClInclude Include="DE\idPlayerMetricsManager.h" />
     <ClInclude Include="DE\idResourceManager.h" />
@@ -274,11 +720,10 @@
     <ClInclude Include="DE\ReticleScaleManager.h" />
     <ClInclude Include="DE\ReticleColorManager.h" />
     <ClInclude Include="DE\TypeInfoManager.h" />
-    <ClInclude Include="DE\GeneratedClasses.h" />
     <ClInclude Include="DE\UserColorSet.h" />
     <ClInclude Include="DE\drawStretchPicHookArgs.h" />
     <ClInclude Include="DE\drawStringHookArgs.h" />
-    <ClInclude Include="Scanner\Scanner.h" />
+    <ClInclude Include="DE\Scanner.h" />
     <ClInclude Include="DE\Sigs.h" />
     <ClInclude Include="DE\GameHudColorsManager.h" />
     <ClInclude Include="DE\idCmd.h" />
@@ -294,49 +739,41 @@
     <ClInclude Include="DE\LangManager.h" />
     <ClInclude Include="DE\LocalizedBindStringData.h" />
     <ClInclude Include="DE\MaterialLib.h" />
-    <ClInclude Include="DE\MemHelper.h" />
-    <ClInclude Include="DE\Patcher.h" />
+    <ClInclude Include="Common\MemHelper.h" />
+    <ClInclude Include="Common\Patcher.h" />
     <ClInclude Include="DE\PlayerInventory.h" />
     <ClInclude Include="DE\PlayerStateChecker.h" />
-    <ClInclude Include="DE\UtilsDE.h" />
-    <ClInclude Include="MinHookManager\MinHookManager.h" />
-    <ClInclude Include="Rtti\Rtti_Helper.h" />
-    <ClInclude Include="System\FileWatcher.h" />
-    <ClInclude Include="TypeGenerator\ClassDefFileGenerator.h" />
-    <ClInclude Include="Voice\Voice.h" />
+    <ClInclude Include="Common\MinHookManager.h" />
+    <ClInclude Include="Common\FileWatcher.h" />
+    <ClInclude Include="Common\Voice.h" />
     <ClInclude Include="DE\WeaponSettings.h" />
     <ClInclude Include="DE\WeaponSwitcher.h" />
     <ClInclude Include="dllmain.h" />
-    <ClInclude Include="Loguru\loguru.hpp" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Common\loguru.hpp" />
     <ClInclude Include="DE\winFocusManager.h" />
     <ClInclude Include="DE\weaponFovManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Hud\CustomIceNadeIconUIData.cpp" />
+    <ClCompile Include="DE\CustomIceNadeIconUIData.cpp" />
     <ClCompile Include="DE\ColorManager.cpp" />
-    <ClCompile Include="Debug\ImGuiDebugWin.cpp" />
+    <ClCompile Include="ImGui\ImGuiDebugWin.cpp" />
     <ClCompile Include="DE\idCvarManager.cpp" />
     <ClCompile Include="DE\fastCvarManager.cpp" />
     <ClCompile Include="DE\idEventManager.cpp" />
     <ClCompile Include="DE\idDeclUIColorManager.cpp" />
     <ClCompile Include="DE\EquipmentManager.cpp" />
-    <ClCompile Include="Hud\CustomCrosshairManager.cpp" />
+    <ClCompile Include="DE\CustomCrosshairManager.cpp" />
     <ClCompile Include="ImGui\Fonts\EternalUiRegular_BWZGd.h" />
     <ClCompile Include="ImGui\menu\KaibzHud.cpp" />
-    <ClCompile Include="Hud\KaibzHudManager.cpp" />
+    <ClCompile Include="DE\KaibzHudManager.cpp" />
     <ClCompile Include="DE\playerSoundManager.cpp" />
-    <ClCompile Include="Tools\eventsInfoGenerator.cpp" />
     <ClCompile Include="ImGui\menu\GoToSettingsGui.cpp" />
     <ClCompile Include="ImGui\menu\guiHelpers.cpp" />
     <ClCompile Include="ImGui\Fonts\font_awesome.cpp" />
     <ClCompile Include="ImGui\menu\DebugGui.cpp" />
     <ClCompile Include="DE\playerPropsManager.cpp" />
     <ClCompile Include="ImGui\menu\KaibzCrosshair.cpp" />
-    <ClCompile Include="Tools\cmdInfoGenerator.cpp" />
-    <ClCompile Include="Config\Config.cpp" />
-    <ClCompile Include="Tools\cvarInfoGenerator.cpp" />
+    <ClCompile Include="Config.cpp" />
     <ClCompile Include="DE\BindLabelChanger.cpp" />
     <ClCompile Include="DE\ButtonCheck.cpp" />
     <ClCompile Include="DE\ControllerLayout.cpp" />
@@ -371,7 +808,7 @@
     <ClCompile Include="DE\LocalizedBindStringData.cpp" />
     <ClCompile Include="DE\MaterialDebug.cpp" />
     <ClCompile Include="DE\MaterialLib.cpp" />
-    <ClCompile Include="DE\Patcher.cpp" />
+    <ClCompile Include="Common\Patcher.cpp" />
     <ClCompile Include="DE\PlayerInventory.cpp" />
     <ClCompile Include="DE\PlayerStateChecker.cpp" />
     <ClCompile Include="DE\ReticleColorManager.cpp" />
@@ -379,10 +816,9 @@
     <ClCompile Include="DE\UserColorSet.cpp" />
     <ClCompile Include="DE\WeaponSettings.cpp" />
     <ClCompile Include="DE\WeaponSwitcher.cpp" />
-    <ClCompile Include="FileOp\FileOp.cpp" />
-    <ClCompile Include="MD5\HashManager.cpp" />
-    <ClCompile Include="Hud\CustomIceNadeIconManager.cpp" />
-    <ClCompile Include="DE\idLibManager.cpp" />
+    <ClCompile Include="Common\FileOp.cpp" />
+    <ClCompile Include="Common\HashManager.cpp" />
+    <ClCompile Include="DE\CustomIceNadeIconManager.cpp" />
     <ClCompile Include="ImGui\console\console.cpp" />
     <ClCompile Include="ImGui\dependencies\imgui\imgui.cpp" />
     <ClCompile Include="ImGui\dependencies\imgui\imgui_demo.cpp" />
@@ -410,32 +846,65 @@
     <ClCompile Include="ImGui\hooks\hooks.cpp" />
     <ClCompile Include="ImGui\menu\menu.cpp" />
     <ClCompile Include="ImGui\utils\utils.cpp" />
-    <ClCompile Include="K_Utils\K_Utils.cpp" />
-    <ClCompile Include="MinHookManager\MinHookManager.cpp" />
-    <ClCompile Include="ModSettings\modSettings.cpp" />
-    <ClCompile Include="Scanner\Scanner.cpp" />
-    <ClCompile Include="DE\MemHelper.cpp" />
-    <ClCompile Include="Voice\Voice.cpp" />
+    <ClCompile Include="Common\K_Utils.cpp" />
+    <ClCompile Include="Common\MinHookManager.cpp" />
+    <ClCompile Include="DE\modSettings.cpp" />
+    <ClCompile Include="DE\Scanner.cpp" />
+    <ClCompile Include="Common\MemHelper.cpp" />
+    <ClCompile Include="Common\Voice.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug_Sandbox|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Dev_Vanilla|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Dev_Sandbox|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug_Vanilla|Win32'">false</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug_Sandbox|x64'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Dev_Vanilla|x64'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Dev_Sandbox|x64'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug_Vanilla|x64'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_Sandbox|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Dev_Vanilla|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Dev_Sandbox|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_Vanilla|Win32'">
       </PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_Sandbox|x64'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Dev_Vanilla|x64'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Dev_Sandbox|x64'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_Vanilla|x64'">
+      </PrecompiledHeader>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Vanilla|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Sandbox|Win32'">false</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Vanilla|x64'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Sandbox|x64'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Vanilla|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Sandbox|Win32'">
       </PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Vanilla|x64'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Sandbox|x64'">
+      </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Loguru\loguru.cpp" />
+    <ClCompile Include="Common\loguru.cpp" />
     <ClCompile Include="DE\winFocusManager.cpp" />
     <ClCompile Include="DE\weaponFovManager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Gpt\MinHookTemplate.txt" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="MinHookLibX64\libMinHook.x64.lib" />

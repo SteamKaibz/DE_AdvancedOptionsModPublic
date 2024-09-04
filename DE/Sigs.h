@@ -1,9 +1,13 @@
 #pragma once
+#include "../Config.h"
+
 
 //! Signatures of Ida functions that can be used with pattern scanning:
 
  //? this pattern with no space will not work and find wrong results, good to know and remember...
     //static const char consoleUnlockCEScriptSig[] = "4C8B0EBA01000000488BCE448BF041FF51??8D";
+
+//? update 29/8/24 some of those sig will not work in ida anymore...BUT they will still work in-game. Maybe cause of an error with decompiler with rev3. Many funcs in rev3 have a jmp like :JUMPOUT(0x14577C5i64); but if you compare the assembly between rev2 and 3 the code is almost the same aside from the jmpouts which is why the sigs still work in rev3.
 
 static const char idGameLocalSig[] = "48 8B 0D ?? ?? ?? ?? 48 85 C9 74 0E 48 8B 01 FF 90 ?? ?? ?? ?? 0F B6 D0";
 
@@ -11,6 +15,7 @@ static const char getIdPlayerFuncSig[] = "48 8B C1 83 FA 0B";
 
 static const char SoundLangSmthSig[] = "40 55 53 56 57 41 54 41 56 41 57 48 8D 6C 24 A0 48 81 EC 60 01 00 00 48 8B 05";
 static const char idPlayerProcessInputSig[] = "40 55 53 56 48 8D 6C 24 90 48 81 EC 70 01 00 00 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 45 48";
+
 static const char idPLayerSelectWeaponForSelectionGroupSig[] = "89 54 24 10 55 41 54 41 56 48 83 EC 60";
 static const char isKeyPressedSig[] = "33 C0 44 8B C0 38 81 A1 00 00 00 75 07 4C 8B 81 A8 00 00 00 4C 85 C2 74 11";
 static const char idGameSystemLocalMinimalGameCleanupSig[] = "48 89 5C 24 20 55 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 A0 58 FB FF";
@@ -34,7 +39,13 @@ static const char consoleUnlockAltSig[] = "48 8B CE 44 8B F0 41 FF 51";
 //"4C8B0F4?????????????????????41FF51??4C??????"
 
 
+#ifdef GAME_VERSION_SANDBOX
+static const char idInternalCVar_SetSig[] = "E8 ? ? ? ? FF C7 48 83 C3 60";
+#else
 static const char idInternalCVar_SetSig[] = "48 89 5C 24 08 57 48 83 EC 20 48 8B FA 48 8B D9 45 84 C0 75 7F";
+#endif
+
+
 
 ////! i'm really not sure about this one but i struggled too much to find the language in the code...(47 bytes)
 //static const char languageStaticAddrSig[] = "80 1D 51 EC F7 7F 00 00 48 02 C3 EE F7 7F 00 00 0E 00 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00";
@@ -101,7 +112,14 @@ static const char monoSpaceFontAddrSig[] = "48 8B 0D ? ? ? ? E8 ? ? ? ? 48 85 C0
 //static const char fontSetInSetUpMonoSpaceFontSig[] = "48 8B B8 F8 00 00 00 48 8B CF";
 static const char fontSetInSetUpMonoSpaceFontSig[] = "48 8B B8 ? ? ? ? 48 8B CF E8 ? ? ? ? 48 8B CF 48 8B D8";
 
+
+#ifdef GAME_VERSION_SANDBOX
+static const char getGlyphDataFuncSig[] = "89 54 24 10 57 48 83 EC 30 48 8B F9 48 8B 49 58";
+#else
 static const char getGlyphDataFuncSig[] = "89 54 24 10 53 48 83 EC 20 48 8B D9 48 8B 49 58";
+#endif
+
+
 
 static const char fontSetInDrawStringSig[] = "41 89 86 ? ? ? ? B8 ? ? ? ? E9";
 
@@ -139,7 +157,9 @@ static const char idLoadScreenInfoSig[] = "48 8B 0D ? ? ? ? E8 ? ? ? ? 48 8D 4D 
 
 static const char idMaterial2_WhiteSig[] = "48 8B 05 ? ? ? ? F3 0F 11 74 24 ? 48 89 44 24";
 
-static const char dashEffectToggleSig[] = "0F 84 ? ? ? ? 48 8B CE E8 ? ? ? ? 84 C0 75 58";
+//static const char dashEffectToggleSig[] = "0F 84 ? ? ? ? 48 8B CE E8 ? ? ? ? 84 C0 75 58";
+//! v2 so we can still match on sig when debuging if we disabled the effect on last injection
+static const char dashEffectToggleSig[] = "0F ?? ? ? ? ? 48 8B CE E8 ? ? ? ? 84 C0 75 58";
 
 static const char broadcastHudEvent2ArgsSig[] = "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC 20 41 0F B7 F0";
 

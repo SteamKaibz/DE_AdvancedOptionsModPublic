@@ -18,20 +18,46 @@ bool BindLabelChanger::acquirreIdStringBigListOffset(int offset) {
     return false;
 }
 
+
+
+
 void BindLabelChanger::overwriteDynamicBindLabels(unsigned char* strPtr, LocalizedBindStringData localizedOverwriteData) {
     logDebug("overwriteDynamicBindLabels");
 
     try
     {
         std::string str(reinterpret_cast<char const*>(strPtr));
+
+        // Define buffer size for the destination string
+        const size_t bufferSize = 1024; // Adjust this size as needed
+        char buffer[bufferSize];
+
         if (m_isEquipmentLauncherFlag && str != EquipmentLauncherControllerFlagStr) {
             std::string replacementStrFormatedForCopy(localizedOverwriteData.getEquipmentLauncherOverwriteStr().cbegin(), localizedOverwriteData.getEquipmentLauncherOverwriteStr().cend());
-            strcpy((char*)strPtr, replacementStrFormatedForCopy.c_str());
+
+            // Ensure the replacement string fits in the buffer
+            if (replacementStrFormatedForCopy.size() < bufferSize) {
+                strcpy_s(buffer, bufferSize, replacementStrFormatedForCopy.c_str());
+                memcpy(strPtr, buffer, replacementStrFormatedForCopy.size() + 1); // +1 for null terminator
+            }
+            else {
+                logErr("overwriteDynamicBindLabels: replacement string is too large for buffer");
+            }
+
             m_isEquipmentLauncherFlag = false;
         }
         else if (m_isSwitchEquipmentFlag && str != SwitchEquipmentControllerFlagStr) {
             std::string replacementStrFormatedForCopy(localizedOverwriteData.getSwitchEquipmentOverwriteStr().cbegin(), localizedOverwriteData.getSwitchEquipmentOverwriteStr().cend());
-            strcpy((char*)strPtr, replacementStrFormatedForCopy.c_str());
+
+            // Ensure the replacement string fits in the buffer
+            if (replacementStrFormatedForCopy.size() < bufferSize) {
+                strcpy_s(buffer, bufferSize, replacementStrFormatedForCopy.c_str());
+                memcpy(strPtr, buffer, replacementStrFormatedForCopy.size() + 1); // +1 for null terminator
+            }
+            else {
+                logErr("overwriteDynamicBindLabels: replacement string is too large for buffer");
+            }
+
             m_isSwitchEquipmentFlag = false;
         }
         else if (str == EquipmentLauncherFlagStr) {
@@ -48,6 +74,38 @@ void BindLabelChanger::overwriteDynamicBindLabels(unsigned char* strPtr, Localiz
         m_isSwitchEquipmentFlag = false;
     }
 }
+
+
+//void BindLabelChanger::overwriteDynamicBindLabels(unsigned char* strPtr, LocalizedBindStringData localizedOverwriteData) {
+//    logDebug("overwriteDynamicBindLabels");
+//
+//    try
+//    {
+//        std::string str(reinterpret_cast<char const*>(strPtr));
+//        if (m_isEquipmentLauncherFlag && str != EquipmentLauncherControllerFlagStr) {
+//            std::string replacementStrFormatedForCopy(localizedOverwriteData.getEquipmentLauncherOverwriteStr().cbegin(), localizedOverwriteData.getEquipmentLauncherOverwriteStr().cend());
+//            strcpy((char*)strPtr, replacementStrFormatedForCopy.c_str());
+//            m_isEquipmentLauncherFlag = false;
+//        }
+//        else if (m_isSwitchEquipmentFlag && str != SwitchEquipmentControllerFlagStr) {
+//            std::string replacementStrFormatedForCopy(localizedOverwriteData.getSwitchEquipmentOverwriteStr().cbegin(), localizedOverwriteData.getSwitchEquipmentOverwriteStr().cend());
+//            strcpy((char*)strPtr, replacementStrFormatedForCopy.c_str());
+//            m_isSwitchEquipmentFlag = false;
+//        }
+//        else if (str == EquipmentLauncherFlagStr) {
+//            m_isEquipmentLauncherFlag = true;
+//        }
+//        else if (str == SwitchEquipmentFlagStr) {
+//            m_isSwitchEquipmentFlag = true;
+//        }
+//    }
+//    catch (const std::exception& ex)
+//    {
+//        logErr("overwriteDynamicBindLabels: exception error: %s (resetting flags)", ex.what());
+//        m_isEquipmentLauncherFlag = false;
+//        m_isSwitchEquipmentFlag = false;
+//    }
+//}
 
 bool BindLabelChanger::isControllerStaticStringsOverwriteAttempt() {
     logDebug("isControllerStaticStringsOverwriteAttempt");

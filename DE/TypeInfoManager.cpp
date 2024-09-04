@@ -88,7 +88,7 @@
 	   auto headattr = playerclass->variables;
 	   classVariableInfo_t* notarget_field = nullptr;
 	   while (headattr && headattr->name) {
-		   if (AreStringsEqual(headattr->name, fieldname)) {
+		   if (K_Utils::AreStringsEqual(headattr->name, fieldname)) {
 			   return headattr;
 		   }
 		   ++headattr;

@@ -111,7 +111,8 @@
 
      for (size_t i = 0; i < resListPtr->resourceList->declList.num; i++)
      {
-         std::string declName = containerPtr->declWeaponPtr->getNameStr();
+         //std::string declName = containerPtr->declWeaponPtr->getNameStr();
+         std::string declName = idResourceManager::getDeclWeaponName(containerPtr->declWeaponPtr);
          if (declName == "weapon/player/shotgun") {
              declWeaponPtrVec.push_back(containerPtr->declWeaponPtr);
          }
@@ -235,7 +236,8 @@
 
      for (size_t i = 0; i < resListPtr->resourceList->declList.num; i++)
      {
-         std::string declName = containerPtr->declWeaponPtr->getNameStr();
+         //std::string declName = containerPtr->declWeaponPtr->getNameStr();
+         std::string declName = idResourceManager::getDeclWeaponName(containerPtr->declWeaponPtr);
          if (declName.starts_with(inputStr)) {
              declWeaponPtrVec.push_back(containerPtr->declWeaponPtr);
          }
@@ -261,7 +263,8 @@
      logInfo("debugLogPlayerDeclWeapons: Player decl Weapons:");
      for (size_t i = 0; i < resListPtr->resourceList->declList.num; i++)
      {
-         std::string declName = containerPtr->declWeaponPtr->getNameStr();
+         //std::string declName = containerPtr->declWeaponPtr->getNameStr();
+         std::string declName = idResourceManager::getDeclWeaponName(containerPtr->declWeaponPtr);
          if (declName.starts_with("weapon/player/")) {
              logInfo("\tname: %s ptr: %p", declName.c_str(), containerPtr->declWeaponPtr);
          }
@@ -292,17 +295,15 @@
 
      for (size_t i = 0; i < resListPtr->resourceList->declList.num; i++)
      {
-         std::string declName = containerPtr->declWeaponPtr->getNameStr();
+         //std::string declName = containerPtr->declWeaponPtr->getNameStr();
+         std::string declName = idResourceManager::getDeclWeaponName(containerPtr->declWeaponPtr);
          logInfo("%s", declName.c_str());
          containerPtr++;
      }
 
      //logInfo("getResourceVecForClsName debug: input: %s  resListPtr is %p ", classname, resListPtr);
 
-
-
      return idResVec;
-
  }
 
 
