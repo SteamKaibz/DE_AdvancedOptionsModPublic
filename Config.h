@@ -50,12 +50,15 @@ private:
 	static inline bool m_isModSandboxVersion = false;
 #endif
 
+//? Warning: DevMode does not have _DEBUG defined (way to speed up build times) another Dev_Debug solution config could be added.
 #ifdef DE_DEV
 	static inline bool m_isDevMode = true;
 #else
 	static inline bool m_isDevMode = false;
 #endif
 
+	//x not using _DEBUG macro as debug mode for the nexus release doesn't mean and actual debug but simply more log verbose and more sanity check like for exampl is isBadPtr(). the _DEBUG macro would also make build time significantly longer.
+	//todo could improve build time with precompile headers (?)
 #ifdef _DEBUG
 	static inline bool  m_isDebugMode = true;
 #else

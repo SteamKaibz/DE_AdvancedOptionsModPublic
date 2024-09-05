@@ -72,6 +72,8 @@ public:
 
     static std::string getDbgStrForImgui();
 
+    static void TestForceOverdrive();
+
     static void resetLastBloodPunchCount();
 
     //! bp and desperate punch

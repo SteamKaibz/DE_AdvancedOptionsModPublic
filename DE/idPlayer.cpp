@@ -98,6 +98,22 @@ std::string idPlayer_K::getDbgStrForImgui() {
 }
 
 
+void idPlayer_K::TestForceOverdrive() {
+
+    idPlayer* idPlayerObj = idMapInstanceLocalManager::getIdPlayer();
+
+    if (!idPlayerObj) {
+        logErr("TestForceOverdrive: is nullptr");
+        return ;
+    }
+
+    __int64 IdMapInstanceLocal = idMapInstanceLocalManager::getIdMapInstanceLocalPtr();
+    __int64 idCheatCodeManager = IdMapInstanceLocal + 0x1ABF38;
+
+    logInfo("TestForceOverdrive: IdMapInstanceLocal: %p idCheatCodeManager: %p", (void*)IdMapInstanceLocal, (void*)idCheatCodeManager);
+}
+
+
  void idPlayer_K::resetLastBloodPunchCount() {
     logDebug("resetLastBloodPunchCount");
     m_lastBloodPunchCount = -1;

@@ -8,6 +8,7 @@ Options list:  https://www.nexusmods.com/doometernal/mods/1255
 
 ## Prerequisites
 - Visual Studio 2022 or later
+- Optional: CommentsPlus17 extension (extra formatting/colors for comments) https://marketplace.visualstudio.com/items?itemName=mhoumann.CommentsPlusDev17Preview
 
 
 ## How to Build
