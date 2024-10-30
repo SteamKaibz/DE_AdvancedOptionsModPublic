@@ -3,6 +3,7 @@
 //? atm the order and includs in this file is important to be able to build, we need to sanatize all this....
 
 #include <windows.h>
+#include <DbgHelp.h>
 #include <thread>
 #include <intrin.h>
 #include <string>
