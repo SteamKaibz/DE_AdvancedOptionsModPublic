@@ -1124,7 +1124,8 @@ namespace Reticle {
 namespace modSettingsDefault {
 
 
-	static const bool defaultIsFirstTimeModLaunch = true;	
+	static const bool defaultGenerateCrashDump = false;
+	static const bool defaultIsFirstTimeModLaunch = true;
 
 	static const unsigned int defaultToggleModSettingsVkCode = VK_F8;
 	static const int  defaultmodSettingsShortcutTextColorImU32 = IM_COL32(255, 255, 255, 255); //white

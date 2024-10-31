@@ -31,8 +31,9 @@ void modSettings::loadSettings()
 
     try {       
         nlohmann::json j;
-        file >> j;  
-       
+        file >> j;
+
+        m_generateCrashDump = j.value("m_generateCrashDump", modSettingsDefault::defaultGenerateCrashDump);
         m_isFirstTimeModLaunch = j.value("m_isFirstTimeModLaunch", modSettingsDefault::defaultIsFirstTimeModLaunch);
 
         m_isUseDedicatedNadeKeys = j.value("m_isUseDedicatedNadeKeys", modSettingsDefault::defaultIsUseDedicatedNadeKeys);
@@ -191,6 +192,7 @@ void modSettings::saveSettings()
 
     nlohmann::json j;
 
+    j["m_generateCrashDump"] = m_generateCrashDump;
     j["m_isFirstTimeModLaunch"] = m_isFirstTimeModLaunch;
 
     j["m_isUseDedicatedNadeKeys"] = m_isUseDedicatedNadeKeys;
@@ -428,7 +430,9 @@ void modSettings::apply()
 //    }
 //}
 
-
+bool modSettings::getGenerateCrashDump() {
+    return m_generateCrashDump;
+}
 
 bool modSettings::getIsFirstTimeModLaunch()  {
     return m_isFirstTimeModLaunch;

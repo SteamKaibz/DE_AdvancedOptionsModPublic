@@ -456,6 +456,26 @@ int Exit() {
 }
 
 
+LONG WINAPI CrashDumpExeptionFilter(PEXCEPTION_POINTERS pExceptionPointers) {
+	const HANDLE hFile = CreateFileA("DE_AdvancedOptionsMod.dmp", GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	if (hFile == INVALID_HANDLE_VALUE)
+	{
+		return EXCEPTION_EXECUTE_HANDLER;
+	}
+
+	MINIDUMP_EXCEPTION_INFORMATION info{};
+	info.ThreadId = GetCurrentThreadId();
+	info.ExceptionPointers = pExceptionPointers;
+	info.ClientPointers = TRUE;
+
+	MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hFile, MiniDumpNormal, &info, nullptr, nullptr);
+	
+	CloseHandle(hFile);
+
+	return EXCEPTION_EXECUTE_HANDLER;
+}
+
 
 //! Reminder: the way to load this dll with xenos is simply to change the output name to smth like somedll.dll.
 DWORD WINAPI ModMain() {
@@ -547,9 +567,11 @@ DWORD WINAPI ModMain() {
 		}		
 	}
 
+	if (modSettings::getGenerateCrashDump()) {
+		SetUnhandledExceptionFilter(CrashDumpExeptionFilter);
+	}
 
 	Config::printHeaderInLogFile();
-
 
 	//? this actually works even if we don't need it atm. KEEP IT
 	/*logInfo("attempting to change Config mid func let's see it if works....");

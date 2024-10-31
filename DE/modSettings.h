@@ -46,6 +46,7 @@ private:
 	//? this will be true as long as the user has not been in the mod menu at least once, which is ok because they will need to go in the menu to enabled the custom hud anyway. The idea is that the settings save only when out of the mod menu.
 	static inline bool m_isLoadSettingsCalled = false; //! set to true first time settings loaded, even if it fails.
 	
+	static inline bool m_generateCrashDump = modSettingsDefault::defaultGenerateCrashDump;
 	static inline bool m_isFirstTimeModLaunch = modSettingsDefault::defaultIsFirstTimeModLaunch;
 
 	static inline bool m_isUseDedicatedNadeKeys = modSettingsDefault::defaultIsUseDedicatedNadeKeys;
@@ -240,6 +241,8 @@ public:
 	//static void sanatizeData(std::string callerStr);
 
 	//static void update(bool isShowModMenu); //! loading and saving when needed
+
+	static bool getGenerateCrashDump();
 
 	//? will be set to false fist time this func is called.
 	static bool getIsFirstTimeModLaunch();
