@@ -1613,19 +1613,11 @@ enum idDeclHUDElement_idHudSWFInfo_t_hudElementPerspective_t : int32_t {
 };
 
 
-enum idWeapon_chargeState_t : int32_t {
-	CHARGE_STATE_NONE = 0,
-	CHARGE_STATE_READY = 1,
-	CHARGE_STATE_CHARGING = 2,
-	CHARGE_STATE_FULLY_CHARGED = 3,
-	CHARGE_STATE_DISCHARGING = 4,
-	CHARGE_STATE_COOLING = 5,
-	CHARGE_STATE_SUSPENDED = 6
-};
 
 
 
 
+//? these are generated classes for DE_VERSION_SANDBOX
 
 // 
 //? generated classes for for DE_VERSION_SANDBOX Game Build: 20240822-095543-coral-blue (Sand_V2)

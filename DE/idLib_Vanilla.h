@@ -3,6 +3,7 @@
 
 /// you can paste from here:
 
+//? these are generated enums for DE_VERSION_VANILLA
 
 //? generated enums for DE_VERSION_VANILLA Game Build: 20240722-204955-eggplant-purple (Van_V1)
 
@@ -1627,8 +1628,7 @@ enum idWeapon_chargeState_t : int32_t {
 
 
 
-// 
-//? generated classes for DE_VERSION_VANILLA Game Build: 20240722-204955-eggplant-purple (Van_V1)
+//? these are generated classes for DE_VERSION_VANILLA
 
 // forward declarations
 struct fontInfo_t;

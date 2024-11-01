@@ -616,6 +616,44 @@ DWORD WINAPI ModMain() {
 
 	
 
+		if (GameVersionInfoManager::isNewGameUpdateReleased()) {
+			logWarn("This version of the game: %s is newer than the version the mod was made for, mod 'may' not work as attended or not work at all.", GameVersionInfoManager::getBuildVersionStr().c_str());
+
+		}
+		else {
+			logInfo("Game build Version is as expected: %s", GameVersionInfoManager::getBuildVersionStr().c_str());
+		}
+	}*/
+		if (GameVersionInfoManager::isNewGameUpdateReleased()) {
+			logWarn("This version of the game: %s is newer than the version the mod was made for, mod 'may' not work as attended or not work at all.", GameVersionInfoManager::getBuildVersionStr().c_str());
+
+		}
+		else {
+			logInfo("Game build Version is as expected: %s", GameVersionInfoManager::getBuildVersionStr().c_str());
+		}
+	}*/
+
+
+	/*if (Config::get() != ModConfig::nexusRelease) {
+
+		logInfo("Listing Running processes to check for potential conflicts. (Keep in mind that any of those could conflict with this mod but it's up to you to experiment and temporarily disable/quite some of those applications to see if it will help with the issues you are currently having with the mod. You can open the task manager and check where each of this process is located)");
+		logInfo("**** Listing Processes ****");
+
+		std::unordered_set<std::string> runningProcessesSet = K_Utils::GetUniqueRunningProcessesSet();
+		int counter = 0;
+		for (const auto& process : runningProcessesSet)
+		{
+			if (process == ConflictingApps::MsiAfterBurnerProcessName) {
+				logWarn("%s is an application that might make the mod crash/freeze.", process.c_str());
+			}
+			else {
+				logInfo("%s", process.c_str());
+			}
+			counter++;
+		}
+		logInfo("**** Done listing %d processes. *****", counter);
+	}*/
+
 
 	if (!Config::isModError()) {
 		if (Config::isDevMode() || Config::isDebugMode()) {
