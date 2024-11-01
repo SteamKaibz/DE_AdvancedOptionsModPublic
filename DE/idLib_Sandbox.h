@@ -1,7 +1,9 @@
 #pragma once
 #include "idLib_Static.h"
+/// this is where you can start pasting generated data:
 
-//? these are generated enums for DE_VERSION_SANDBOX
+
+//? generated enums for DE_VERSION_SANDBOX Game Build: 20240822-095543-coral-blue (Sand_V2)
 
 #include <cstdint>
 
@@ -1611,11 +1613,19 @@ enum idDeclHUDElement_idHudSWFInfo_t_hudElementPerspective_t : int32_t {
 };
 
 
+enum idWeapon_chargeState_t : int32_t {
+	CHARGE_STATE_NONE = 0,
+	CHARGE_STATE_READY = 1,
+	CHARGE_STATE_CHARGING = 2,
+	CHARGE_STATE_FULLY_CHARGED = 3,
+	CHARGE_STATE_DISCHARGING = 4,
+	CHARGE_STATE_COOLING = 5,
+	CHARGE_STATE_SUSPENDED = 6
+};
 
 
-
-
-//? these are generated classes for DE_VERSION_SANDBOX
+// 
+//? generated classes for for DE_VERSION_SANDBOX Game Build: 20240822-095543-coral-blue (Sand_V2)
 
 // forward declarations
 struct fontInfo_t;
@@ -1641,6 +1651,7 @@ struct idFont;
 struct idGK_UpgradeHandler;
 struct idGUIComponent;
 struct idGameSystemLocal;
+struct idGlobalEncounterManager;
 struct idHUD;
 struct idHUDElement;
 struct idHUDEvent_ReticleDataUpdate_idReticleData_t;
@@ -1675,6 +1686,7 @@ struct idStr;
 struct idStrId;
 struct idUIElement;
 struct idWeapon;
+struct idWeapon_chargeParms_t;
 struct swfDisplayEntry_t;
 struct tagData_t;
 
@@ -1896,6 +1908,17 @@ struct idDeclWeapon {
 static_assert(sizeof(idDeclWeapon) == 9000, "Size of idDeclWeapon is wrong !");
 
 
+struct idWeapon_chargeParms_t {
+	// Offset: 0x0 (0d) Size: 0x4 (4d)
+	char pad_0[4];
+	// Offset: 0x4 (4d)  Size: 0x4 (4d)	the charge state
+	idWeapon_chargeState_t chargeState;
+	// Offset: 0x8 (8d) Size: 0x158 (344d)
+	char pad_End[344];
+}; // size: 0x160 (Size Dec: 352)
+static_assert(sizeof(idWeapon_chargeParms_t) == 352, "Size of idWeapon_chargeParms_t is wrong !");
+
+
 // idWeapon : idInventoryItem : idEventReceiver : idManagedClass : idClass : idEventArgUser
 struct idWeapon {
 	// Offset: 0x0 (0d) Size: 0x23d8 (9176d)
@@ -1906,8 +1929,12 @@ struct idWeapon {
 	bool playedIntroBringUp;
 	// Offset: 0x23DA (9178d)  Size: 0x1 (1d)	was this weapon disabled due to a game challenge ( unselectable )
 	bool gameChallengeDisabled;
-	// Offset: 0x23DB (9179d) Size: 0x17DD (6109d)
-	char pad_End[6109];
+	// Offset: 0x23db (9179d) Size: 0xd8d (3469d)
+	char pad_9179[3469];
+	// Offset: 0x3168 (12648d)  Size: 0x160 (352d)	charging
+	idWeapon_chargeParms_t chargeParms;
+	// Offset: 0x32C8 (13000d) Size: 0x8F0 (2288d)
+	char pad_End[2288];
 }; // size: 0x3bb8 (Size Dec: 15288)
 static_assert(sizeof(idWeapon) == 15288, "Size of idWeapon is wrong !");
 
@@ -3882,6 +3909,15 @@ struct alignas(8) idDeclUIColor {
 static_assert(sizeof(idDeclUIColor) == 5528, "Size of idDeclUIColor is wrong !");
 
 
-
+// idGlobalEncounterManager : idClass : idEventArgUser
+struct idGlobalEncounterManager {
+	// Offset: 0x0 (0d) Size: 0x10 (16d)
+	char pad_0[16];
+	// Offset: 0x10 (16d)  Size: 0x4 (4d)
+	int currentGlobalEncounterID;
+	// Offset: 0x14 (20d) Size: 0x8CC (2252d)
+	char pad_End[2252];
+}; // size: 0x8e0 (Size Dec: 2272)
+static_assert(sizeof(idGlobalEncounterManager) == 2272, "Size of idGlobalEncounterManager is wrong !");
 
 

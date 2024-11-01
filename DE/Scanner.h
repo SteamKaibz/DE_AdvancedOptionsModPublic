@@ -14,7 +14,7 @@
 #include "../DE/idResourceListManager.h"
 #include "../DE/LangManager.h"
 #include "../DE/BindLabelChanger.h"
-#include "../DE/GameVersionInfoManager.h"
+#include "GameInfoManager.h"
 #include "../DE/idMapInstanceLocalManager.h"
 #include "../DE/idCvarManager.h"
 #include "../DE/ColorManager.h"
@@ -24,6 +24,7 @@
 #include "../DE/idHudEventManager.h"
 #include "../DE/winFocusManager.h"
 #include "../DE/EquipmentManager.h"
+
 
 
 

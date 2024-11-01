@@ -2,8 +2,7 @@
 
 
 ## Project Description
-DE Advanced Options Mod provides additional customization options for Doom Eternal. 
-Options list:  https://www.nexusmods.com/doometernal/mods/1255
+This is the source for DE Advanced Options Mod:  https://www.nexusmods.com/doometernal/mods/1255
 
 
 ## Prerequisites
@@ -32,18 +31,14 @@ Options list:  https://www.nexusmods.com/doometernal/mods/1255
    - Ensure it's set to `msimg32`
 
 5. **Select Configuration**:
-   - Use the drop-down in the toolbar to select either `Vanilla` or `Sandbox` from the Solution Configuration.
+   - Use the drop-down in the toolbar to select either `Vanilla` or `Sandbox` or any other configuration you want from the Solution Configuration. (the configurations with Dev_ will give acces to shortcut in the game to display or test certain features. The configs with Debug_ prefix will use default Debug settings and will have more safety nets for ex for the isbarPtr() function)
 
 6. **Build the Project**:
    - Press `Ctrl + Shift + B` or go to `Build` -> `Build Solution`.
 
 
 ## Usage Instructions
-After building the DLL, place it in the appropriate directory as follows:
-- For Vanilla: ...Steam\steamapps\common\DOOMEternal
-- For Sandbox: ...Steam\steamapps\common\DOOMEternal\doomSandBox
-
-Launch the game and access the mod's options using the shortcut shown bottom right of the screen.
+See the instructions on the nexus page for detailed information on how to install/use the mod.
 
 
 ## How to generate game data (classes, enums, events...)
@@ -64,8 +59,9 @@ This project is licensed under the BSD-2-Clause license.
 - [MinHook](https://github.com/TsudaKageyu/minhook) - Used for functions hooking
 - [nlohmann Json](https://github.com/nlohmann/json) - Json library
 
-- Thanks to https://github.com/belazr for UniversalHook fixes and general contributions
-- Thanks to https://github.com/Decimation for advices and improvements
-- Thanks to MethanHydrat for getting me into modding and his work/advices
+- Thanks to https://github.com/belazr for UniversalHook fixes and general contributions.
+- Thanks to https://github.com/Decimation for advices and improvements.
+- Thanks to MethanHydrat for getting me into modding and his work/advices.
+- Thanks to SamPt for his advices/feedback.
 - Thanks to Chrispy for his work on Meathook mod.
-- Thanks to Sunbeam for all the knowledge he shared
+- Thanks to Sunbeam for all the knowledge he shared;

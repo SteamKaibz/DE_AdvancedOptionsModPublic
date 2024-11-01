@@ -1,5 +1,5 @@
 #include "Config.h"
-//#include "../DE/GameVersionInfoManager.h"
+//#include "../DE/GameInfoManager.h"
 
 
 
@@ -260,26 +260,113 @@ bool Config::isLogIdConsoleToFile()
 //	return m_isImprovedWeaponSwitchingEnabled;
 //}
 
-void Config::printHeaderInLogFile()
-{
-	logInfo(getLogHeaderString().c_str());	
+//void Config::logConfigSummary()
+//{
+//	logInfo(getInfoSummaryStr().c_str());
+//}
+
+
+std::string Config::getGameVersionK_Str() {
+	
+	static bool isFirstime = true;
+
+	std::string gameBuildResultStr = "Game Build Unknown";
+	std::string gameBuildStrCustomResult = "???";
+
+	// Check if the build string exists in the map
+	auto it = GameBuildVersionMap.find(m_currentGameVersionStr);
+
+	// If found, return the version, otherwise return "Unknown_Game_Version"
+	if (it != GameBuildVersionMap.end()) {
+		gameBuildResultStr = it->first;
+		gameBuildStrCustomResult = it->second;
+
+		if (m_currentGameVersionStr == OLD_REVISION_3_GAME_BUILD_STR) {
+			if (isFirstime) {
+				logWarn("Game version is OLD_REVISION_3_GAME_BUILD, mod might not work as intended or at all, or crash");
+			}
+		}
+	}
+	else {
+		if (isFirstime) {
+			logWarn("Game version is Unknown, user is using an old game version or the game has been updated ");
+		}
+
+		if (m_currentGameVersionStr.empty()) {
+			logErr("getGameVersionK_Str: m_currentGameVersionStr is empty, Config::aquireGameVersionStr has not been called or returned unexpected result !");
+		}
+	}
+
+	isFirstime = false;
+	
+	return "Game Build: " +  gameBuildResultStr + " - " + gameBuildStrCustomResult;
 }
 
 
+void Config::aquireGameVersionStr(std::string gameVersionStr) {
+	m_currentGameVersionStr = gameVersionStr;
+}
+
+void Config::aquireWindowsVersion(std::string windowsVersionStr) {
+	m_windowsVersionStr = windowsVersionStr;
+}
+
+void Config::acquireCpuInfo(std::string cpuInfoStr) {
+	m_cpuInfoStr = cpuInfoStr;
+}
+
+void Config::acquireGpuInfo(std::string gpuInfoStr) {
+	m_gpuInfoStr = gpuInfoStr;
+}
 
 
+std::string Config::getInfoSummaryStr() {
 
-std::string Config::getLogHeaderString()
+	std::string resultStr = "Windows version : " + m_windowsVersionStr + "\n";
+	resultStr += "CPU Info : " + m_cpuInfoStr + "\n";
+	resultStr += "GPU Info : " + m_gpuInfoStr + "\n";
+	resultStr += "Mod Name : " + MOD_FULL_NAME + "\n";
+	resultStr += "Mod Version " + getModVersionAsStr() + "\n";
+	resultStr += "Mod Build: " + getModBuildStr() + "\n";
+	resultStr += "Game Exe : " + getCurrentModuleNameStrToLower() + "\n";
+	resultStr += "Game Build: " + getGameVersionK_Str() + "\n";
+	if (m_isModError) {
+		resultStr += "Mod state: ERROR\n";
+	}
+	else {
+		resultStr += "Mod state: All good\n";
+	}
+	return resultStr;
+}
+
+
+std::string Config::getInfoSummaryForLogFile()
 {
-	std::string headerStr =
-		"\n\n\n============================================================================================================\nThis is the log file.\nGame Exe: "+ getCurrentModuleNameStrToLower() + "\nMod Name : " + MOD_FULL_NAME
-		+ "    Version " + getModVersionAsStr() + "    Build: " + getModBuildStr() + "\n"
-		+ "For more info check the mod description page on the Nexus mod page. " + "\n"
-		+ "============================================================================================================" + "\n\n\n"
-		;
+	std::string headerStr;
+	headerStr += "\n\n\n";
+	headerStr += "============================================================================================================\n";
+	headerStr += "Info Summary:\n";
+	headerStr += getInfoSummaryStr();
+	headerStr += "============================================================================================================\n";
+	headerStr += "\n\n\n";	
 
 	return headerStr;
 }
+
+
+std::string Config::getModInfoTextForGui()
+{
+	std::string result = "";
+
+	result += getInfoSummaryStr();
+	result += "\n\n";
+	result += "Credits: ";
+	result += "\n\n";
+	result += getCreditsStr();
+
+	return result;
+}
+
 
 
 
@@ -333,6 +420,9 @@ std::string Config::getModBuildStr() {
 	return result;
 	//return "Mod Version: " + result + " (Build Date: " + BUILD_DATE + ")";
 }
+
+
+
 
 
 //std::string Config::getModConfigStr()
@@ -418,30 +508,7 @@ std::string Config::getCreditsStr() {
 
 
 
-std::string Config::getModInfoTextForGui()
-{
-	std::string result = "";
 
-	result += "Game Exe Version: ";
-	result += DE_VANILLA_MODULE_NAME_TOLOWER;
-	result += "Mod Name: ";
-	result += MOD_FULL_NAME;
-	result += "\n\n";
-	result += "Mod Version: ";
-	result += getModVersionAsStr();
-	result += "  ";
-	result += "Mod Build: ";
-	result += getModBuildStr();
-	result += "\n\n";	
-	result += "For more Info about the mod (changelog, troubleshooting, bug report...)check the mod nexus page";
-	//result += MOD_NEXUS_LINK;
-	result += "\n\n";
-	result += "Credits: ";
-	result += "\n\n";
-	result += getCreditsStr();
-
-	return result;
-}
 
 std::string Config::getGameDirectoryStr()
 {

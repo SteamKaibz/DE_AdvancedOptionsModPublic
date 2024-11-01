@@ -25,6 +25,8 @@ private:
 	static inline idCVar* m_sys_langCvarPtr = nullptr;
 	static inline idCVar* m_r_antialiasingCvarPtr = nullptr;
 	static inline idCVar* m_hands_fovScaleCvarPtr = nullptr;
+	static inline idCVar* m_pm_sprintspeedCvarPtr = nullptr;
+	static inline idCVar* m_hud_globalalphaCvarPtr = nullptr;
 
 
 
@@ -55,6 +57,10 @@ public:
 	static antialiasingLevel getCurAntiAliasLevel();
 
 	static float getCurHands_fovScale();
+
+	static float getSprintSpeed();
+
+	static float getHudAlpha();
 
 	static std::string getDbgStrFromImgui();
 

@@ -38,10 +38,11 @@
 	}
 
 	
-	if (!idCvarManager::acquireSetInternalFuncAddr((uintptr_t)MemHelper::ModulePatternScan("idInternalCVar_SetSig", idInternalCVar_SetSig))) {
+	//? not using this, not safe enough, will use execute command instead
+	/*if (!idCvarManager::acquireSetInternalFuncAddr((uintptr_t)MemHelper::ModulePatternScan("idInternalCVar_SetSig", idInternalCVar_SetSig))) {
 		logErr("scanForAddrs failed for idInternalCVarSetSig");
 		return false;
-	}
+	}*/
 
 
 	//? this is not technically a scan, but i'll put it here for now...Meaning it will stay here forever surely.
@@ -71,6 +72,15 @@
 		logErr("scanForAddrs failed for acquirreIdGameSystemLocalPtrAdrr");
 		return false;
 	}
+
+
+	char* idGlobalEncounterManagerInstructionAddr = (char*)(MemHelper::ModulePatternScan("idMapInstanceLocal_idGlobalEncounterManagerSig", idMapInstanceLocal_idGlobalEncounterManagerSig));
+	idGlobalEncounterManagerInstructionAddr += 3;
+	if (!idMapInstanceLocalManager::acquireIdGlobalEncounterManagerOffset((uintptr_t)idGlobalEncounterManagerInstructionAddr)) {
+		logErr("scanForAddrs failed for idMapInstanceLocal_idGlobalEncounterManagerSig");
+		return false;
+
+	}	
 
 
 	if (!idEventManager::acquireIdEventDefInterfaceLocal(TypeInfoManager::getIdEventDefInterface())) {
@@ -134,7 +144,7 @@
 	}
 
 
-	static const std::vector<unsigned char> RestrictIdConsoleNewInstructionVec = { 0x01 };
+	//static const std::vector<unsigned char> RestrictIdConsoleNewInstructionVec = { 0x01 };
 	static const std::vector<unsigned char> UnlockMaxNamedIdColorsPatchNewInstructionVec = { 0x02 };
 
 	if (!Patcher::patchIfNeeded("UnlockMaxNamedIdColors", ((uintptr_t)MemHelper::ModulePatternScan("maxSwfNamedColorsV2Sig", maxSwfNamedColorsV2Sig) - 3), UnlockMaxNamedIdColorsPatchNewInstructionVec)) {
@@ -239,6 +249,8 @@
 		logErr("scanForAddrs failed for SwitchEquipmentItemFpSig");
 		return false;
 	}
+
+	
 	
 
 
@@ -499,8 +511,15 @@
 		return false;
 	}
 
+
+	if (!GameInfoManager::acquireGpuInfoVar(MemHelper::FindPtrFromRelativeOffset(((uintptr_t)MemHelper::ModulePatternScan("GpuInfoStartSig", GpuInfoStartSig)), 3, 7))) {
+		logErr("scanForAddrs failed for GpuInfoStartSig");
+		return false;
+	}
+	
+
 	//? don't need this thers is a cvar for it
-	/*qsdfif (!GameVersionInfoManager::acquirreBuildStrPtrAdd((__int64**)MemHelper::FindPtrFromRelativeOffset((uintptr_t)MemHelper::ModulePatternScan("BuildInformationStrSig", BuildInformationStrSig), 3, 7))) {
+	/*qsdfif (!GameInfoManager::acquirreBuildStrPtrAdd((__int64**)MemHelper::FindPtrFromRelativeOffset((uintptr_t)MemHelper::ModulePatternScan("BuildInformationStrSig", BuildInformationStrSig), 3, 7))) {
 		logErr("scanForAddrs failed for BuildInformationStrSig");
 		return false;
 	}*/

@@ -1,9 +1,13 @@
 #pragma once
 #include "idLib_Static.h"
 
-#include <cstdint> //! for enums
+/// you can paste from here:
 
-//? these are generated enums for DE_VERSION_VANILLA
+
+//? generated enums for DE_VERSION_VANILLA Game Build: 20240722-204955-eggplant-purple (Van_V1)
+
+#include <cstdint>
+
 
 enum idDeclWeapon_weaponCategory_t : int32_t {
 	WEAPON_CATEGORY_MELEE = 0,
@@ -81,8 +85,6 @@ enum idPlayer_playerUseState_t : int32_t {
 	USE_STATE_WAITING_FOR_RELOAD = 4,
 	USE_STATE_WAITING_FOR_USE_RELEASE = 5
 };
-
-
 
 
 enum eventFlags_t : int32_t {
@@ -1612,11 +1614,22 @@ enum idDeclHUDElement_idHudSWFInfo_t_hudElementPerspective_t : int32_t {
 };
 
 
+enum idWeapon_chargeState_t : int32_t {
+	CHARGE_STATE_NONE = 0,
+	CHARGE_STATE_READY = 1,
+	CHARGE_STATE_CHARGING = 2,
+	CHARGE_STATE_FULLY_CHARGED = 3,
+	CHARGE_STATE_DISCHARGING = 4,
+	CHARGE_STATE_COOLING = 5,
+	CHARGE_STATE_SUSPENDED = 6
+};
 
 
 
 
-//? these are generated classes for DE_VERSION_VANILLA
+
+// 
+//? generated classes for DE_VERSION_VANILLA Game Build: 20240722-204955-eggplant-purple (Van_V1)
 
 // forward declarations
 struct fontInfo_t;
@@ -1642,6 +1655,7 @@ struct idFont;
 struct idGK_UpgradeHandler;
 struct idGUIComponent;
 struct idGameSystemLocal;
+struct idGlobalEncounterManager;
 struct idHUD;
 struct idHUDElement;
 struct idHUDEvent_ReticleDataUpdate_idReticleData_t;
@@ -1676,6 +1690,7 @@ struct idStr;
 struct idStrId;
 struct idUIElement;
 struct idWeapon;
+struct idWeapon_chargeParms_t;
 struct swfDisplayEntry_t;
 struct tagData_t;
 
@@ -1897,6 +1912,17 @@ struct idDeclWeapon {
 static_assert(sizeof(idDeclWeapon) == 9000, "Size of idDeclWeapon is wrong !");
 
 
+struct idWeapon_chargeParms_t {
+	// Offset: 0x0 (0d) Size: 0x4 (4d)
+	char pad_0[4];
+	// Offset: 0x4 (4d)  Size: 0x4 (4d)	the charge state
+	idWeapon_chargeState_t chargeState;
+	// Offset: 0x8 (8d) Size: 0x158 (344d)
+	char pad_End[344];
+}; // size: 0x160 (Size Dec: 352)
+static_assert(sizeof(idWeapon_chargeParms_t) == 352, "Size of idWeapon_chargeParms_t is wrong !");
+
+
 // idWeapon : idInventoryItem : idEventReceiver : idManagedClass : idClass : idEventArgUser
 struct idWeapon {
 	// Offset: 0x0 (0d) Size: 0x23c8 (9160d)
@@ -1907,8 +1933,12 @@ struct idWeapon {
 	bool playedIntroBringUp;
 	// Offset: 0x23CA (9162d)  Size: 0x1 (1d)	was this weapon disabled due to a game challenge ( unselectable )
 	bool gameChallengeDisabled;
-	// Offset: 0x23CB (9163d) Size: 0x17D5 (6101d)
-	char pad_End[6101];
+	// Offset: 0x23cb (9163d) Size: 0xd8d (3469d)
+	char pad_9163[3469];
+	// Offset: 0x3158 (12632d)  Size: 0x160 (352d)	charging
+	idWeapon_chargeParms_t chargeParms;
+	// Offset: 0x32B8 (12984d) Size: 0x8E8 (2280d)
+	char pad_End[2280];
 }; // size: 0x3ba0 (Size Dec: 15264)
 static_assert(sizeof(idWeapon) == 15264, "Size of idWeapon is wrong !");
 
@@ -3883,5 +3913,15 @@ struct alignas(8) idDeclUIColor {
 static_assert(sizeof(idDeclUIColor) == 5528, "Size of idDeclUIColor is wrong !");
 
 
+// idGlobalEncounterManager : idClass : idEventArgUser
+struct idGlobalEncounterManager {
+	// Offset: 0x0 (0d) Size: 0x10 (16d)
+	char pad_0[16];
+	// Offset: 0x10 (16d)  Size: 0x4 (4d)
+	int currentGlobalEncounterID;
+	// Offset: 0x14 (20d) Size: 0x8CC (2252d)
+	char pad_End[2252];
+}; // size: 0x8e0 (Size Dec: 2272)
+static_assert(sizeof(idGlobalEncounterManager) == 2272, "Size of idGlobalEncounterManager is wrong !");
 
 

@@ -2,8 +2,8 @@
 
 #include <windows.h>
 #include <string>
-#include "../Config.h"
 #include "enumsCustom.h"
+#include "../Config.h"
 
 
 
@@ -472,7 +472,7 @@ struct idVec4 {
 		h = _h;
 	}
 
-	void print() {
+	/*void print() {
 		logInfo("print:  x: %.2f, y: %.2f, w: %.2f, h: %.2f,", x, y, w, h);
 	}
 
@@ -482,7 +482,7 @@ struct idVec4 {
 
 	void printMsg(std::string str) {
 		logInfo("printMsg: %s:  x: %.2f, y: %.2f, w: %.2f, h: %.2f,", str.c_str(), x, y, w, h);
-	}
+	}*/
 };
 
 struct idVec4_Bounds {

@@ -148,6 +148,8 @@ public:
 
 	static void setIsForceAiHaste(bool isForceAiHaste);
 
+	static void setPlayerSprintSpeed(float speedF);
+
 
 
 

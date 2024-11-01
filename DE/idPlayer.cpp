@@ -7,7 +7,7 @@ std::string idPlayer_K::getDbgStrForImgui() {
     static uint64_t lastDebugLoopCheckMs = 0;
     std::string resultStr = "idPlayer: Debug:\n";
 
-    __int64 IdMapInstanceLocalPtr = idMapInstanceLocalManager::getIdMapInstanceLocalPtr();
+    __int64 IdMapInstanceLocalPtr = idMapInstanceLocalManager::getIdMapInstanceLocalPtP();
     resultStr += "\tIdMapInstanceLocalPtr: " + K_Utils::intToHexString(IdMapInstanceLocalPtr) + "\n";
 
     idPlayer* idPlayerPtr = idMapInstanceLocalManager::getIdPlayer();
@@ -98,20 +98,48 @@ std::string idPlayer_K::getDbgStrForImgui() {
 }
 
 
-void idPlayer_K::TestForceOverdrive() {
+/// <summary>
+/// mainly used to let player move faster when in the hub map and only when no enemies are around.
+/// </summary>
+//todo add user setting
+void idPlayer_K::autoManagePlayerSpeed() {
+    //const float defaultSprintSpeed = 9.525f;
 
-    idPlayer* idPlayerObj = idMapInstanceLocalManager::getIdPlayer();
-
-    if (!idPlayerObj) {
-        logErr("TestForceOverdrive: is nullptr");
-        return ;
+    std::string curMapName = idMapInstanceLocalManager::getCurrentMapNameStr();
+    float currPlayerSpeedF = fastCvarManager::getSprintSpeed();
+    if (currPlayerSpeedF < 0) {
+        logErr("autoManagePlayerSpeed: currPlayerSpeedF is < 0 (?!)");
+        return;
     }
 
-    __int64 IdMapInstanceLocal = idMapInstanceLocalManager::getIdMapInstanceLocalPtr();
-    __int64 idCheatCodeManager = IdMapInstanceLocal + 0x1ABF38;
+    if (modSettings::getIsSpeedBoostInHudMap() && (curMapName == GameMapName::Hub) && (!idMapInstanceLocalManager::isEncounterActive())) {
+        if (currPlayerSpeedF != LocalPlayer::SprintSpeedInHub) {
+            idCmd::setPlayerSprintSpeed(LocalPlayer::SprintSpeedInHub);
+        }       
+    }
 
-    logInfo("TestForceOverdrive: IdMapInstanceLocal: %p idCheatCodeManager: %p", (void*)IdMapInstanceLocal, (void*)idCheatCodeManager);
+    else {
+        if (currPlayerSpeedF != LocalPlayer::SprintSpeedDefault) {
+            idCmd::setPlayerSprintSpeed(LocalPlayer::SprintSpeedDefault);
+        }
+    }
 }
+
+//! do not need this anymore anyway as there is a better way of changing player speed using a cvar.
+//void idPlayer_K::TestForceOverdrive() {
+//
+//    idPlayer* idPlayerObj = idMapInstanceLocalManager::getIdPlayer();
+//
+//    if (!idPlayerObj) {
+//        logErr("TestForceOverdrive: is nullptr");
+//        return ;
+//    }
+//
+//    __int64 IdMapInstanceLocal = idMapInstanceLocalManager::getIdMapInstanceLocalPtP();
+//    __int64 idCheatCodeManager = IdMapInstanceLocal + 0x1ABF38;
+//
+//    logInfo("TestForceOverdrive: IdMapInstanceLocal: %p idCheatCodeManager: %p", (void*)IdMapInstanceLocal, (void*)idCheatCodeManager);
+//}
 
 
  void idPlayer_K::resetLastBloodPunchCount() {

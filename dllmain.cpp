@@ -201,7 +201,7 @@ void modInit() {
 	//! init only once.
 	if (!isFirstTimeInit) return;
 
-	logInfo("modInit called");
+	logInfo("mod systems Init started");
 
 
 	//MaterialLib::init();
@@ -238,14 +238,14 @@ void modInit() {
 
 
 
-	logInfo("current Game build Version is: %s (this mod version was designed for game build version: %s)", GameVersionInfoManager::getBuildVersionStr().c_str(), GameVersionInfoManager::getExpectedBuildVersionStr().c_str());
+	//logInfo("current Game build Version is: %s (this mod version was designed for game build version: %s)", GameInfoManager::getBuildVersionStr().c_str(), GameInfoManager::getExpectedBuildVersionStr().c_str());
 
-	/*if (GameVersionInfoManager::isNewGameUpdateReleased()) {
-		logWarn("This version of the game: %s is different than the version the mod was made for: %s, mod 'may' not work as attended or not work at all.", GameVersionInfoManager::getBuildVersionStr().c_str(), GameVersionInfoManager::getExpectedBuildVersionStr().c_str());
+	/*if (GameInfoManager::isNewGameUpdateReleased()) {
+		logWarn("This version of the game: %s is different than the version the mod was made for: %s, mod 'may' not work as attended or not work at all.", GameInfoManager::getBuildVersionStr().c_str(), GameInfoManager::getExpectedBuildVersionStr().c_str());
 
 	}
 	else {
-		logInfo("Game build Version is the one this mod was designed for: %s", GameVersionInfoManager::getBuildVersionStr().c_str());
+		logInfo("Game build Version is the one this mod was designed for: %s", GameInfoManager::getBuildVersionStr().c_str());
 	}*/
 
 	if (!Config::isDevMode() && !Config::isDebugMode()) {
@@ -571,7 +571,6 @@ DWORD WINAPI ModMain() {
 		SetUnhandledExceptionFilter(CrashDumpExeptionFilter);
 	}
 
-	Config::printHeaderInLogFile();
 
 	//? this actually works even if we don't need it atm. KEEP IT
 	/*logInfo("attempting to change Config mid func let's see it if works....");
@@ -613,36 +612,6 @@ DWORD WINAPI ModMain() {
 	}
 
 	
-	/*if (!Config::isModError()) {
-		if (GameVersionInfoManager::isNewGameUpdateReleased()) {
-			logWarn("This version of the game: %s is newer than the version the mod was made for, mod 'may' not work as attended or not work at all.", GameVersionInfoManager::getBuildVersionStr().c_str());
-
-		}
-		else {
-			logInfo("Game build Version is as expected: %s", GameVersionInfoManager::getBuildVersionStr().c_str());
-		}
-	}*/
-
-
-	/*if (Config::get() != ModConfig::nexusRelease) {
-
-		logInfo("Listing Running processes to check for potential conflicts. (Keep in mind that any of those could conflict with this mod but it's up to you to experiment and temporarily disable/quite some of those applications to see if it will help with the issues you are currently having with the mod. You can open the task manager and check where each of this process is located)");
-		logInfo("**** Listing Processes ****");
-
-		std::unordered_set<std::string> runningProcessesSet = K_Utils::GetUniqueRunningProcessesSet();
-		int counter = 0;
-		for (const auto& process : runningProcessesSet)
-		{
-			if (process == ConflictingApps::MsiAfterBurnerProcessName) {
-				logWarn("%s is an application that might make the mod crash/freeze.", process.c_str());
-			}
-			else {
-				logInfo("%s", process.c_str());
-			}
-			counter++;
-		}
-		logInfo("**** Done listing %d processes. *****", counter);
-	}*/
 
 
 	if (!Config::isModError()) {
@@ -656,16 +625,12 @@ DWORD WINAPI ModMain() {
 	}
 
 
-	/*if (Config::isModDevMode()) {
-		logWarn("");
-		logWarn("THIS IS DEV MODE MAKE SURE THIS IS WHAT YOU WANT");
-		logWarn("THIS IS DEV MODE MAKE SURE THIS IS WHAT YOU WANT");
-		logWarn("THIS IS DEV MODE MAKE SURE THIS IS WHAT YOU WANT");
-		logWarn("THIS IS DEV MODE MAKE SURE THIS IS WHAT YOU WANT");
-		logWarn("THIS IS DEV MODE MAKE SURE THIS IS WHAT YOU WANT");
-		logWarn("");
-
-	}*/
+	Config::aquireGameVersionStr(GameInfoManager::getBuildVersionStr());
+	Config::aquireWindowsVersion(K_Utils::GetWindowsVersion());
+	Config::acquireCpuInfo(K_Utils::getCpuInfoStr());
+	//! using game here cause getting the right driver version for gpu is a bit challenging, this at least is battletested:
+	Config::acquireGpuInfo(GameInfoManager::getGpuInfoStr());
+	logInfo(Config::getInfoSummaryForLogFile().c_str());
 
 
 
@@ -708,6 +673,7 @@ DWORD WINAPI ModMain() {
 	uint64_t lastCustomHudcheckMs = 0;
 	uint64_t lastFragSelectedCheckMs = 0;
 	uint64_t lastAACheckMs = 0;
+	uint64_t lastPlayerSpeedCheckMs = 0;
 	
 	//uint64_t lastCurrentActiveReticleCheckMs = 0;
 	bool wasPlayerInMenu = false;
@@ -742,9 +708,9 @@ DWORD WINAPI ModMain() {
 
 
 		if (isFirstTimeStatusLog) {
-			logInfo("FirstTimeStatusLog:");
+			//logInfo("FirstTimeStatusLog:");
 			logInfo("main loop Sleep Ms: %d", loopSleepMs);
-			logInfo("isModError: %s", Config::isModError() ? "true" : "false");
+			//logInfo("isModError: %s", Config::isModError() ? "true" : "false");
 
 			isFirstTimeStatusLog = false;
 		}
@@ -845,6 +811,13 @@ DWORD WINAPI ModMain() {
 
 
 				lastPlayerFlagUpdateMs = K_Utils::EpochMillis();
+			}
+
+
+			if (K_Utils::EpochMillis() - lastPlayerSpeedCheckMs > 500) {
+
+				idPlayer_K::autoManagePlayerSpeed();
+				lastPlayerSpeedCheckMs = K_Utils::EpochMillis();
 			}
 
 

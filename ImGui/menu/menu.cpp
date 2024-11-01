@@ -383,12 +383,12 @@ namespace Menu {
                 guiHelper::insertToolTipSameLine("Checked: Gives you a throw Frag and a throw Ice keys that you can bind in the game menu.\nChanging this settings requires restart for controller users. \nUnchecked: defaut game behaviour");
                 modSettings::setIsUseDedicatedNadeKeys(isUseDedicatedGrenadeKeys);
 
-                if (isUseDedicatedGrenadeKeys) {
+               /* if (isUseDedicatedGrenadeKeys) {
                     ImGui::Indent();
                     ImGui::TextColored(YellowColorImVec4, "If you notice a perf drop on your machine because of the second nade icon displayed, report it to mod author.\nYou can use the custom hud in the meantime");
                     ImGui::Unindent();
 
-                }
+                }*/
 
                 ImGui::NewLine();
 
@@ -443,7 +443,7 @@ namespace Menu {
 
                 static bool isOverideInteractionFOV = modSettings::getIsOverideInteractionFOV();
                 ImGui::Checkbox("Overide Interaction FOV", &isOverideInteractionFOV);
-                guiHelper::insertToolTipSameLine("Checked: lets you set a custom FOV (fied of view) during interactions locks like glory kills, chainsawing, using battery cells... Unchecked: defaut game behaviour");
+                guiHelper::insertToolTipSameLine("Checked: lets you set a custom FOV (fied of view) during interactions locks \nlike glory kills, chainsawing, using buttons... \nUnchecked: defaut game behaviour");
 
                 modSettings::setIsOverideInteractionFOV(isOverideInteractionFOV);
 
@@ -456,7 +456,7 @@ namespace Menu {
                     if (ImGui::Button("RESET##interactionsFOV_Int")) {
                         interactionsFOV_Int = (int)modSettingsDefault::defaultInteractionFOV;
                     }
-                    guiHelper::insertToolTipSameLine("The value of the Field Of View during interaction animations");
+                    guiHelper::insertToolTipSameLine("The value of the Field Of View during interaction animations like glory kills...\nI recommend to set this to the same value as your in-game FOV if you don't like the zoom effect");
                     ImGui::Unindent();
                 }
                 modSettings::setInteractionFOV((float)interactionsFOV_Int);
@@ -480,48 +480,7 @@ namespace Menu {
                 ImGui::NewLine();
 
                 ImGui::TextColored(WhiteColorImVec4, "These are the settings for the custom hud and custom crosshair ");
-
-                ImGui::NewLine(); 
-                ImGui::NewLine();
                
-
-                if (ImGui::Button("Apply Profile Colors")) {
-                    idDeclUIColorManager::setKaibzHudColorsToGameColorProfile();
-                }
-                guiHelper::insertToolTipSameLine("By pressing this button, the custom crosshair and hud colors will be set close to the game settings color profile\nThis feature might be broken atm should get fixed next mod update");   
-                ImGui::SameLine();
-                ImGui::TextColored(YellowColorImVec4, "This will automatically set all the colors for the custom hud");
-                       
-                ImGui::Indent();
-                ImGui::NewLine();
-                
-                CautionColorImVec4 = ImGui::ColorConvertU32ToFloat4(modSettings::getKaibzHudCautionColorImU32());
-                ImGui::ColorEdit3("Caution Color", (float*)&CautionColorImVec4);
-                guiHelper::insertToolTipSameLine("the color of icons/texts when their status is at caution level\n For ex when radiation is below half)");
-                modSettings::setKaibzHudCautionColorImU32(ImGui::ColorConvertFloat4ToU32(CautionColorImVec4));
-
-                ImGui::NewLine();
-
-                WarningColorImVec4 = ImGui::ColorConvertU32ToFloat4(modSettings::getKaibzHudWarningColorImU32());
-                ImGui::ColorEdit3("Warning Color", (float*)&WarningColorImVec4);
-                guiHelper::insertToolTipSameLine("the color of icons/texts when their status is at warning level");
-                modSettings::setKaibzHudWarningColorImU32(ImGui::ColorConvertFloat4ToU32(WarningColorImVec4));
-
-                ImGui::NewLine();
-
-                CriticalColorImVec4 = ImGui::ColorConvertU32ToFloat4(modSettings::getKaibzHudCriticalColorImU32());
-                ImGui::ColorEdit3("Critical Color", (float*)&CriticalColorImVec4);
-                guiHelper::insertToolTipSameLine("the color of icons/texts when their status is at critical level.\nFor ex when health or ammo is very low");
-                modSettings::setKaibzHudCriticalColorImU32(ImGui::ColorConvertFloat4ToU32(CriticalColorImVec4));
-
-                ImGui::NewLine();
-
-                DisabledColorImVec4 = ImGui::ColorConvertU32ToFloat4(modSettings::getKaibzHudDisabledColorImU32());
-                ImGui::ColorEdit3("Cooldown/empty Color", (float*)&DisabledColorImVec4);
-                guiHelper::insertToolTipSameLine("the color of icons/text when recharging or empty");
-                modSettings::setKaibzHudDisabledColorImU32(ImGui::ColorConvertFloat4ToU32(DisabledColorImVec4));
-
-                ImGui::Unindent();
 
                 ImGui::NewLine();  
                 ImGui::NewLine();
@@ -532,7 +491,6 @@ namespace Menu {
                 ImGui::Checkbox("Use Custom Dot Crosshair", &isUseCustomDotCrosshair);
                 guiHelper::insertToolTipSameLine("Checked: uses a custom dot crosshair, you can change its size, color, cooldown color \nIt has a black outline so it's much easier to see compared to the one from the game\nYou can use this dot with the game crosshair if you want\nBut The InGame Dot will be disabled when you use the custom one \nUnchecked: No custom dot crosshair ");
                 modSettings::setIsUseImguiDotCrosshair(isUseCustomDotCrosshair);
-
               
 
                 if (modSettings::getIsUseImguiDotCrosshair()) {
@@ -541,22 +499,84 @@ namespace Menu {
                     ImGui::NewLine(); 
 
 
+                    int dotCrosshairSizePix = (int)modSettings::getImguiCustomDotCrosshairRadiusPix();
+                    ImGui::SliderInt("Crosshair Radius", &dotCrosshairSizePix, 0, 25);
+                    ImGui::SameLine();
+                    if (ImGui::Button("RESET##CustomDotCrosshairRadius")) {
+                        dotCrosshairSizePix = (int)modSettingsDefault::g_defaultimguiCustomDotCrosshairRadiusPix;
+                    }
+                    guiHelper::insertToolTipSameLine("The radius in pixels of the custom dot crosshair");
+                    modSettings::setImguiCustomDotCrosshairRadiusPix((float)dotCrosshairSizePix);
+
+                    ImGui::NewLine();
+
+
+                    int dotCrosshairOutlineThickness = (int)modSettings::getImguiCustomDotCrosshairOutlineThickness();
+                    ImGui::SliderInt("Crosshair Outline Thickness", &dotCrosshairOutlineThickness, 0, 5);
+                    ImGui::SameLine();                  
+                    if (ImGui::Button("RESET##CrosshairOutlineThickness")) {
+                        dotCrosshairOutlineThickness = (int)modSettingsDefault::g_defaultImguiCustomDotCrosshairOutlineThickness;
+                    }
+                    guiHelper::insertToolTipSameLine("The thickness of the black outline around the crosshair\nTo make seeing the crosshair better");
+                    modSettings::setImguiCustomDotCrosshairOutlineThickness((float)dotCrosshairOutlineThickness);
+
+
+
                     bool isShowHealthAsCrosshairColor = modSettings::getCustomCrosshairIsShowHealthAsColor();
                     ImGui::Checkbox("Show Health as crosshair Color", &isShowHealthAsCrosshairColor);
                     guiHelper::insertToolTipSameLine("Checked: Will change the color of the crosshair based how health.\nThis will use the custom colors as so:\nArmor Max Color when health is full (max value of health + armor) \nArmor Color when lower than max health+armor\nHealth Color when no armor and above 50% Health\nCaution Color when below 50% health\nWarning Color when below %25 health\nIf you use the crosshair cooldown color feature make sure the color is not one of those");
-                    modSettings::setCustomCrosshairIsShowHealthAsColor(isShowHealthAsCrosshairColor);
+                    modSettings::setCustomCrosshairIsShowHealthAsColor(isShowHealthAsCrosshairColor);  
+
 
                     
-                    if (!isShowHealthAsCrosshairColor) {
+                    if (isShowHealthAsCrosshairColor) {                       
+
+                        ImGui::NewLine();
+
+                        // Custom Dot Crosshair Health and Armor Full Color
+                        ImVec4 dotCrosshairHealthAndArmorFullColorImVec4 = ImGui::ColorConvertU32ToFloat4(modSettings::getCustomDotCrosshairHealthAndArmorFullColor());
+                        ImGui::ColorEdit3("Health and Armor Full Crosshair Color", (float*)&dotCrosshairHealthAndArmorFullColorImVec4);
+                        guiHelper::insertToolTipSameLine("The color of the dot crosshair when health and armor are both full");
+                        modSettings::setCustomDotCrosshairHealthAndArmorFullColor(ImGui::ColorConvertFloat4ToU32(dotCrosshairHealthAndArmorFullColorImVec4));
+
+                        ImGui::NewLine();
+
+                        // Custom Dot Crosshair Armor Full Color
+                        ImVec4 dotCrosshairArmorFullColorImVec4 = ImGui::ColorConvertU32ToFloat4(modSettings::getCustomDotCrosshairArmorFullColor());
+                        ImGui::ColorEdit3("Armor Full Crosshair Color", (float*)&dotCrosshairArmorFullColorImVec4);
+                        guiHelper::insertToolTipSameLine("The color of the dot crosshair when armor is full");
+                        modSettings::setCustomDotCrosshairArmorFullColor(ImGui::ColorConvertFloat4ToU32(dotCrosshairArmorFullColorImVec4));
+
+                        ImGui::NewLine();
+
+                        // Custom Dot Crosshair Health Full Color
+                        ImVec4 dotCrosshairHealthFullColorImVec4 = ImGui::ColorConvertU32ToFloat4(modSettings::getCustomDotCrosshairHealthFullColor());
+
+                        logInfo("dotCrosshairHealthFullColorImVec4 debug: r %.3f g %.3f g %.3f a %.3f ", dotCrosshairHealthFullColorImVec4.x, dotCrosshairHealthFullColorImVec4.y, dotCrosshairHealthFullColorImVec4.z, dotCrosshairHealthFullColorImVec4.w);
+                            
+
+                        ImGui::ColorEdit3("Health Full Crosshair Color", (float*)&dotCrosshairHealthFullColorImVec4);
+                        guiHelper::insertToolTipSameLine("The color of the dot crosshair when health is full");
+                        modSettings::setCustomDotCrosshairHealthFullColor(ImGui::ColorConvertFloat4ToU32(dotCrosshairHealthFullColorImVec4));
+
+                        ImGui::NewLine();
+
+                        // Custom Dot Crosshair Warning Color
+                        ImVec4 dotCrosshairWarningColorImVec4 = ImGui::ColorConvertU32ToFloat4(modSettings::getCustomDotCrosshairWarningColor());
+                        ImGui::ColorEdit3("Warning Crosshair Color", (float*)&dotCrosshairWarningColorImVec4);
+                        guiHelper::insertToolTipSameLine("The color of the dot crosshair when health or armor are not full");
+                        modSettings::setCustomDotCrosshairWarningColor(ImGui::ColorConvertFloat4ToU32(dotCrosshairWarningColorImVec4));
+                    }
+
+                    else {
 
                         ImGui::NewLine();
 
                         ImVec4 dotCrosshairColorImVec4 = ImGui::ColorConvertU32ToFloat4(modSettings::getCustomDotCrosshairColorImU32());
-                        ImGui::ColorEdit3("Custom Dot Crosshair color", (float*)&dotCrosshairColorImVec4);
+                        ImGui::ColorEdit3("Crosshair color", (float*)&dotCrosshairColorImVec4);
                         guiHelper::insertToolTipSameLine("the color of the Dot crosshair");
                         modSettings::setCustomDotCrosshairColorImU32(ImGui::ColorConvertFloat4ToU32(dotCrosshairColorImVec4));
-                    }
-
+                    }   
                     
 
                     ImGui::NewLine();
@@ -564,21 +584,12 @@ namespace Menu {
                  
                     ImVec4 dotCrosshairCooldownColorImVec4  = ImGui::ColorConvertU32ToFloat4(modSettings::getCustomDotCrosshairCooldownColorImU32());                   
                   
-                    ImGui::ColorEdit3("Custom Dot Crosshair Coodown color", (float*)&dotCrosshairCooldownColorImVec4);
+                    ImGui::ColorEdit3("Weapon Cooldown Crosshair color", (float*)&dotCrosshairCooldownColorImVec4);
                     guiHelper::insertToolTipSameLine("the color of the dot crosshair when the weapon is recharging for meathook or stickies");                  
                     modSettings::setCustomDotCrosshairCooldownColorImU32(ImGui::ColorConvertFloat4ToU32(dotCrosshairCooldownColorImVec4));
 
                     ImGui::NewLine();   
-
-
-                    int dotCrosshairSizePix = (int)modSettings::getImguiCustomDotCrosshairRadiusPix();
-                    ImGui::SliderInt("Custom Dot Crosshair Radius", &dotCrosshairSizePix, 0, 25);
-                    ImGui::SameLine();
-                    if (ImGui::Button("RESET##CustomDotCrosshairRadius")) {
-                        dotCrosshairSizePix = 3;
-                    }
-                    guiHelper::insertToolTipSameLine("The radius in pixels of the custom dot crosshair");
-                    modSettings::setImguiCustomDotCrosshairRadiusPix((float)dotCrosshairSizePix);
+                    
 
                     ImGui::Unindent();
 
@@ -689,7 +700,6 @@ namespace Menu {
                     modSettings::setFlag(KaibzHudFlag::FlashHudForHammerCount, isFlashHudForHammerCountChange);
 
                     ImGui::NewLine();
-
                     
 
 
@@ -711,6 +721,50 @@ namespace Menu {
                     ImGui::Separator();
                     ImGui::NewLine();
                     ImGui::NewLine();
+
+
+                    if (ImGui::Button("Apply Profile Colors")) {
+                        idDeclUIColorManager::setKaibzHudColorsToGameColorProfile();
+                    }
+                    guiHelper::insertToolTipSameLine("By pressing this button, the custom crosshair and hud colors will be set close to the game settings color profile\nThis feature might be broken atm should get fixed next mod update");
+                    ImGui::SameLine();
+                    ImGui::TextColored(YellowColorImVec4, "This will automatically set all the colors for the custom hud");
+
+                    ImGui::Indent();
+                    ImGui::NewLine();
+
+                    CautionColorImVec4 = ImGui::ColorConvertU32ToFloat4(modSettings::getKaibzHudCautionColorImU32());
+                    ImGui::ColorEdit3("Caution Color", (float*)&CautionColorImVec4);
+                    guiHelper::insertToolTipSameLine("the color of icons/texts when their status is at caution level\n For ex when radiation is below half)");
+                    modSettings::setKaibzHudCautionColorImU32(ImGui::ColorConvertFloat4ToU32(CautionColorImVec4));
+
+                    ImGui::NewLine();
+
+                    WarningColorImVec4 = ImGui::ColorConvertU32ToFloat4(modSettings::getKaibzHudWarningColorImU32());
+                    ImGui::ColorEdit3("Warning Color", (float*)&WarningColorImVec4);
+                    guiHelper::insertToolTipSameLine("the color of icons/texts when their status is at warning level");
+                    modSettings::setKaibzHudWarningColorImU32(ImGui::ColorConvertFloat4ToU32(WarningColorImVec4));
+
+                    ImGui::NewLine();
+
+                    CriticalColorImVec4 = ImGui::ColorConvertU32ToFloat4(modSettings::getKaibzHudCriticalColorImU32());
+                    ImGui::ColorEdit3("Critical Color", (float*)&CriticalColorImVec4);
+                    guiHelper::insertToolTipSameLine("the color of icons/texts when their status is at critical level.\nFor ex when health or ammo is very low");
+                    modSettings::setKaibzHudCriticalColorImU32(ImGui::ColorConvertFloat4ToU32(CriticalColorImVec4));
+
+                    ImGui::NewLine();
+
+                    DisabledColorImVec4 = ImGui::ColorConvertU32ToFloat4(modSettings::getKaibzHudDisabledColorImU32());
+                    ImGui::ColorEdit3("Cooldown/empty Color", (float*)&DisabledColorImVec4);
+                    guiHelper::insertToolTipSameLine("the color of icons/text when recharging or empty");
+                    modSettings::setKaibzHudDisabledColorImU32(ImGui::ColorConvertFloat4ToU32(DisabledColorImVec4));
+
+                    ImGui::Unindent();
+
+
+                    ImGui::NewLine();
+                    ImGui::NewLine();
+
 
                     ImGui::TextColored(WhiteColorImVec4, "Hud Elements Customisation: (You can set each element color and visibility)");
 
@@ -1104,8 +1158,9 @@ namespace Menu {
                 int selectedColorIndex_IceNade_Ready = modSettings::getOverrideIceGrenadeColor() - valStart;
                 int selectedColorIndex_IceNade_Cooldown = modSettings::getOverrideIceGrenadeCooldownColor() - valStart;
                 int selectedColorIndex_RadsuitMeter = modSettings::getOverrideRadMeterColor() - valStart;
+                int selectedColorIndex_LowAmmoWarning = modSettings::getOverrideLowAmmoWarningColor() - valStart;
 
-                bool isColoredWeaponBar = modSettings::getIsWeaponBarColored();
+                
 
 
                 ImGui::Text("1 BloodPunch Icon Color:");
@@ -1153,8 +1208,22 @@ namespace Menu {
 
                 ImGui::NewLine();
 
+                ImGui::Text("Low Ammo Warning Color:");
+                ImGui::Combo("##LowAmmoWarningColor", &selectedColorIndex_LowAmmoWarning, colorOptions, IM_ARRAYSIZE(colorOptions));
+
+                ImGui::NewLine();
+
+                bool isRemoveLowWarnings = modSettings::getIsRemoveHudLowWarnings();
+                ImGui::Checkbox("Remove Low Warnings Indicators", &isRemoveLowWarnings);
+                guiHelper::insertToolTipSameLine("Checked: Removes the 'Out Of Ammo' and 'Low Ammo' big signs at the center of the screen.\nThe hud will still become reddish when health is very low\nAnd health and ammo numbers will still become red when low.\nUnchecked: Default game behaviour");
+                modSettings::setIsRemoveHudLowWarnings(isRemoveLowWarnings);
+
+                ImGui::NewLine();
+
+                bool isColoredWeaponBar = modSettings::getIsWeaponBarColored();
                 ImGui::Checkbox("Colored Weapon Bar", &isColoredWeaponBar);
-                guiHelper::insertToolTipSameLine("Checked: default game behaviour. \nUnchecked: will make the weapon/ammo info on the hud white instead of being weapon colored like red for rockets or purple for plasma\nThe goal is to reduce the color feedback so the grenades and equipments colors are easier or more intuitive to notice. ");
+                guiHelper::insertToolTipSameLine("Checked: default game behaviour. \nUnchecked: will make the weapon/ammo info on the hud white instead of being colored, like red for rockets or purple for plasma\nThe goal is to reduce colors to enhance grenades and equipments colors feedback.\nUnchecked: Default game behaviour");
+                modSettings::setIsWeaponBarColored(isColoredWeaponBar);
 
 
                 modSettings::setOverrideBloodPunchColor1(selectedColorIndex_BloodPunch_1 + valStart);
@@ -1166,8 +1235,8 @@ namespace Menu {
                 modSettings::setOverrideIceGrenadeColor(selectedColorIndex_IceNade_Ready + valStart);
                 modSettings::setOverrideIceGrenadeCooldownColor(selectedColorIndex_IceNade_Cooldown + valStart);
                 modSettings::setOverrideRadMeterColor(selectedColorIndex_RadsuitMeter + valStart);
+                modSettings::setOverrideLowAmmoWarningColor(selectedColorIndex_LowAmmoWarning + valStart);
                
-                modSettings::setIsWeaponBarColored(isColoredWeaponBar);
 
 
                 ImGui::NewLine();
@@ -1385,18 +1454,27 @@ namespace Menu {
             }           
 
 
-            if (ImGui::BeginTabItem("AI")) {
+            if (ImGui::BeginTabItem("Gameplay")) {
 
                 ImGui::Indent();
 
                 ImGui::NewLine();
                
 
+                bool isFastSpeedInGameHubMap = modSettings::getIsSpeedBoostInHudMap();
+                ImGui::Checkbox("Faster movement in Hub Map", &isFastSpeedInGameHubMap);
+                guiHelper::insertToolTipSameLine("Checked: You will move faster while in the game hub.\nthis will make replaying this part of the campaign a bit less painful.\nIf you get in a fight while in the hub the speed will automatially go back to default\nUnchecked: Default Game Behaviour");
+                modSettings::setIsSpeedBoostInHudMap(isFastSpeedInGameHubMap);
+
+                ImGui::NewLine();
+
                 bool isForceAiHaste = modSettings::GetIsForceAiHaste();
-                ImGui::Checkbox("Force Ai Haste", &isForceAiHaste);
-                guiHelper::insertToolTipSameLine("This will make the AI behave/move/attack as if there was a totem nearby. For players who need a challenge. Default setting: Disabled");               
+                ImGui::Checkbox("Force AI Haste", &isForceAiHaste);
+                guiHelper::insertToolTipSameLine("Checked: This will make the AI behave/move/attack as if there was a totem nearby. For players who need more challenge... \nUnchecked: Default Game Behaviour");               
                 modSettings::SetIsForceAiHaste(isForceAiHaste);
-                
+
+                          
+
 
                 ImGui::Dummy(ImVec2(0.0f, verticalSpacingEndTab));
                 ImGui::Unindent();
@@ -1475,7 +1553,7 @@ namespace Menu {
 
                 ImVec2 maxBindComboBoxWidhtVec2 = ImGui::CalcTextSize("25Chars******************");
                 static float comboBoxMaxWidthF = maxBindComboBoxWidhtVec2.x;
-                const char* toggleModMenuSelectedKey = guiHelper::getAllowedKeyName(modSettings::getToggleModSettingsVkCode());
+                const char* toggleModMenuSelectedKey = K_Utils::getAllowedKeyName(modSettings::getToggleModSettingsVkCode());
 
                 ImGui::SetNextItemWidth(comboBoxMaxWidthF);
                 if (ImGui::BeginCombo("Toggle Mod Menu Keybind", toggleModMenuSelectedKey))
@@ -1488,6 +1566,7 @@ namespace Menu {
                         {
                             toggleModMenuSelectedKey = keyInfo.name;
                             modSettings::setToggleModSettingsVkCode(keyInfo.vkCode);
+                            //logInfo("???????????????????????????????????????????????????????????");
                             // Use keyInfo.vkCode as the VK code for the selected key
                             // You can store this value or use it as needed
                         }

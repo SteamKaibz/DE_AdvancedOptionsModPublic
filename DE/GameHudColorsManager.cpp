@@ -28,37 +28,39 @@ idColor GameHudColorsManager::blendWithWhite(const idColor& color, float blendFa
 //! computing colors for custom equipment icon, like the ice nade custom icon	
 
 void GameHudColorsManager::setAlpha(const idColor& baseColor, idColor& destColor, float alphaF) {
-	destColor.r = baseColor.r;
-	destColor.g = baseColor.g;
-	destColor.b = baseColor.b;
-	destColor.a = alphaF;
+	destColor.r = baseColor.r * fastCvarManager::getHudAlpha();
+	destColor.g = baseColor.g * fastCvarManager::getHudAlpha(); 
+	destColor.b = baseColor.b * fastCvarManager::getHudAlpha();
+	destColor.a = alphaF * fastCvarManager::getHudAlpha();
 }
 
  void GameHudColorsManager::setIconWhiteBlendColor(const idColor& baseColor, idColor& destColor, float blendFactor) {
-	destColor.r = baseColor.r + (1.0f - baseColor.r) * blendFactor;
-	destColor.g = baseColor.g + (1.0f - baseColor.g) * blendFactor;
-	destColor.b = baseColor.b + (1.0f - baseColor.b) * blendFactor;
-	destColor.a = 1.0f;
-}
+	destColor.r = baseColor.r + (1.0f - baseColor.r) * blendFactor * fastCvarManager::getHudAlpha();;
+	destColor.g = baseColor.g + (1.0f - baseColor.g) * blendFactor * fastCvarManager::getHudAlpha();;
+	destColor.b = baseColor.b + (1.0f - baseColor.b) * blendFactor * fastCvarManager::getHudAlpha();;
+	destColor.a = 1.0f * fastCvarManager::getHudAlpha();
+	
+	
+ }
 
 
 //! lowered alpha
-void GameHudColorsManager::setIconExtraBorderColor(const idColor& baseColor, idColor& destColor) {
+//void GameHudColorsManager::setIconExtraBorderColor(const idColor& baseColor, idColor& destColor) {
+//
+//	destColor.r = baseColor.r;
+//	destColor.g = baseColor.g;
+//	destColor.b = baseColor.b;
+//	destColor.a = .1f;
+//
+//}
 
-	destColor.r = baseColor.r;
-	destColor.g = baseColor.g;
-	destColor.b = baseColor.b;
-	destColor.a = .1f;
-
-}
-
-void GameHudColorsManager::setIconBackgroundColor(const idColor& baseColor, idColor& destColor) {
-
-	destColor.r = baseColor.r;
-	destColor.g = baseColor.g;
-	destColor.b = baseColor.b;
-	destColor.a = .3f;
-}
+//void GameHudColorsManager::setIconBackgroundColor(const idColor& baseColor, idColor& destColor) {
+//
+//	destColor.r = baseColor.r;
+//	destColor.g = baseColor.g;
+//	destColor.b = baseColor.b;
+//	destColor.a = .3f;
+//}
 
 
 
@@ -225,6 +227,27 @@ idColor GameHudColorsManager::getCurrentProfileFragNadeBackgroundColor() {
 	return ((namedColorId >= (int)SWF_NAMED_COLOR_WEAPON_SHOTGUN && namedColorId <= (int)SWF_NAMED_COLOR_WEAPON_UNMAYKR) || (namedColorId >= (int)SWF_NAMED_COLOR_WEAPON_SHOTGUN_FULL && namedColorId <= (int)SWF_NAMED_COLOR_WEAPON_UNMAYKR_FULL));
 }
 
+ //! meaning not the low ammo text just the shapes
+ bool GameHudColorsManager::isHudElementLowAmmoWarningShape(int fullPathHash){
+
+	 for (int element : m_HudLowAmmoWarningShapeHashIdsVec) {
+		 if (element == fullPathHash) return true;
+	 }
+	 return false;		 
+ }
+
+ bool GameHudColorsManager::isHudElementLowWarning(int fullPathHash) {
+	 
+	 for (int element : m_HudLowWarningElementsHashIdsVec) {
+		 if (element == fullPathHash) return true;
+	 }
+	 return false;	 
+ }
+
+
+
+
+
 //todo we need to design a system that calls forceUpdateHudElementsColors everytime a displayed hud element has changed. Update, do we?
 //! this is needed because some elements like the arrow of equipment are never changed by the game, but in our case it will be a way to updateColor all the colors that need to be updated.
  void GameHudColorsManager::forceUpdateHudElementsColors() {
@@ -240,14 +263,14 @@ idColor GameHudColorsManager::getCurrentProfileFragNadeBackgroundColor() {
 //! this func shoulg get trigger everytime reapplyswfcolors is called
 //! will return overridden color or original color depending if each mod's feature is enabled or not
 //! this func is triggered in setSpriteInstanceColor hook
- unsigned int GameHudColorsManager::getColor(__int64 spriteInstanceAddr, unsigned int namedColorId) {
+ unsigned int GameHudColorsManager::getColor(idSWFSpriteInstance* spriteInstance, unsigned int namedColorId) {
 
 
-	if (MemHelper::isBadReadPtr((void*)spriteInstanceAddr)) {
-		logErr("getColor: bad ptr: %p This should not happen...", (void*)spriteInstanceAddr);
+	if (MemHelper::isBadReadPtr(spriteInstance)) {
+		logErr("getColor: bad ptr: %p This should not happen...", spriteInstance);
 		return namedColorId;
 	}
-	idSWFSpriteInstance* spriteInstance = (idSWFSpriteInstance*)spriteInstanceAddr;
+	//idSWFSpriteInstance* spriteInstance = (idSWFSpriteInstance*)spriteInstanceAddr;
 	int fullPathHash = spriteInstance->fullPathHash;
 
 
@@ -306,6 +329,43 @@ idColor GameHudColorsManager::getCurrentProfileFragNadeBackgroundColor() {
 		}
 		return namedColorId;
 	}
+
+	/*if (fullPathHash == 0xC76E7720) {
+		logInfo("found _root/lowAmmo/info/message namedColorId is : %u (dec) returning color ", namedColorId);
+	}*/
+
+	//? it's important this check is done before isHudElementLowWarning()
+	//! just the low ammo warning shapes not the text	
+	if (!modSettings::getIsRemoveHudLowWarnings() && (modSettings::getOverrideLowAmmoWarningColor() != swfNamedColors_t::SWF_CUSTOM_NAMED_COLOR_DEFAULT) && GameHudColorsManager::isHudElementLowAmmoWarningShape(fullPathHash)) {
+
+		return modSettings::getOverrideLowAmmoWarningColor();
+	}
+
+
+	if (GameHudColorsManager::isHudElementLowWarning(fullPathHash)) {
+
+		if (modSettings::getIsRemoveHudLowWarnings()) {
+			return SWF_CUSTOM_NAMED_COLOR_INVISIBLE;
+		}
+		//! i have to do this to prevent low ammmo text from staying invisible, not sure why. this is a band aid i might go back to it later cause im' too frustrated atm.
+		else if (fullPathHash == 0xC76E7720) {
+			return swfNamedColors_t::SWF_NAMED_COLOR_UI_CAUTION;
+		}
+		else {
+			return namedColorId;
+		}
+	}
+
+	//if (modSettings::getIsRemoveHudLowWarnings() && GameHudColorsManager::isHudElementLowWarning(fullPathHash) ) {
+	//	/*if (modSettings::getIsRemoveHudLowWarnings()) {
+	//		return SWF_CUSTOM_NAMED_COLOR_INVISIBLE;
+	//	}*/
+	//	return SWF_CUSTOM_NAMED_COLOR_INVISIBLE;
+	//	//return namedColorId;
+	//}	
+	
+
+	
 
 
 
@@ -483,170 +543,170 @@ idColor GameHudColorsManager::getCurrentProfileFragNadeBackgroundColor() {
 
 
 
- void GameHudColorsManager::acquireMonitoredSpriteInstanceAddr(__int64 addr) {
-	if (MemHelper::isBadReadPtr((void*)addr)) {
-		logErr("acquireMonitoredSpriteInstanceAddr found bad ptr for addr: %p returning", (void*)addr);
+ void GameHudColorsManager::acquireMonitoredSpriteInstanceAddr(idSWFSpriteInstance* spriteInstance) {
+	if (MemHelper::isBadReadPtr(spriteInstance)) {
+		logErr("acquireMonitoredSpriteInstanceAddr found bad ptr for spriteInstance: %p returning", spriteInstance);
 		return;
 	}
-	idSWFSpriteInstance* spriteInstance = (idSWFSpriteInstance*)addr;
+	//idSWFSpriteInstance* spriteInstance = (idSWFSpriteInstance*)addr;
 	int fullPathHash = spriteInstance->fullPathHash;
 	switch (fullPathHash)
 	{
 	case equipmentArrowSpriteId:
-		m_currentEquipmentArrowSpriteInstanceAddr = addr;
+		m_currentEquipmentArrowSpriteInstanceAddr = spriteInstance;
 		break;
 	case equipmentBackerSpriteId:
-		m_EquipmentBackerSpriteInstanceAddr = addr;
+		m_EquipmentBackerSpriteInstanceAddr = spriteInstance;
 		break;
 	case healthIconOuterSpriteId:
-		m_healthIconOuterSpriteAddr = addr;
+		m_healthIconOuterSpriteAddr = spriteInstance;
 		break;
 	case healthIconBgSpriteId:
-		m_healthIconBgSpriteAddr = addr;
+		m_healthIconBgSpriteAddr = spriteInstance;
 		break;
 	case healthTextSpriteId:
-		m_healthTextSpriteIdAddr = addr;
+		m_healthTextSpriteIdAddr = spriteInstance;
 		break;
 	case healthPipsOutlineSpriteId:
-		m_healthPipsOutlineSpriteIdAddr = addr;
+		m_healthPipsOutlineSpriteIdAddr = spriteInstance;
 		break;
 	case healthPipsGradientBottomSpriteId:
-		m_healthPipsGradientBottomSpriteAddr = addr;
+		m_healthPipsGradientBottomSpriteAddr = spriteInstance;
 		break;
 	case healthPipsGradientTopSpriteId:
-		m_healthPipsGradientTopSpriteAddr = addr;
+		m_healthPipsGradientTopSpriteAddr = spriteInstance;
 		break;
 	case healthBottomAdornmentSpriteId:
-		m_healthBottomAdornmentSpriteAddr = addr;
+		m_healthBottomAdornmentSpriteAddr = spriteInstance;
 		break;
 	case healthPulseLoopSpriteId:
-		m_healthPulseLoopSpriteAddr = addr;
+		m_healthPulseLoopSpriteAddr = spriteInstance;
 		break;
 	case healthGlowSpriteId:
-		m_healthGlowSpriteIdSpriteAddr = addr;
+		m_healthGlowSpriteIdSpriteAddr = spriteInstance;
 		break;
 	case healthRightSideRightRightSpriteId:
-		m_healthRightSideRightRightSpriteAddr = addr;
+		m_healthRightSideRightRightSpriteAddr = spriteInstance;
 		break;
 	case healthRightSideMiddleMiddleSpriteId:
-		m_healthRightSideMiddleMiddleSpriteAddr = addr;
+		m_healthRightSideMiddleMiddleSpriteAddr = spriteInstance;
 		break;
 	case healthRightSideAddAmountSpriteId:
-		m_healthRightSideAddAmountSpriteAddr = addr;
+		m_healthRightSideAddAmountSpriteAddr = spriteInstance;
 		break;
 	case healthrightSideRightborderSpriteId:
-		m_healthrightSideRightborderSpriteAddr = addr;
+		m_healthrightSideRightborderSpriteAddr = spriteInstance;
 		break;
 	case armorBarGradientSpriteId:
-		m_armorBarGradientSpriteAddr = addr;
+		m_armorBarGradientSpriteAddr = spriteInstance;
 		break;
 	case armorBarBaseSpriteId:
-		m_armorBarBaseSpriteAddr = addr;
+		m_armorBarBaseSpriteAddr = spriteInstance;
 		break;
 	case armorRightSideSpriteId:
-		m_armorRightSideSpriteAddr = addr;
+		m_armorRightSideSpriteAddr = spriteInstance;
 		break;
 	case armorTextSpriteId:
-		m_armorTextSpriteAddr = addr;
+		m_armorTextSpriteAddr = spriteInstance;
 		break;
 	case armorIconSpriteId:
-		m_armorIconSpritAddr = addr;
+		m_armorIconSpritAddr = spriteInstance;
 		break;
 	case armorIconGlowSpriteId:
-		m_armorIconGlowSpriteAddr = addr;
+		m_armorIconGlowSpriteAddr = spriteInstance;
 		break;
 	case armorInfoSpriteId:
-		m_armorInfoSpriteAddr = addr;
+		m_armorInfoSpriteAddr = spriteInstance;
 		break;
 	case armorBgSpriteId:
-		m_armorBgSpriteAddr = addr;
+		m_armorBgSpriteAddr = spriteInstance;
 		break;
 	case weaponInfoBgModlessSpriteId:
-		m_weaponInfoBgModlessSpriteAddr = addr;
+		m_weaponInfoBgModlessSpriteAddr = spriteInstance;
 		break;
 	case weaponInfoTextSpriteId:
-		m_weaponInfoTextSpriteAddr = addr;
+		m_weaponInfoTextSpriteAddr = spriteInstance;
 		break;
 	case weaponInfoBgSpriteId: //! this is the big container bar
-		m_weaponInfoBgSpriteAddr = addr;
+		m_weaponInfoBgSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchBgPulseSpriteId:
-		m_bloodPunchBgPulseSpriteAddr = addr;
+		m_bloodPunchBgPulseSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchChargeGlowBgSpriteId:
-		m_bloodPunchChargeGlowBgSpriteAddr = addr;
+		m_bloodPunchChargeGlowBgSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchBgImgSpriteId:
-		m_bloodPunchBgImgSpriteAddr = addr;
+		m_bloodPunchBgImgSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchBorderImgSpriteId:
-		m_bloodPunchBorderImgSpriteAddr = addr;
+		m_bloodPunchBorderImgSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchIconOnSpriteId:
-		m_bloodPunchIconOnSpriteAddr = addr;
+		m_bloodPunchIconOnSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchIconOffSpriteId:
-		m_bloodPunchIconOffSpriteAddr = addr;
+		m_bloodPunchIconOffSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchReadyFlashSpriteId:
-		m_bloodPunchReadyFlashSpriteAddr = addr;
+		m_bloodPunchReadyFlashSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchFillRightGlowSpriteId:
-		m_bloodPunchFillRightGlowSpriteAddr = addr;
+		m_bloodPunchFillRightGlowSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchFillRightImgSpriteId:
-		m_bloodPunchFillRightImgSpriteAddr = addr;
+		m_bloodPunchFillRightImgSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchFillLeftGlowSpriteId:
-		m_bloodPunchFillLeftGlowSpriteAddr = addr;
+		m_bloodPunchFillLeftGlowSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchFillLeftImgSpriteId:
-		m_bloodPunchFillLeftImgSpriteAddr = addr;
+		m_bloodPunchFillLeftImgSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchTextSpriteId:
-		m_bloodPunchTextSpriteAddr = addr;
+		m_bloodPunchTextSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchBindKbmSpriteId:
-		m_bloodPunchBindKbmSpriteAddr = addr;
+		m_bloodPunchBindKbmSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchBindJoySpriteId:
-		m_bloodPunchBindJoySpriteAddr = addr;
+		m_bloodPunchBindJoySpriteAddr = spriteInstance;
 		break;
 	case radSuitBarGradientSpriteId:
-		m_radSuitBarGradientSpriteAddr = addr;
+		m_radSuitBarGradientSpriteAddr = spriteInstance;
 		break;
 	case radSuitBarBaseSpriteId:
-		m_radSuitBarBaseSpriteAddr = addr;
+		m_radSuitBarBaseSpriteAddr = spriteInstance;
 		break;
 	case radSuitRightSideSpriteId:
-		m_radSuitRightSideSpriteAddr = addr;
+		m_radSuitRightSideSpriteAddr = spriteInstance;
 		break;
 	case radSuitTextSpriteId:
-		m_radSuitTextSpriteAddr = addr;
+		m_radSuitTextSpriteAddr = spriteInstance;
 		break;
 	case radSuitIconImgSpriteId:
-		m_radSuitIconImgSpriteAddr = addr;
+		m_radSuitIconImgSpriteAddr = spriteInstance;
 		break;
 	case radSuitGlowImgSpriteId:
-		m_radSuitGlowImgSpriteAddr = addr;
+		m_radSuitGlowImgSpriteAddr = spriteInstance;
 		break;
 	case radSuitBgSpriteId:
-		m_radSuitBgSpriteAddr = addr;
+		m_radSuitBgSpriteAddr = spriteInstance;
 		break;
 	case radSuitBgPulseSpriteId:
-		m_radSuitBgPulseSpriteAddr = addr;
+		m_radSuitBgPulseSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchChargeBgSpriteId:
-		m_bloodPunchChargeBgSpriteAddr = addr;
+		m_bloodPunchChargeBgSpriteAddr = spriteInstance;
 		break;
 	case bloodPunchImgImgSpriteId:
-		m_bloodPunchImgImgSpriteAddr = addr;
+		m_bloodPunchImgImgSpriteAddr = spriteInstance;
 		break;
 	case fragCoolDownFillGlowSpriteId:
-		m_fragCoolDownFillGlowSpriteAddr = addr;
+		m_fragCoolDownFillGlowSpriteAddr = spriteInstance;
 		break;
 	case equipmentSpriteId:
-		m_debug_EquipmentSpriteInstanceAddr = addr;
+		m_debug_EquipmentSpriteInstanceAddr = spriteInstance;
 		break;
 		/*case weaponInfoBigBarSpriteId:
 			m_weaponInfoBigBarSpriteAddr;*/
@@ -730,11 +790,77 @@ idColor GameHudColorsManager::getCurrentProfileFragNadeBackgroundColor() {
 //! DEBUG:	
 
 
+ //! this is used to log all the sprite instance which are passed to the setSpriteInstanceColorHook to identify the hash of an element we're looking for, so we can then set its color.
+ void GameHudColorsManager::debugLogUniqueSpriteInstance(idSWFSpriteInstance* idSWFSpriteInstance, const std::unordered_set<std::string>& excludeFilter) {
+
+	 if (MemHelper::isBadReadPtr(idSWFSpriteInstance)) {
+		 logWarn("debugLogSpriteInstance: bad ptr: %p", idSWFSpriteInstance);
+		 return;
+	 }
+
+	 // Check if the name is in the filter set (skip logging if it is)
+	 if (excludeFilter.find(idSWFSpriteInstance->name.str) != excludeFilter.end()) {
+		 return; // Do not log this sprite instance if the name matches the filter
+	 }
+
+	 // Check if the sprite instance has already been logged
+	 if (debug_LoggedSprinteInstances.find(idSWFSpriteInstance) == debug_LoggedSprinteInstances.end()) {
+		 std::string spriteInstanceFullPathStr = spriteInstancegetFullPathStr(idSWFSpriteInstance);
+		 logInfo("debugLogSpriteInstance: spriteInstance name %s hash: 0x%X (dec: %d)",
+			 spriteInstanceFullPathStr.c_str(), idSWFSpriteInstance->fullPathHash, idSWFSpriteInstance->fullPathHash);
+		 debug_LoggedSprinteInstances.insert(idSWFSpriteInstance); // Add to the set
+	 }
+ }
 
 
+ void GameHudColorsManager::debugLogUniqueSpriteInstance(idSWFSpriteInstance* idSWFSpriteInstance) {
+
+	 static bool isFirstTime;
+
+	 if (isFirstTime) {
+		 logWarn("debugLogUniqueSpriteInstance is active, not what you want if this version of the mod is being released !");
+		 logWarn("debugLogUniqueSpriteInstance is active, not what you want if this version of the mod is being released !");
+		 logWarn("debugLogUniqueSpriteInstance is active, not what you want if this version of the mod is being released !");
+		 logWarn("debugLogUniqueSpriteInstance is active, not what you want if this version of the mod is being released !");
+
+		 isFirstTime = false;
+	 }
+
+	 if (MemHelper::isBadReadPtr(idSWFSpriteInstance)) {
+		 logWarn("debugLogSpriteInstance: bad ptr: %p", idSWFSpriteInstance);
+		 return;
+	 }	 
+
+
+	 // Check if the sprite instance has already been logged
+	 if (debug_LoggedSprinteInstances.find(idSWFSpriteInstance) == debug_LoggedSprinteInstances.end()) {
+		 std::string spriteInstanceFullPathStr = spriteInstancegetFullPathStr(idSWFSpriteInstance);
+		 std::string namedColorIdStr = TypeInfoManager::getEnumMemberName("swfNamedColors_t", idSWFSpriteInstance->namedColorId);
+		 logInfo("debugLogSpriteInstance: spriteInstance name %s, hash: 0x%X (dec: %d) namedColorId: %d (%s)",
+			 spriteInstanceFullPathStr.c_str(), idSWFSpriteInstance->fullPathHash, idSWFSpriteInstance->fullPathHash, idSWFSpriteInstance->namedColorId, namedColorIdStr.c_str());
+		 debug_LoggedSprinteInstances.insert(idSWFSpriteInstance); // Add to the set
+	 }
+ }
+
+ std::string GameHudColorsManager::spriteInstancegetFullPathStr(const idSWFSpriteInstance* instance) {
+	 if (instance == nullptr) {
+		 return "";
+	 }
+
+	 std::string fullPath = instance->name.str; // Assuming name.str is a valid string type.
+	 const idSWFSpriteInstance* currentInstance = instance->parent;
+
+	 // Traverse up the parent chain
+	 while (currentInstance != nullptr) {
+		 // Prepend the parent name followed by a '/'
+		 fullPath = std::string(currentInstance->name.str) + "/" + fullPath;
+		 currentInstance = currentInstance->parent;
+	 }
+
+	 return fullPath;
+ }
 
  unsigned int GameHudColorsManager::debugLogInstancesDefaultNamesColors(__int64 spriteInstanceAddr, unsigned int namedColorId) {
-	logDebug("debugLogInstancesDefaultNamesColors");
 
 	if (MemHelper::isBadReadPtr((void*)spriteInstanceAddr)) {
 		logWarn("debugLogInstancesDefaultNamesColors: bad ptr: %p", (void*)spriteInstanceAddr);

@@ -21,6 +21,8 @@ private:
 
 public:
 
+	static bool getIsWeaponCooldownFlag();
+
 	static void showCircleCrosshair(KaibzHudData& data);
 	//static void showCircleCrosshair(bool* p_open = NULL);
 

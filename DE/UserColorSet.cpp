@@ -121,7 +121,6 @@ unsigned int UserColorSet::getCustomInvisibleColorUint() {
 }
 
  void UserColorSet::Update() {
-    logDebug("Update");
 
     m_bloodpunch1Available_Color = getSwfNamedColorFromModSettings(modSettings::getOverrideBloodPunchColor1());
     logInfo("m_bloodpunch1Available_Color: %s (%d)", getSwfNamedColorString(m_bloodpunch1Available_Color).c_str(), m_bloodpunch1Available_Color);

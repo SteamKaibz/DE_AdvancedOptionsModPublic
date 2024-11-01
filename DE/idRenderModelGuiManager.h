@@ -34,7 +34,7 @@ private:
 
 
 
-	static inline const unsigned int m_packedColorOffset = UndocumentedOffsets::RenderModelGui_PackedColorOffset;
+	static inline const unsigned int m_packedColorOffset = GameOffsets::RenderModelGui_PackedColorOffset;
 	//static inline const unsigned int m_packedColorOffset = 0x4D0;
 
 	//? why do we have those as we have m_screenWidthAddr below ?????

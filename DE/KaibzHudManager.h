@@ -32,7 +32,9 @@ public:
 	static int getIntVal(float valueF, float maxValue);
 	
 
-	static ImU32 getCustomCrosshairHealthAsImU32Color(float currentHealthValue, float MaxHealthValue, float currentArmorValue, float MaxArmorValue);
+	static ImU32 getCustomCrosshairHealthAsImU32ColorV2(float currentHealthValue, float MaxHealthValue, float currentArmorValue, float MaxArmorValue);
+
+	//static ImU32 getCustomCrosshairHealthAsImU32Color(float currentHealthValue, float MaxHealthValue, float currentArmorValue, float MaxArmorValue);
 
 	static KaibzHudColor_t get3StagesCorlor(float currentValue, float MaxValue, KaibzHudColor_t normalColor);
 

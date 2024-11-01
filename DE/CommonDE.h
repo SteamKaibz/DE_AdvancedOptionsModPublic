@@ -37,58 +37,7 @@ static const int intMinusOne = -1;
 //! to find idStringListBaseOffset, (also documented in libreoffice file) search the idb for %s - unable to allocate new index for keyBindingInfo At this point you will have to compare with previous db where that number is and identify where it is, there is also i screenshot i made you can use, hopefully that will be enough.
 //!? could we actually get this value with pattern scan as it's hard coded in the func. update we did. we're leaving this here because i think we have a circular depedency issue betwwen Scanner.h and ObjectLocator.h
 
-//static const int  idStringListBaseOffset = 0x6B68570; // old value:  0x6B94670;
-//static const uintptr_t  idStringListBaseOffset = 0x6B68570; // old value:  0x6B94670;
 
-
-//? 8/9/23 this is the offset we used before to find functions and structs
-//static const uintptr_t bindInputStrPtrOffset = 0x18;
-//static const uintptr_t bindActionStrPtrOffset = 0x48;
-//static const uintptr_t Hud_WeaponInfoPtr_idDeclWeaponOffset = 0x100;
-//static const uintptr_t currentlyEquippedWeaponDataOffset = 0x34;
-//static const uintptr_t idInventoryItemSpacing = 0x20;
-//static const uintptr_t idInventoryItemDeclOffset = 0x38;
-//static const uintptr_t idInventoryItemDeclIdOffset = 0x34;
-//static const uintptr_t idPlayerItemsCountOffset = 0x35E0;
-//static const uintptr_t GetPerfMetricsStrOffset = 0x48FE40;
-//static const uintptr_t keySerializeEndAddrOffset = 0x4A8D90;
-//static const uintptr_t bindListFuncAddrOffset = 0x356150;
-//static const uintptr_t currentBindsetFuncAddrOffset = 0x4A8C40;
-//static const uintptr_t equipmentFunctionAddrOffset = 0x1585CD0;
-//static const uintptr_t idHudWeaponInfoNadeStatusOffset = 0x194;
-//static const uintptr_t inMenuDetectionOffset = 0x17CD2C0;
-//static const uintptr_t inGameDetectionOffset = 0x16003D0;
-//static const uintptr_t idPlayerProfileSerializeOffset = 0x4AF6B0;
-//static const uintptr_t idInventoryCollectionGetInventoryItemOffset = 0x1D1D6A0;
-//static const uintptr_t idInventoryItempsCountOffset = 0x5C0;
-//static const uintptr_t idInventoryFirstItempOffset = 0x8;
-//static const uintptr_t BindCopyControllerStrSomethingOffset = 0x1C335A0;
-//static const uintptr_t GetPerfMetricsStrOffset = 0x48FE40;
-//static const uintptr_t showPerfMetricsStrLineOffset = 0x4930A0;
-//static const uintptr_t RenderShapeOffset = 0x4FDD30;
-//static const uintptr_t idSWF_Render_CallerOffset = 0x1C09690;
-//static const uintptr_t renderSWFOffset = 0x4FCF80;
-//static const uintptr_t DrawStretchPic_623070Offset = 0x623070;
-//static const uintptr_t DrawStretchPic_498ED0Offset = 0x498ED0;
-//static const uintptr_t idPlayerNadeStatusOffset = 0x6F48;
-//static const uintptr_t idHUDMenuScreenPauseHandleActionOffset = 0x16003D0;
-//static const uintptr_t idSwfCountOffset = 0x38B8B18;
-//static const uintptr_t idSWFListOffset =  0x38B8B10;
-//static const uintptr_t idDebugHUDLocalOffset = 0x499690;
-//static const uintptr_t idRenderModelGui_DrawStringOffset = 0x6239F0;
-//static const uintptr_t idResourceSmthOffset = 0x464250;
-//static const uintptr_t renderTestMaterialOffset =  0x1AFA8E0;
-//static const uintptr_t idPlayerProcessInputOffset = 0x1ABBDD0;
-//static const uintptr_t idPLayerSelectWeaponForSelectionGroupOffset = 0x1ADB7A0;
-//static const uintptr_t isKeyPressedOffset = 0x1AE54F0;
-//static const uintptr_t idGameSystemLocalMinimalGameCleanupOffset = 0xCED020;
-//static const uintptr_t idMenu_UpdateOffset = 0x1847CD0;
-//static const uintptr_t pBindsStrSetOffset = 0x35CEC0;
-//static const uintptr_t setActiveReticleOffset = 0x15773A0;
-//static const uintptr_t idBroadcastManager_ReleaseBroadcastEventOffset = 0x4899C0;
-//static const uintptr_t convertIdDeclUIColorToidColorTargetOffset = 0x4D5AF0;
-//static const uintptr_t setSpriteInstancetOffset = 0x52F750;
-//static const uintptr_t showPerfMetricsSmthOffset =  0x48E580;
 
 
 
@@ -117,26 +66,6 @@ const std::wstring sayGeneratingTypes = L"Creating Types Files";
 const std::wstring sayPreviousModVersionXInput9_1_0FoundError = L"Error: previous version of the mod found, please check the mod log file in the game folder";
 const std::wstring sayPreviousModVersionDinput8FoundError = L"Error: previous version of the mod found, please check the mod log file in the game folder";
 
-
-//static unsigned char FragGrenadeCharArr[] = "Frag Grenade";
-//static unsigned char IceGrenadeCharArr[] = "Ice Grenade";
-
-//static std::string EquipmentLauncherStr = "Equipment Launcher";
-//static std::string MissionInformationStr = "Mission Information";
-
-//static std::string FragGrenadeStr = "Frag Grenade";
-//static std::string IceGrenadeStr = "Ice Grenade";
-
-
-
-
-//const int shotgunWeaponIndex = 1;
-//const int assaultRifleWeaponIndex = 2;
-//const int plasmaWeaponIndex = 3;
-//const int rocketLauncherWeaponIndex = 4;
-//const int superShotgunWeaponIndex = 5;
-//const int ballistaWeaponIndex = 6;
-//const int miniGunWeaponIndex = 7;
 
 
 //? these are not reliable, they can break if another mod is installed
@@ -193,28 +122,43 @@ namespace ConflictingApps {
 	const std::string MsiAfterBurnerProcessName = "MSIAfterburner.exe";
 }
 
+namespace GameMapName {
+	const std::string Hub = "game/hub/hub";
+}
+
+namespace LocalPlayer {
+	const float SprintSpeedDefault = 9.525f;
+	const float SprintSpeedInHub = 20.0f; //! custom arbitrary value which seems good to make the "fetch" sequence less annoying
+}
+
 
 //! offset we could not find through typeInfo or otherwise. is game is updated and crashes for unknow reason, recheck  those:
-namespace UndocumentedOffsets {
+namespace GameOffsets {
+
+	//!  this offset was found in rev2 in ida: idGameTimeManagerLocal_GetGameMs_D06DD0((__int64)idMapInstanceLocalPtr_6B14930 + 0x125A60, &v23, 1); now in sandbox rev3 it's: idGameTimeManagerLocal_GetGameMs(idMapInstanceLocal + 0x125F80, &v23, 1); also in  return idPlayer::CastTo_2125F50(*(_QWORD *)(idGameLocal_a1 + 8i64 * a2 + 0x1AF8)); in ida rev2. Double check the van/sand version though....
+	const int IdPlayer_1_Offset = 0x1AF8;
+	const int CvarFindInternalVtbFuncOffset = 0x20;
+	const int CmdExecuteFuncAddrOffset = 0x40;
+	const int idPlayerPlaySoundVtbOffset = 0x118;
+	const int IdMapInstanceVtb_GetCurrentMapName = 0x50;
 
 #ifdef GAME_VERSION_SANDBOX
-	const int IdPlayer_1_Offset = 0x1AF8; //!  this offset was found in rev2 in ida: idGameTimeManagerLocal_GetGameMs_D06DD0((__int64)idMapInstanceLocalPtr_6B14930 + 0x125A60, &v23, 1); now in sandbox rev3 it's: idGameTimeManagerLocal_GetGameMs(idMapInstanceLocal + 0x125F80, &v23, 1);
 	const __int64 IdGameTimeManagerLocalOffset = 0x125F80; //! updated for sandbox. check rev2 in ida: idGameTimeManagerLocal_GetGameMs_D06DD0((__int64)	
-	const int CvarFindInternalVtbFuncOffset = 0x20;
-	const int CmdExecuteFuncAddrOffset = 0x40;
-	const int idPlayerPlaySoundVtbOffset = 0x118;
 	const int RenderModelGui_PackedColorOffset = 0x4E0; //! sig: 8B 87 ? ? ? ? 4B 8D 0C 40 F3 0F 10 AD or check 622D11 in ida rev2.
 #else
-	const int IdPlayer_1_Offset = 0x1AF8; //! check ida: return idPlayer::CastTo_2125F50(*(_QWORD *)(idGameLocal_a1 + 8i64 * a2 + 0x1AF8)); in ida rev2
 	const __int64 IdGameTimeManagerLocalOffset = 0x125A60; //! check rev2 in ida: idGameTimeManagerLocal_GetGameMs_D06DD0((__int64)
-	//const __int64 CurrentGameModeOffset = 0x6B07DB5; //! not used anymore.
-	const int CvarFindInternalVtbFuncOffset = 0x20;
-	const int CmdExecuteFuncAddrOffset = 0x40;
-	const int idPlayerPlaySoundVtbOffset = 0x118;
+	//const __int64 CurrentGameModeOffset = 0x6B07DB5; //! not used anymore.	
 	const int RenderModelGui_PackedColorOffset = 0x4D0; //! sig: 8B 87 ? ? ? ? 4B 8D 0C 40 F3 0F 10 AD or check 622D11 in ida rev2.
+	//? this one is a good example of smth we should not do, because this offset if different in Vanilla/Sandbox but because the offset in the Vtable of the idMapInstance ptr is the same in both version we should and will use the function ptr instead.
+	/*const __int64 MapInstance_CurrentMapPath = 0x9A068;*/
+
 #endif
 	
 }
+
+
+
+
 
 namespace WeaponIdStr {
 	//! using strings for id is not great but at least i'll be sure:
@@ -1128,6 +1072,8 @@ namespace modSettingsDefault {
 	static const bool defaultIsFirstTimeModLaunch = true;
 
 	static const unsigned int defaultToggleModSettingsVkCode = VK_F8;
+	static const std::string defaultToggleModSettingsStr = "F8";
+
 	static const int  defaultmodSettingsShortcutTextColorImU32 = IM_COL32(255, 255, 255, 255); //white
 
 	static const bool defaultIsUseDedicatedNadeKeys = true;
@@ -1219,9 +1165,19 @@ namespace modSettingsDefault {
 	static const bool g_defaultUseImguiCustomDotCrosshair = false;
 	
 	static const ImU32 g_defaultCustomDotCrosshairColorImU32 = IM_COL32(255, 255, 255, 255); //white
-	static const ImU32 g_defaultCustomDotCrosshairCooldownColorImU32 = IM_COL32(255, 0, 0, 255);
+	//static const ImU32 g_defaultCustomDotCrosshairCooldownColorImU32 = IM_COL32(255, 0, 0, 255);
+	static const ImU32 g_defaultCustomDotCrosshairCooldownColorImU32 = IM_COL32(224, 0, 255, 255);
+	//! health as crosshair colors:
 
-	static const float g_defaultimguiCustomDotCrosshairRadiusPix = 2.0f;
+	static const ImU32 g_defaultCustomDotCrosshairHealthAndArmorFullColorImU32 = IM_COL32(255, 255, 255, 255); //white
+	static const ImU32 g_defaultCustomDotCrosshairArmorFullColorImU32 = IM_COL32(152, 251, 152, 255); // pale green
+	//static const ImU32 g_defaultCustomDotCrosshairHealthFullColorImU32 = IM_COL32(173, 216, 230, 255); // pale blue
+	static const ImU32 g_defaultCustomDotCrosshairHealthFullColorImU32 = IM_COL32(0, 191, 255, 255); // blue health
+	static const ImU32 g_defaultCustomDotCrosshairWarningColorImU32 = IM_COL32(238, 105, 9, 255); // orange
+
+
+	static const float g_defaultimguiCustomDotCrosshairRadiusPix = 3.0f;
+	static const float g_defaultImguiCustomDotCrosshairOutlineThickness = 1.0f;
 
 	static const bool g_defaultCustomDotCrosshairIsShowHealthAsColor = false;
 
@@ -1330,6 +1286,7 @@ namespace modSettingsDefault {
 
 	static const int g_defaultOverrideRadMeterColor = (int)swfNamedColors_t::SWF_CUSTOM_NAMED_COLOR_WHITE;
 
+	static const int g_defaultOverrideLowAmmoWarningColor = (int)swfNamedColors_t::SWF_CUSTOM_NAMED_COLOR_DEFAULT;
 	
 	/*static const int g_defaultOverrideDotReticleColor = (int)swfNamedColors_t::SWF_CUSTOM_NAMED_COLOR_WHITE;
 	static const int g_defaultOverrideDotReticleCooldownColor = (int)swfNamedColors_t::SWF_CUSTOM_NAMED_COLOR_RED;
@@ -1340,6 +1297,7 @@ namespace modSettingsDefault {
 	static const int g_DotColorFeatureDisabledColor = (int)swfNamedColors_t::SWF_CUSTOM_NAMED_COLOR_DEFAULT;
 
 
+	static const bool g_defaultIsRemoveHudLowWarnings = false;
 
 	//! the binds above some of the hud elements
 	static const bool g_defaultIsRemoveBindsReminderOnHud = true;
@@ -1366,6 +1324,7 @@ namespace modSettingsDefault {
 	//static const bool g_defaultForceRainAnywhere = false;
 	//static const bool g_defaultForceSnowAnywhere = false;
 	static const bool g_defaultisForceAiHaste = false;
+	static const bool g_defaultIsSpeedBoostInHubMap = false;
 
 
 
@@ -1386,8 +1345,8 @@ namespace modSettingsDefault {
 
 
 	//! debug settings:
-	static const unsigned int g_defaultReloadImguiHooksVkCode = VK_F7;
-	static const std::string g_defaultReloadImguiHooksKeyName = "F7";
+	//static const unsigned int g_defaultToggleModMenuVkCode = VK_F8;
+	//static const std::string g_defaultReloadImguiHooksKeyName = "F7";
 	static const std::string g_defaultDevModeKey = "X";
 
 	//! weapons
@@ -1464,7 +1423,6 @@ const int32_t Equipment_switchedFlash_Id = 0xF4E3275;
 
 const int32_t equipmentArrowSpriteId = -1637630621;
 const int32_t equipmentBackerSpriteId = -2014894865; //! the little bar right side of the nade
-
 
 
 const int32_t healthIconOuterSpriteId = -1170972450; 
@@ -1726,28 +1684,7 @@ namespace hudString {
 static const std::string textForidCmd = "66666666666666";
 }
 
-//namespace VarName{
-//	extern  const char* idPlayer = "idPlayer";
-//	extern  const char* playerHud = "playerHud";
-//}
 
 
-//enum idGameSystemLocalState_t : __int32 {
-//	GAME_STATE_UNDEFINED_K = -0x1,
-//	GAME_STATE_MAIN_MENU = 0x0,
-//	GAME_STATE_LOADING = 0x1,
-//	GAME_STATE_INGAME = 0x2,
-//	GAME_STATE_NUM = 0x3,
-
-//const unsigned int g_declReticleMaxCount = 37;
-
-/*
-idSWFSpriteInstance:print: Addr: 000001F741A5CC70 full path name: fill_right:glow:glow, visIndex: 56, fullPathHash: -216838433 namedColorId: 3 bounds.tl.x: 194.53 bounds.tl.y: 644.20  bounds.br.x: 194.53 bounds.br.y: 644.20
-
-
-
-
-
-*/
 
 

@@ -9,13 +9,17 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <unordered_map>
 
 
-#include "../Common/Voice.h"
+//#include "../Common/Voice.h"
 #include "../DE/enumsCustom.h"
+//#include "DE/GameInfoManager.h"
+//#include "DE/GameInfoManager.h"
 
 
 
+//! 5/9/24 inluding macros here instead of adding loguru.h file in other file so we could potentially change logger easily in the future.
 #ifndef logDebug
 #define logDebug(...) VLOG_F(loguru::Verbosity_1 , __VA_ARGS__)
 #endif 
@@ -34,16 +38,12 @@
 
 
 
-
-
-
-//! comment this if you want to build for vanilla, and uncomment you want to build for sandbox
-//#define GAME_VERSION_SANDBOX
+//! 5/9/24 if you ever need to create Solution configuration (ex Dev_Sandbox) check Vs reminder file as this can be tricky, or check commit from this date.
 
 class Config
 {
 private:
-
+//! 5/9/24 macros defined at solution configuration level. Check project properties => C++ => Preprocessor
 #ifdef GAME_VERSION_SANDBOX
 	static inline bool m_isModSandboxVersion = true;
 #else
@@ -66,7 +66,6 @@ private:
 #endif
 
 
-
 	static inline bool m_isLogIdConsoleToFile = false;
 
 	static inline FILE* fp;
@@ -74,12 +73,16 @@ private:
 
 	static inline std::string m_gameDirectoryStr;
 	static inline std::string m_currentModuleNameStrToLower;
+	static inline std::string m_currentGameVersionStr = "";
+	static inline std::string m_windowsVersionStr = "unknown Windows version (?!)";
+	static inline std::string m_cpuInfoStr = "unknown CPU info";
+	static inline std::string m_gpuInfoStr = "unknown GPU info";
 	//static inline bool m_isSandboxModule = false;
 	
 
 public:
 
-	static const inline float MOD_BUILD_F = 2.32f;
+	static const inline float MOD_BUILD_F = 2.4f;
 
 	static const inline std::string MOD_FOLDER_NAME = "DE_AdvancedOptionsMod";
 
@@ -105,6 +108,15 @@ public:
 		"doometernalx64vk.exe", "doomsandbox64vk.exe"
 	};
 
+	static const inline std::string OLD_REVISION_3_GAME_BUILD_STR = "20230804-000051-white-wine";
+
+	//! this is a way to give simple names to game version as nowwhere in the game is a patch version like 6.6.6 rev3 present this is just made up somewhere else. because it would be a pain to have folders of data which start with the actual game build str like 20240722-204955-eggplant-purple we'll use a simple conversion below
+	static const inline std::unordered_map<std::string, std::string> GameBuildVersionMap = {
+	{OLD_REVISION_3_GAME_BUILD_STR, "6.66-Rev2 (OLD!)"}, //! 
+	{"20240722-204955-eggplant-purple", "Vanilla_V1"}, //! vanilla version
+	{"20240822-095543-coral-blue", "Sandbox_V2"} //! sandbox version
+	};
+
 	static const inline std::string GAME_WINDOW_CLASS_NAME = "Ghost_CLASS";
 
 	//static const inline std::string MOD_NEXUS_LINK = "https://www.nexusmods.com/doometernal/mods/1255";
@@ -116,7 +128,6 @@ public:
 	static bool isDevMode();
 	static bool isDebugMode();
 
-	static std::string getModVersionAsStr();
 
 	static bool isModError();
 	static void setModError(std::string erroMsg);
@@ -134,31 +145,30 @@ public:
 	static void setLogIdConsoleToFile(bool isLogIdConsoleToFile);
 	static bool isLogIdConsoleToFile();
 
-	static std::string getModBuildStr();
-	//static std::string getModConfigStr();
+	//static std::string getGameVersion_K();
+	//static std::string
 
 	static std::string& getCurrentModuleNameStrToLower();
 	static void setCurrentModuleNameStrToLower(const std::string& moduleName);
 
-	//static bool isSandboxModule();
-	//static void setIsSandboxModule(std::string moduleNameStrToLower);
 
-	/*static void setDevMode(bool isDevMode);*/
-
-	static std::string getCreditsStr();
-
-	static void printHeaderInLogFile();
-	static std::string getLogHeaderString();
+	//static void logConfigSummary();
+	static std::string getGameVersionK_Str();
+	static void aquireGameVersionStr(std::string gameVersionStr);
+	static void aquireWindowsVersion(std::string windowsVersionStr);
+	static void acquireCpuInfo(std::string cpuInfoStr);
+	static void acquireGpuInfo(std::string gpuInfoStr);
+	static std::string getInfoSummaryStr();
+	static std::string getInfoSummaryForLogFile();
+	static std::string getModBuildStr();
+	static std::string getModVersionAsStr();
 	static std::string getTimeDateStr();
+	static std::string getCreditsStr();
 
 	static std::string getModInfoTextForGui();
 
 	static std::string getGameDirectoryStr();
 	static void setGameDirectoryStr(std::string dirPath);
-
-
-
-
 
 };
 

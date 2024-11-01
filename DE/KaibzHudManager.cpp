@@ -47,43 +47,88 @@ int KaibzHudManager::getIntVal(float valueF, float maxValue){
 //}
 
 
-ImU32 KaibzHudManager::getCustomCrosshairHealthAsImU32Color(float currentHealthValue, float MaxHealthValue, float currentArmorValue, float MaxArmorValue) {
+//! This should be better as it now show everytime you have a a full armor, or full health or full both, which is relevant information as you can get a free bloodpunch in those situation if you play well, then crosshair being orange for all other situation is ok as it shows you should get more health
+ImU32 KaibzHudManager::getCustomCrosshairHealthAsImU32ColorV2(float currentHealthValue, float MaxHealthValue, float currentArmorValue, float MaxArmorValue) {
+
+
+	/*static float lastarmorPercentage = -1.0f;
+	static float lasthealthPercentage = -1.0f;*/
+
 
 	if (MaxArmorValue <= 0 || MaxHealthValue <= 0) {
-		// Handle error or return a default color
+		//! Handle error or return a default color
 		return modSettings::getKaibzHudDisabledColorImU32();
 	}
 
 	float armorPercentage = (currentArmorValue) / MaxArmorValue * 100.0f;
 	float healthPercentage = (currentHealthValue) / MaxHealthValue * 100.0f;
 
-	if (armorPercentage == 100.0f) {
-		return modSettings::getKaibzHudArmorMaxColorImU32();
-	}
-	else if (armorPercentage > 0.0f) {
-		return modSettings::getKaibzHudArmorColorImU32();
+	//if (armorPercentage != lastarmorPercentage) {
+	//	logInfo("getCustomCrosshairHealthAsImU32ColorV2: debug: armorPercentage has changed to %.3f", armorPercentage);
+	//	lastarmorPercentage = armorPercentage;
+	//}
+
+	//if (healthPercentage != lasthealthPercentage) {
+	//	logInfo("getCustomCrosshairHealthAsImU32ColorV2: debug: healthPercentage has changed to %.3f", healthPercentage);
+	//	lasthealthPercentage = healthPercentage;
+	//}
+
+
+	if (armorPercentage == 100.0f && healthPercentage == 100.0f) {
+		return modSettings::getCustomDotCrosshairHealthAndArmorFullColor(); //! white
 	}
 
-	else if (healthPercentage <= 0.0f) {
-		return modSettings::getKaibzHudCriticalColorImU32();
+	else if (armorPercentage == 100.0f) {
+		return modSettings::getCustomDotCrosshairArmorFullColor(); //! green
 	}
 
-	else if (healthPercentage <= 25.0f) {
-		return modSettings::getKaibzHudWarningColorImU32();
-	}
-	else if (healthPercentage <= 50.0f) {
-		return modSettings::getKaibzHudCautionColorImU32();
+	else if (healthPercentage == 100.f) {
+		return modSettings::getCustomDotCrosshairHealthFullColor(); //! blue
 	}
 
-	else if (healthPercentage <= 100.0f) {
-		return modSettings::getKaibzHudHealthColorImU32();
+	else {
+		return modSettings::getCustomDotCrosshairWarningColor(); //! orange
 	}
-
-	else  {
-		return modSettings::getKaibzHudHealthMaxColorImU32();
-	}
-
 }
+
+//! this was not good enough in a system where you can only show one color.
+//ImU32 KaibzHudManager::getCustomCrosshairHealthAsImU32Color(float currentHealthValue, float MaxHealthValue, float currentArmorValue, float MaxArmorValue) {
+//
+//	if (MaxArmorValue <= 0 || MaxHealthValue <= 0) {
+//		// Handle error or return a default color
+//		return modSettings::getKaibzHudDisabledColorImU32();
+//	}
+//
+//	float armorPercentage = (currentArmorValue) / MaxArmorValue * 100.0f;
+//	float healthPercentage = (currentHealthValue) / MaxHealthValue * 100.0f;
+//
+//	if (armorPercentage == 100.0f) {
+//		return modSettings::getKaibzHudArmorMaxColorImU32(); // white
+//	}
+//	else if (armorPercentage > 0.0f) {
+//		return modSettings::getKaibzHudArmorColorImU32();
+//	}
+//
+//	else if (healthPercentage <= 0.0f) {
+//		return modSettings::getKaibzHudCriticalColorImU32();
+//	}
+//
+//	else if (healthPercentage <= 25.0f) {
+//		return modSettings::getKaibzHudWarningColorImU32();
+//	}
+//	else if (healthPercentage <= 50.0f) {
+//		return modSettings::getKaibzHudCautionColorImU32();
+//	}
+//
+//	else if (healthPercentage <= 100.0f) {
+//		return modSettings::getKaibzHudHealthColorImU32();
+//	}
+//
+//	else  {
+//		return modSettings::getKaibzHudHealthMaxColorImU32();
+//	}
+//
+//}
 
 
 
@@ -246,7 +291,8 @@ KaibzHudData KaibzHudManager::getData() {
 		}
 
 		//! crosshair data:
-		data.crosshairHealthColorImU32 = getCustomCrosshairHealthAsImU32Color(idHUD_LowWarningPtr->healthCurrent, idHUD_LowWarningPtr->healthMax, idHUD_LowWarningPtr->armorCurrent, idHUD_LowWarningPtr->armorMax);
+		data.crosshairHealthColorImU32 = getCustomCrosshairHealthAsImU32ColorV2(idHUD_LowWarningPtr->healthCurrent, idHUD_LowWarningPtr->healthMax, idHUD_LowWarningPtr->armorCurrent, idHUD_LowWarningPtr->armorMax);
+		//data.crosshairHealthColorImU32 = getCustomCrosshairHealthAsImU32Color(idHUD_LowWarningPtr->healthCurrent, idHUD_LowWarningPtr->healthMax, idHUD_LowWarningPtr->armorCurrent, idHUD_LowWarningPtr->armorMax);
 	}
 
 

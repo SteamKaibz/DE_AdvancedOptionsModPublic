@@ -96,7 +96,7 @@
 //#include "Rtti/Rtti_Helper.h"
 #include "DE/ReticleColorManager.h"
 //#include "Debug/ReticleSettingsDebug.h"
-#include "DE/GameVersionInfoManager.h"
+#include "DE/GameInfoManager.h"
 #include "DE/idHudManager.h"
 #include "DE/idPlayerMetricsManager.h"
 #include "DE/idLib_Dynamic.h"
@@ -283,7 +283,10 @@ LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 			else if (wParam == VK_F4) {
 				logInfo("HookedWndProc: VK_F4 pressed");				
 
-				playerSoundManager::playOutOfItemSound();
+				//idMapInstanceLocalManager::isAnyAiAliveInLevel();
+				//idPlayer_K::autoManagePlayerSpeed();
+
+				//playerSoundManager::playOutOfItemSound();
 				
 				
 				/*std::string propsStr = playerPropsManager::getDebugStrV2();
@@ -340,9 +343,10 @@ LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 				logInfo("HookedWndProc: VK_F5 pressed");
 				Beep(500, 500);
 				Menu::bShowDebugWindow = !Menu::bShowDebugWindow;
-				//cvarInfoGenerator::dumpCvarsListToFile();
-				//cmdInfoGenerator::dumpCmdListToFile();
-				//idCmd::executeCommandText_K2("activateConsole");
+
+				std::string mapInstanceDbgStr = idMapInstanceLocalManager::getDbgStrForImgui();
+				logInfo("%s", mapInstanceDbgStr.c_str());
+				
 			}
 
 
@@ -641,15 +645,12 @@ __int64 __fastcall idMenu_UpdateHook(__int64 idMenu, __int64 a2) {
 
 
 
-//! float __fastcall getFovTargetValMB_1D2F860(_QWORD *idWeaponPtr_a1)
 typedef float(__fastcall* getFovTargetValMB)(idWeapon* idWeaponAddr_a1);
-//typedef float(__fastcall* getFovTargetValMB)(__int64 idWeaponAddr_a1);
 getFovTargetValMB pgetFovTargetValMB = nullptr;
 getFovTargetValMB pgetFovTargetValMBTarget;
 
-//float __fastcall getFovTargetValMB_Hook(__int64 idWeaponAddr_a1) {<
+//! sig: 48 83 EC 38 48 83 B9 ? ? ? ? ? 4C 8B C1
 float __fastcall getFovTargetValMB_Hook(idWeapon* idWeaponObj_a1) {
-	logDebug("SelectWeaponForSelectionGroupHook");
 
 	idWeaponManager::acquirreCurrentIdWeapon(idWeaponObj_a1);
 	/*ws.getCurrentlyEquippedIdWeaponAdrr(idWeaponAddr_a1);*/
@@ -662,6 +663,7 @@ float __fastcall getFovTargetValMB_Hook(idWeapon* idWeaponObj_a1) {
 }
 
 
+
 //! SelectWeaponForSelectionGroup Hook: char __fastcall SelectWeaponForSelectionGroupHook(__int64 gui_a1, int x_a2)
 typedef char(__fastcall* SelectWeaponForSelectionGroup)(__int64 a1, int a2);
 SelectWeaponForSelectionGroup pSelectWeaponForSelectionGroup = nullptr;
@@ -669,7 +671,6 @@ SelectWeaponForSelectionGroup pSelectWeaponForSelectionGroupTarget;
 
 //! this is triggered everytime user presses a dedicated weapon key
 char __fastcall SelectWeaponForSelectionGroupHook(__int64 a1, int weaponIndex_a2) {
-	logDebug("SelectWeaponForSelectionGroupHook");
 
 	/*static int lastA2debug = -1;
 	if (a2 != lastA2debug) {
@@ -938,10 +939,11 @@ void __fastcall idHUD_Reticle_SetActiveReticleHook(idHUD_Reticle* idHUD_Reticle_
 
 	}
 
-	CustomCrosshairManager::acquireWeaponCoolDownStatus(idSWFWidget_Hud_Reticle_v8, idDeclWeaponReticle_a3);
+	//? !!!!!!!!! this will not work if user has chosen no crosshair in the game menu !!!!!!!!!
+	//CustomCrosshairManager::acquireWeaponCoolDownStatus(idSWFWidget_Hud_Reticle_v8, idDeclWeaponReticle_a3);
 
 	//logInfo("debug:  idSWFWidget_Hud_Reticle_v8 is %p ", idSWFWidget_Hud_Reticle_v8);
-	//! idSWFWidget_Hud_Reticle_v8 will be null when the ingame reticle mode is set to None so the rest of this code will not trigger, obviously
+	//? idSWFWidget_Hud_Reticle_v8 will be null when the ingame reticle mode is set to None so the rest of this code will not trigger, obviously
 	if (idSWFWidget_Hud_Reticle_v8) {		
 
 		idSWFSpriteInstance* idSWFSpriteInstance_v17 = idSWFWidgetManager::getBoundSprite(idSWFWidget_Hud_Reticle_v8);
@@ -1030,7 +1032,6 @@ idColor* __fastcall convertIdDeclUIColorToidColorHook(__int64 idDeclUIColor_a1, 
 
 		//logInfo("convertIdDeclUIColorToidColorHook: colorId_a3: %d", colorId_a3);
 
-		//? 30/4/24 removing this just 5 min for testing....
 		*idColorPtr_a2 = *(idColor*)GameHudColorsManager::getCustomIdColor(colorId_a3);		
 		return idColorPtr_a2;
 
@@ -1040,48 +1041,27 @@ idColor* __fastcall convertIdDeclUIColorToidColorHook(__int64 idDeclUIColor_a1, 
 }
 
 
-//! void __fastcall setSpriteInstanceColor_Smth_52F290(idSWFSpriteInstance* idSWFSpriteInstance_a1,unsigned int namedColorId_a2) 
-typedef void(__fastcall* setSpriteInstanceColor)(__int64 idSWFSpriteInstance_a1, unsigned int namedColorId_a2);
+//! sig: 48 89 6C 24 10 48 89 74 24 18 57 48 83 EC 30 8B F2 48 8B F9
+typedef void(__fastcall* setSpriteInstanceColor)(idSWFSpriteInstance* idSWFSpriteInstance_a1, unsigned int namedColorId_a2);
 setSpriteInstanceColor psetSpriteInstanceColor = nullptr;
 setSpriteInstanceColor psetSpriteInstanceColorTarget = nullptr;
 
-void __fastcall setSpriteInstanceColorHook(__int64 idSWFSpriteInstance_a1, unsigned int namedColorId_a2) {
-	logDebug("IdHudDebugPrintHook");
+void __fastcall setSpriteInstanceColorHook(idSWFSpriteInstance* idSWFSpriteInstance_a1, unsigned int namedColorId_a2) {
+	
 
-	//! using rbp was a mess, hopefully we'll never have to do that again.
-	/*__int64 val = GetRBPValueWithRAxPreserved();
-	logInfo("setSpriteInstanceColorHook: TEST: rbp val: %p", (void*)val);*/
-
-
-
-	//? this is used to get the addresses of all the sprites instances we are interested in. So at least, the frag icon instances so this should be UNcommented all the time. As those instances addresses are acquired when a level load or when the idCmd::reapplySwfColorsCmd is called.
+	//! this is used to get the addresses of all the sprites instances we are interested in. So at least, the frag icon instances so this should be UNcommented all the time. As those instances addresses are acquired when a level load or when the idCmd::reapplySwfColorsCmd is called.
 	GameHudColorsManager::acquireMonitoredSpriteInstanceAddr(idSWFSpriteInstance_a1);
 
 	
-	//idSWFSpriteInstanceManager::debugPrintSpriteInstanceMaterialOverrideNameForColorId(idSWFSpriteInstance_a1, SWF_NAMED_COLOR_HUD_EQUIPMENT_FLAME_BELCH);
-
-	//! this works GREAT to debug hud elements and find what their fullPathHash is, you just find corresponding named color and watch the log
-	//idSWFSpriteInstanceManager::debugPrintfullPathHashForColorId(idSWFSpriteInstance_a1, SWF_NAMED_COLOR_HUD_EQUIPMENT_FRAG);
-	//GameHudColorsManager::debugPrintfullPathHashIfIsColorId(idSWFSpriteInstance_a1, SWF_NAMED_COLOR_HUD_EQUIPMENT_FRAG_ICON);
-
+	//! 11/9/24 will log info about each sprite instance BUT will only do it once for each sprite instance ptr.	
+	//GameHudColorsManager::debugLogUniqueSpriteInstance(idSWFSpriteInstance_a1);
 
 	
 	namedColorId_a2 = GameHudColorsManager::getColor(idSWFSpriteInstance_a1, namedColorId_a2);
 
 
-
-	//? trying to change dot crosshair color, and everything that is white to red
-	//if (namedColorId_a2 == 258 || namedColorId_a2 == 259) {
-	//	namedColorId_a2 = 94;
-	//}
-	////else {
-	//	//! See our How our custom color System could work log entry in our log file to understand how this system works.
-	//	namedColorId_a2 = GameHudColorsManager::getColor(idSWFSpriteInstance_a1, namedColorId_a2);
-	//}
-		
-
-
-	//! this is good to identify original colors of a hud element:
+	
+	//! i used this to identify specific hud elements:
 	//GameHudColorsManager::debugLogInstancesDefaultNamesColors(idSWFSpriteInstance_a1, namedColorId_a2);	
 
 	//! this is good to test colors on arrow, bp, rad suit:
@@ -1101,9 +1081,6 @@ void __fastcall setSpriteInstanceColorHook(__int64 idSWFSpriteInstance_a1, unsig
 	/*if (PlayerStateChecker::isPlaying()) {
 		GameHudColorsManager::addSpriteInstanceAddrToDebugVec(idSWFSpriteInstance_a1);
 	}*/
-
-	//! this is great to get a log of every hud elements
-	//GameHudColorsManager::debugLogSpriteInstance(idSWFSpriteInstance_a1);
 
 
 	//! we had an issue with this before when we forgot to add the isPlaying check which cause issue when trying to go back to default profile color.
@@ -1202,9 +1179,6 @@ __int64 __fastcall printOutlinedStringMB_hook(
 
 	if (iceNadeIconData.isRenderingAllowed) {
 		idRenderModelGuiManager::drawIceIcon(gui, iceNadeIconData);
-		
-
-		
 	}
 
 	

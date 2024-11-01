@@ -3,6 +3,22 @@
 
 
 
+bool KaibzCrosshair::getIsWeaponCooldownFlag()
+{
+
+    weaponSlot_t weaponSlot = idWeaponManager::getCurWeaponSlot();
+    bool isCurWeapOnCoolDown = idWeaponManager::getIsCurrentWeaponOnCooldown();
+
+    if (isCurWeapOnCoolDown && (weaponSlot == weaponSlot_t::SSG || weaponSlot == weaponSlot_t::SHOTGUN)) {
+        //m_isWeaponCooldownFlag = true;
+        return true;
+    }
+
+    return false;
+
+    //return m_isWeaponCooldownFlag;
+}
+
 
 void KaibzCrosshair::showCircleCrosshair(KaibzHudData& data)
 {
@@ -19,7 +35,7 @@ void KaibzCrosshair::showCircleCrosshair(KaibzHudData& data)
     if (ImGui::Begin("customcrosshair", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoBackground))
     {
 
-        static float outlineThickness = 1.0f; // Initial outline thickness  
+        float outlineThickness = modSettings::getImguiCustomDotCrosshairOutlineThickness();
 
         // Calculate crosshair position and size
         ImVec2 crosshairPos = ImVec2(window_size.x / 2.0f, window_size.y / 2.0f);
@@ -29,7 +45,7 @@ void KaibzCrosshair::showCircleCrosshair(KaibzHudData& data)
         drawList->AddCircleFilled(crosshairPos, modSettings::getImguiCustomDotCrosshairRadiusPix() + outlineThickness, outlineColorImU32); // Outer background. always black  
 
 
-        if (CustomCrosshairManager::getIsWeaponCooldownFlag()) {           
+        if (getIsWeaponCooldownFlag()) {           
             drawList->AddCircleFilled(crosshairPos, modSettings::getImguiCustomDotCrosshairRadiusPix(), modSettings::getCustomDotCrosshairCooldownColorImU32()); // Inner crosshair
         }
 

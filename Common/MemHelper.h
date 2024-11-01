@@ -30,15 +30,15 @@ const int monitoredWeaponMaxIndex = 7; //!  minigun
 class MemHelper
 {
 private:
-	//uintptr_t m_moduleBaseAddr = 0;
+	uintptr_t m_moduleBaseAddr = 0;
 	uintptr_t m_idPlayerAddr = 0;
 	//GameState m_gameState = GameState::unknown;
 
-	__int64 m_idHud_WeaponInfoPtr = 0;
+	/*__int64 m_idHud_WeaponInfoPtr = 0;
 
 	const int m_iceNadeSelected = 1;
-	const int m_normalNadeSelected = 2;
-	NadeStatus m_nadeStatus = NadeStatus::undefinedNade;
+	const int m_normalNadeSelected = 2;*/
+	//NadeStatus m_nadeStatus = NadeStatus::undefinedNade;
 	
 	//void updateNadeStatus();
 	//NadeStatus getNadeStatus();

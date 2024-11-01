@@ -384,6 +384,209 @@ std::set<std::string> K_Utils::loadFileToSet(std::string inputFilePath)
 	return uniqueStrsSet;
 }
 
+
+
+// Function to call RtlGetVersion and get the full version info
+RTL_OSVERSIONINFOW  K_Utils::GetWindowsVersionInfo() {
+	typedef LONG(WINAPI* RtlGetVersionPtr)(PRTL_OSVERSIONINFOW);
+	RTL_OSVERSIONINFOW rovi = { 0 };
+	rovi.dwOSVersionInfoSize = sizeof(rovi);
+
+	RtlGetVersionPtr RtlGetVersion = (RtlGetVersionPtr)GetProcAddress(GetModuleHandleW(L"ntdll.dll"), "RtlGetVersion");
+	if (RtlGetVersion != nullptr) {
+		RtlGetVersion(&rovi);
+	}
+	return rovi;
+}
+
+std::string  K_Utils::GetWindowsVersion() {
+	std::string version = "Windows ";
+	RTL_OSVERSIONINFOW osInfo = GetWindowsVersionInfo();
+
+	// Check for Windows version using MajorVersion and BuildNumber
+	if (osInfo.dwMajorVersion == 10) {
+		if (osInfo.dwBuildNumber >= 22000) {
+			version += "11";
+		}
+		else {
+			version += "10";
+		}
+	}
+	else if (osInfo.dwMajorVersion == 6) {
+		if (osInfo.dwMinorVersion == 3) {
+			version += "8.1";
+		}
+		else if (osInfo.dwMinorVersion == 2) {
+			version += "8";
+		}
+		else if (osInfo.dwMinorVersion == 1) {
+			version += "7";
+		}
+	}
+	else {
+		version += std::to_string(osInfo.dwMajorVersion) + "." + std::to_string(osInfo.dwMinorVersion);
+	}
+
+	version += " (Build " + std::to_string(osInfo.dwBuildNumber) + ")";
+	return version;
+}
+
+
+std::string K_Utils::getCpuInfoStr() {
+	
+
+	/*int cpuInfo[4] = { -1 };
+	__cpuid(cpuInfo, 0x80000002);
+	char cpuBrand[0x40];
+	memcpy(cpuBrand, cpuInfo, sizeof(cpuInfo));
+	__cpuid(cpuInfo, 0x80000003);
+	memcpy(cpuBrand + 16, cpuInfo, sizeof(cpuInfo));
+	__cpuid(cpuInfo, 0x80000004);
+	memcpy(cpuBrand + 32, cpuInfo, sizeof(cpuInfo));
+
+	return std::string(cpuBrand);*/
+
+	int cpuInfo[4] = { -1 };
+	char cpuBrand[0x40] = { 0 }; // Ensure the array is zero-initialized
+
+	__cpuid(cpuInfo, 0x80000002);
+	memcpy(cpuBrand, cpuInfo, sizeof(cpuInfo));
+	__cpuid(cpuInfo, 0x80000003);
+	memcpy(cpuBrand + 16, cpuInfo, sizeof(cpuInfo));
+	__cpuid(cpuInfo, 0x80000004);
+	memcpy(cpuBrand + 32, cpuInfo, sizeof(cpuInfo));
+
+	return std::string(cpuBrand);
+}
+
+
+
+const char* K_Utils::getAllowedKeyName(unsigned int vkCode)
+{
+	for (const auto& key : allowedKeyBindsKeyInfos)
+	{
+		if (key.vkCode == vkCode)
+		{
+			return key.name;
+		}
+	}
+	logErr("getAllowedKeyName: failed to find str for key code: %u vkCode", vkCode);
+	return "???";
+}
+
+
+unsigned int K_Utils::convertKeyStrToVkCode(std::string keyStr, unsigned int defaultVKCode) {
+	
+	unsigned int vkCodeResult = 0;
+
+
+	for (const auto& key : allowedKeyBindsKeyInfos)
+	{
+		if (std::string(key.name) == keyStr)
+		{			
+			//logInfo("convertKeyStrToVkCode: debug: keyStr: %s key.vkCode: %u", keyStr.c_str(), key.vkCode);
+			return key.vkCode;
+		}
+	}
+
+	std::string validKeys;
+	for (const auto& key : allowedKeyBindsKeyInfos)
+	{
+		validKeys += key.name;
+		validKeys += ", ";
+	}
+
+	if (!validKeys.empty()) {
+		validKeys.pop_back();
+		validKeys.pop_back();
+	}
+
+	logWarn("convertKeyStrToVkCode: failed to parse vk code for input %s. Setting it to: %u. "
+		"If you manually edited the json file, remember the only valid keys are: %s (without the comma of course)", keyStr.c_str(), defaultVKCode, validKeys.c_str());
+
+
+	return defaultVKCode;
+	
+}
+
+std::string K_Utils::convertVkCodeToKeyStr(unsigned int vkCode) {
+
+
+	for (const auto& key : allowedKeyBindsKeyInfos)
+	{
+		if (key.vkCode == vkCode)
+		{
+			//logInfo("convertVkCodeToKeyStr: debug: vkCode: %u vkCode key.name: %s", vkCode, key.name);
+			return std::string(key.name);
+		}
+	}
+
+	// If no match is found, return a default or error string
+	logWarn("convertVkCodeToKeyStr: No valid key found for vkCode: %u returning ???", vkCode);
+	return "???";
+}
+
+
+
+
+
+
+//! going to use game data to get those infos
+//? this almost work but we can not get the gpu driver info right. May be a solution would be to try this: https://github.com/SaschaWillems/vulkan.gpuinfo.org/blob/1e6ca6e3c0763daabd6a101b860ab4354a07f5d3/functions.php#L294
+//std::string K_Utils::getGPUInfo() {
+//	VkInstance instance;
+//	VkApplicationInfo appInfo = {};
+//	appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+//	appInfo.pApplicationName = "GPU Info App";
+//	appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
+//	appInfo.pEngineName = "No Engine";
+//	appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+//	appInfo.apiVersion = VK_API_VERSION_1_0;
+//
+//	VkInstanceCreateInfo createInfo = {};
+//	createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+//	createInfo.pApplicationInfo = &appInfo;
+//
+//	if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
+//		return "Failed to create Vulkan instance!";
+//	}
+//
+//	uint32_t deviceCount = 0;
+//	vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
+//
+//	if (deviceCount == 0) {
+//		vkDestroyInstance(instance, nullptr);
+//		return "No GPUs with Vulkan support found!";
+//	}
+//
+//	std::vector<VkPhysicalDevice> devices(deviceCount);
+//	vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
+//
+//	std::stringstream gpuInfoStream;
+//	for (const auto& device : devices) {
+//		VkPhysicalDeviceProperties properties;
+//		vkGetPhysicalDeviceProperties(device, &properties);
+//
+//		uint32_t driverVersion = properties.driverVersion;
+//		uint32_t major = (driverVersion >> 22) & 0x3FF;
+//		uint32_t minor = (driverVersion >> 12) & 0x3FF;
+//		uint32_t patch = driverVersion & 0xFFF;
+//
+//		gpuInfoStream << "GPU: " << properties.deviceName << "\n";
+//		gpuInfoStream << "  Vulkan API Version: " << VK_VERSION_MAJOR(properties.apiVersion) << "."
+//			<< VK_VERSION_MINOR(properties.apiVersion) << "."
+//			<< VK_VERSION_PATCH(properties.apiVersion) << "\n";
+//		gpuInfoStream << "  Driver Version: " << major << "." << minor << "." << patch << "\n";		
+//		gpuInfoStream << "  Vendor ID: " << properties.vendorID << "\n";
+//		gpuInfoStream << "  Device ID: " << properties.deviceID << "\n";
+//	}
+//
+//	vkDestroyInstance(instance, nullptr);
+//	return gpuInfoStream.str();
+//}
+
+
+
 //! don't list the same proces twice
 //std::unordered_set<std::string> K_Utils::GetUniqueRunningProcessesSet()
 //{

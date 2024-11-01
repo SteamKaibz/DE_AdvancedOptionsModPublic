@@ -12,6 +12,7 @@
 #include "idSWFSpriteInstanceManager.h"
 #include "PlayerStateChecker.h"
 #include "enumsCustom.h"
+#include "modSettings.h"
 
 
 
@@ -72,7 +73,9 @@ public:
 
     static std::string getDbgStrForImgui();
 
-    static void TestForceOverdrive();
+    static void autoManagePlayerSpeed();
+
+    //static void TestForceOverdrive();
 
     static void resetLastBloodPunchCount();
 

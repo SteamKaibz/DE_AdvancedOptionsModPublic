@@ -85,6 +85,19 @@ bool fastCvarManager::cacheCriticalCvars()
 		return false;
 	}
 
+	m_pm_sprintspeedCvarPtr = (idCVar*)idCvarManager::getCvarPtr("pm_sprintspeed");
+	if (MemHelper::isBadReadPtr(m_pm_sprintspeedCvarPtr)) {
+		logErr("cacheCriticalCvars: failed to find m_pm_sprintspeedCvarPtr");
+		m_pm_sprintspeedCvarPtr = nullptr;
+		return false;
+	}
+
+	m_hud_globalalphaCvarPtr = (idCVar*)idCvarManager::getCvarPtr("hud_globalalpha");
+	if (MemHelper::isBadReadPtr(m_hud_globalalphaCvarPtr)) {
+		logErr("cacheCriticalCvars: failed to find m_hud_globalalphaCvarPtr");
+		m_hud_globalalphaCvarPtr = nullptr;
+		return false;
+	}
 
 	logInfo("cacheCriticalCvars: succes caching all critical cvars");
 	return true;
@@ -189,6 +202,29 @@ float fastCvarManager::getCurHands_fovScale() {
 
 	return m_hands_fovScaleCvarPtr->data->valueFloat;
 
+}
+
+
+float fastCvarManager::getSprintSpeed() {
+
+	if (!m_pm_sprintspeedCvarPtr) {
+		logErr("getSprintSpeed m_pm_sprintspeedCvarPtr is nullptr");
+		return -1.0f;
+	}
+
+	return m_pm_sprintspeedCvarPtr->data->valueFloat;
+}
+
+
+float fastCvarManager::getHudAlpha() {
+	if (!m_hud_globalalphaCvarPtr) {
+		logErr("getHudAlpha: m_hud_globalalphaCvarPtr is nullptr");
+		return 1.0f;
+	}
+
+	//qsdfqsdflogWarn("getHudAlpha: % .3f", m_hud_globalalphaCvarPtr->data->valueFloat);
+
+	return m_hud_globalalphaCvarPtr->data->valueFloat;
 }
 
 

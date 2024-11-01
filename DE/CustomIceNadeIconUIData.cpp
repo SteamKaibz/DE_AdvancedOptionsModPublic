@@ -16,12 +16,15 @@ void CustomIceNadeIconUIData::updateIsIceNadeCooldownStatus() {
 }
 
  void CustomIceNadeIconUIData::updateMaterials() {
+	 
+	 //? Update: the big crashes we had were becaue the cached materials pointers were wrong, now we always use materialLib to get them, no cache.
+	 //x? settings all the materials to white to try to find crash origin
 	/*m_iceNadeIconUIData.extraBorderMrt = MaterialLib::getWhite();
 	m_iceNadeIconUIData.borderMrt = MaterialLib::getWhite();
 	m_iceNadeIconUIData.backgroundMrt = MaterialLib::getWhite();
 	m_iceNadeIconUIData.iconMrt = MaterialLib::getWhite();*/
 
-	//? settings all the materials to white to try to find crash origin
+	
 	extraBorderMrt = MaterialLib::getIceNadeExtraBorderMtr();
 	borderMrt = MaterialLib::getIceNadeBorderMtr();
 	backgroundMrt = MaterialLib::getIceNadeBackgroundMtr();
@@ -68,6 +71,8 @@ void CustomIceNadeIconUIData::updateIsIceNadeCooldownStatus() {
 			//baseBorderColor = GameHudColorsManager::getCurrentProfileIceNadeBackgroundColor();
 
 			iconColor = baseIceIconColor;
+			GameHudColorsManager::setAlpha(baseIceIconColor, iconColor, 1.0f);
+
 		}
 		else { //! if custom user color
 			baseIceIconColor = *(idColor*)GameHudColorsManager::getCustomIdColor(UserColorSet::getIceNadeArrow_Color());

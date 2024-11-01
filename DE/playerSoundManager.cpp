@@ -10,7 +10,7 @@ void playerSoundManager::playOutOfItemSound()
 	if (!m_playSoundFp) {
 
 		__int64 vtbPtr = *(__int64*)playerPtr;
-		__int64 playSoundPtrToFAdd = vtbPtr + UndocumentedOffsets::idPlayerPlaySoundVtbOffset;
+		__int64 playSoundPtrToFAdd = vtbPtr + GameOffsets::idPlayerPlaySoundVtbOffset;
 		__int64 FAdd = *(__int64*)playSoundPtrToFAdd;
 		m_playSoundFp = (idPlayerPlaySoundEventFp)FAdd;
 		if (MemHelper::isBadReadPtr(m_playSoundFp)) {

@@ -12,23 +12,27 @@ void GoToSettingsGui::showModKeyShortcutText(bool* p_open)
         return;
     }
 
-    static std::string ToggleModTextStr;
+    //? i had set this ToggleModTextStr to static and then later modified the code meaning ToggleModTextStr was no more modified later in this func. this made me go crazy for about 2 hours to figure out the issue was here when wondering why the key in game menu was not updated when changed in mod menu.
+    std::string ToggleModTextStr = guiHelper::getModTextInGameMenu();
+    
+    //? 
+    //static std::string gameMenuModGuiStr = guiHelper::getModTextInGameMenu();
     static ImU32 TextBgRectColorImU32 = Menu::TranparentImU32;
 
     if (Config::isDevMode()) {
-        ToggleModTextStr = "DEV MODE - KAIBZ MOD [";
+        //ToggleModTextStr = "DEV MODE - KAIBZ MOD [";
         TextBgRectColorImU32 = Menu::BlueVioletColorImU32;
     }
     else if (Config::isDebugMode()) {
-        ToggleModTextStr = "DEBUG MODE - KAIBZ MOD [";
+        //ToggleModTextStr = "DEBUG MODE - KAIBZ MOD [";
         TextBgRectColorImU32 = Menu::RedColorImU32;
     }
     else {
-        ToggleModTextStr = "KAIBZ MOD [";
+        //ToggleModTextStr = "KAIBZ MOD [";
         TextBgRectColorImU32 = Menu::TranparentImU32;
     }
 
-    ToggleModTextStr += std::string(guiHelper::getAllowedKeyName(modSettings::getToggleModSettingsVkCode())) + "]";
+    //ToggleModTextStr += std::string(guiHelper::getAllowedKeyName(modSettings::getToggleModSettingsVkCode())) + "]";
 
 
     ImVec2 textSize = ImGui::CalcTextSize(ToggleModTextStr.c_str(), nullptr, true);

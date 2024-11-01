@@ -3,18 +3,7 @@
 
 
 
-const char* guiHelper::getAllowedKeyName(unsigned int vkCode)
-{
-    for (const auto& key : allowedKeyBindsKeyInfos)
-    {
-        if (key.vkCode == vkCode)
-        {
-            return key.name;
-        }
-    }
-    logErr("getAllowedKeyName: failed to find str for key code: %u vkCode", vkCode);
-    return "???";
-}
+
 
 
 
@@ -154,9 +143,6 @@ float guiHelper::computeNegativeSpacing(float fontSize) {
 //}
 
 
-
-
-
 float guiHelper::computeHudIconOffset_Y(float eternalTextFontSize, float hudIconFontSize)
 {
     float offset = (eternalTextFontSize - hudIconFontSize) / 2.0f;
@@ -170,6 +156,29 @@ float guiHelper::computeHudIconOffset_Y(float eternalTextFontSize, float hudIcon
 
 bool guiHelper::startsWithOne(const std::string& str) {
     return !str.empty() && str[0] == '1';
+}
+
+std::string guiHelper::getModTextInGameMenu()
+{
+    std::string resultStr = Config::getGameVersionK_Str();
+
+    if (Config::isDevMode()) {
+        resultStr += " - DEV MODE - KAIBZ MOD [";
+      
+    }
+    else if (Config::isDebugMode()) {
+        resultStr += " - DEBUG MODE - KAIBZ MOD [";
+       
+    }
+    else {
+        resultStr = "KAIBZ MOD [";        
+    }
+
+
+
+    resultStr += std::string(K_Utils::convertVkCodeToKeyStr(modSettings::getToggleModSettingsVkCode())) + "]";
+
+    return resultStr;
 }
 
 //float guiHelper::computeHudIconOffset_Y(float eternalTextFontSize, float hudIconFontSize)

@@ -38,7 +38,9 @@ void modSettings::loadSettings()
 
         m_isUseDedicatedNadeKeys = j.value("m_isUseDedicatedNadeKeys", modSettingsDefault::defaultIsUseDedicatedNadeKeys);
 
-        m_toggleModSettingsVkCode = j.value("m_toggleModSettingsVkCode", modSettingsDefault::defaultToggleModSettingsVkCode);
+        m_toggleModSettingsKeyStr = j.value("m_toggleModSettingsKeyStr", modSettingsDefault::defaultToggleModSettingsStr);
+        m_toggleModSettingsVkCode = K_Utils::convertKeyStrToVkCode(m_toggleModSettingsKeyStr, modSettingsDefault::defaultToggleModSettingsVkCode);
+
         m_modSettingsShortcutTextColorImU32 = j.value("m_modSettingsShortcutTextColorImU32", modSettingsDefault::defaultmodSettingsShortcutTextColorImU32);
 
         m_isDisableNewCampaignPopUp = j.value("m_isDisableNewCampaignPopUp", modSettingsDefault::defaultIsDisableNewCampaignPopUp);
@@ -85,8 +87,16 @@ void modSettings::loadSettings()
         //! CUSTOM CROSSHAIR
         m_useImGuiCustomDotCrosshair = j.value("m_useImGuiCustomDotCrosshair", modSettingsDefault::g_defaultUseImguiCustomDotCrosshair);
         m_imguiCustomDotCrosshairRadiusPix = j.value("m_imguiCustomDotCrosshairRadiusPix", modSettingsDefault::g_defaultimguiCustomDotCrosshairRadiusPix);
-        m_customDotCrosshairColorImU32 = j.value("m_customDotCrosshairColorImU32", modSettingsDefault::g_defaultCustomDotCrosshairColorImU32);
+        m_imguiCustomDotCrosshairOutlineThickness = j.value("m_imguiCustomDotCrosshairOutlineThickness", modSettingsDefault::g_defaultImguiCustomDotCrosshairOutlineThickness);
+      
+            m_customDotCrosshairColorImU32 = j.value("m_customDotCrosshairColorImU32", modSettingsDefault::g_defaultCustomDotCrosshairColorImU32);
         m_customDotCrosshairCooldownColorImU32 = j.value("m_customDotCrosshairCooldownColorImU32", modSettingsDefault::g_defaultCustomDotCrosshairCooldownColorImU32);
+
+        m_customDotCrosshairHealthAndArmorFullColorImU32 = j.value("m_customDotCrosshairHealthAndArmorFullColorImU32", modSettingsDefault::g_defaultCustomDotCrosshairHealthAndArmorFullColorImU32);
+        m_customDotCrosshairArmorFullColorImU32 = j.value("m_customDotCrosshairArmorFullColorImU32", modSettingsDefault::g_defaultCustomDotCrosshairArmorFullColorImU32);
+        m_customDotCrosshairHealthFullColorImU32 = j.value("m_customDotCrosshairHealthFullColorImU32", modSettingsDefault::g_defaultCustomDotCrosshairHealthFullColorImU32);
+        m_customDotCrosshairWarningColorImU32 = j.value("m_customDotCrosshairWarningColorImU32", modSettingsDefault::g_defaultCustomDotCrosshairWarningColorImU32);
+        
         m_customCrosshairIsShowHealthAsColor = j.value("m_customCrosshairIsShowHealthAsColor", modSettingsDefault::g_defaultCustomDotCrosshairIsShowHealthAsColor);
 
 
@@ -109,9 +119,12 @@ void modSettings::loadSettings()
         m_kaibzHudBloodPunch1ColorImU32 = j.value("m_kaibzHudBloodPunch1ColorImU32", modSettingsDefault::g_defaultkaibzHudBloodPunch1ColorImU32);
         m_kaibzHudBloodPunch2ColorImU32 = j.value("m_kaibzHudBloodPunch2ColorImU32", modSettingsDefault::g_defaultkaibzHudBloodPunch2ColorImU32);
         m_kaibzHudBloodPunchDesperateColorImU32 = j.value("m_kaibzHudBloodPunchDesperateColorImU32", modSettingsDefault::g_defaultkaibzHudBloodPunchDesperateColorImU32);
+      
         m_kaibzHudHealthMaxColorImU32 = j.value("m_kaibzHudHealthMaxColorImU32", modSettingsDefault::g_defaultkaibzHudHealthMaxColorImU32);
         m_kaibzHudHealthColorImU32 = j.value("m_kaibzHudHealthColorImU32", modSettingsDefault::g_defaultkaibzHudHealthColorImU32);
         m_kaibzHudArmorMaxColorImU32 = j.value("m_kaibzHudArmorMaxColorImU32", modSettingsDefault::g_defaultkaibzHudArmorMaxColorImU32);
+        m_kaibzHudArmorColorImU32 = j.value("m_kaibzHudArmorColorImU32", modSettingsDefault::g_defaultkaibzHudArmorColorImU32);
+       
         m_kaibzHudRadsuitColorImU32 = j.value("m_kaibzHudRadsuitColorImU32", modSettingsDefault::g_defaultkaibzHudRadsuitColorImU32);
         m_kaibzHudOxygenColorImU32 = j.value("m_kaibzHudOxygenColorImU32", modSettingsDefault::g_defaultkaibzHudOxygenColorImU32);
         m_kaibzHudAmmoColorImU32 = j.value("m_kaibzHudAmmoColorImU32", modSettingsDefault::g_defaultkaibzHudAmmoColorImU32);
@@ -143,6 +156,10 @@ void modSettings::loadSettings()
         m_IsWeaponBarColored = j.value("m_IsWeaponBarColored", modSettingsDefault::g_defaultIsWeaponBarColored);
         m_OverrideRadMeterColor = j.value("m_OverrideRadMeterColor", modSettingsDefault::g_defaultOverrideRadMeterColor);
 
+        m_OverrideLowAmmoWarningColor = j.value("m_OverrideLowAmmoWarningColor", modSettingsDefault::g_defaultOverrideLowAmmoWarningColor);
+
+        m_isRemoveHudLowWarnings = j.value("m_isRemoveHudLowWarnings", modSettingsDefault::g_defaultIsRemoveHudLowWarnings);
+
         m_isRemoveBindsReminderOnHud = j.value("m_isRemoveBindsReminderOnHud", modSettingsDefault::g_defaultIsRemoveBindsReminderOnHud);
 
         m_isDashBlurEffectDisabled = j.value("m_isDashBlurEffectDisabled", modSettingsDefault::g_defaultIsDashBlurEffectDisabled);
@@ -164,13 +181,14 @@ void modSettings::loadSettings()
 
         //! gameplay settings:
         m_isForceAiHaste = j.value("m_isForceAiHaste", modSettingsDefault::g_defaultisForceAiHaste);
+        m_isSpeedBoosInHudMap = j.value("m_isSpeedBoosInHudMap", modSettingsDefault::g_defaultIsSpeedBoostInHubMap);
 
         //! mod settings
         m_isUseImgui = j.value("m_isUseImgui", modSettingsDefault::g_defaulIsUseImgui);
         //m_isLogGameConsoleToLogFile = j.value("m_isLogGameConsoleToLogFile", modSettingsDefault::g_defaulIsLogConsoleToLogFile);
 
         //! debug:
-        m_reloadImguiHooksKeyName = j.value("m_reloadImguiHooksKeyName", modSettingsDefault::g_defaultReloadImguiHooksKeyName);
+        //m_reloadImguiHooksKeyName = j.value("m_reloadImguiHooksKeyName", modSettingsDefault::g_defaultReloadImguiHooksKeyName);
         //m_devModeKeyStr = j.value("m_devModeKeyStr", modSettingsDefault::g_defaultDevModeKey);
 
     }
@@ -197,7 +215,10 @@ void modSettings::saveSettings()
 
     j["m_isUseDedicatedNadeKeys"] = m_isUseDedicatedNadeKeys;
 
-    j["m_toggleModSettingsVkCode"] = m_toggleModSettingsVkCode;
+    //m_toggleModSettingsKeyStr = K_Utils::convertVkCodeToKeyStr(m_toggleModSettingsVkCode);
+    j["m_toggleModSettingsKeyStr"] = m_toggleModSettingsKeyStr;
+
+
     j["m_modSettingsShortcutTextColorImU32"] = m_modSettingsShortcutTextColorImU32;
 
     j["m_isDisableNewCampaignPopUp"] = m_isDisableNewCampaignPopUp;
@@ -241,7 +262,16 @@ void modSettings::saveSettings()
     j["m_useImGuiCustomDotCrosshair"] = m_useImGuiCustomDotCrosshair;
     j["m_customDotCrosshairColorImU32"] = m_customDotCrosshairColorImU32;
     j["m_customDotCrosshairCooldownColorImU32"] = m_customDotCrosshairCooldownColorImU32;
+    j["m_customDotCrosshairHealthAndArmorFullColorImU32"] = m_customDotCrosshairHealthAndArmorFullColorImU32;
+    j["m_customDotCrosshairArmorFullColorImU32"] = m_customDotCrosshairArmorFullColorImU32;
+    j["m_customDotCrosshairHealthFullColorImU32"] = m_customDotCrosshairHealthFullColorImU32;
+    j["m_customDotCrosshairWarningColorImU32"] = m_customDotCrosshairWarningColorImU32;
+
+
+
     j["m_imguiCustomDotCrosshairRadiusPix"] = m_imguiCustomDotCrosshairRadiusPix;
+    j["m_imguiCustomDotCrosshairOutlineThickness"] = m_imguiCustomDotCrosshairOutlineThickness;
+
     j["m_customCrosshairIsShowHealthAsColor"] = m_customCrosshairIsShowHealthAsColor;
 
     //! CUSTOM HUD
@@ -264,9 +294,12 @@ void modSettings::saveSettings()
     j["m_kaibzHudBloodPunch1ColorImU32"] = m_kaibzHudBloodPunch1ColorImU32;
     j["m_kaibzHudBloodPunch2ColorImU32"] = m_kaibzHudBloodPunch2ColorImU32;
     j["m_kaibzHudBloodPunchDesperateColorImU32"] = m_kaibzHudBloodPunchDesperateColorImU32;
+   
     j["m_kaibzHudHealthMaxColorImU32"] = m_kaibzHudHealthMaxColorImU32;
     j["m_kaibzHudHealthColorImU32"] = m_kaibzHudHealthColorImU32;
     j["m_kaibzHudArmorMaxColorImU32"] = m_kaibzHudArmorMaxColorImU32;
+    j["m_kaibzHudArmorColorImU32"] = m_kaibzHudArmorColorImU32;
+
     j["m_kaibzHudRadsuitColorImU32"] = m_kaibzHudRadsuitColorImU32;
     j["m_kaibzHudOxygenColorImU32"] = m_kaibzHudOxygenColorImU32;
     j["m_kaibzHudAmmoColorImU32"] = m_kaibzHudAmmoColorImU32;
@@ -293,13 +326,17 @@ void modSettings::saveSettings()
     j["m_OverrideIceGrenadeCoolDown_Color"] = m_OverrideIceGrenadeCoolDown_Color;
     j["m_IsWeaponBarColored"] = m_IsWeaponBarColored;
     j["m_OverrideRadMeterColor"] = m_OverrideRadMeterColor;
+    j["m_OverrideLowAmmoWarningColor"] = m_OverrideLowAmmoWarningColor;
+    
+    j["m_isRemoveHudLowWarnings"] = m_isRemoveHudLowWarnings;
     j["m_isRemoveBindsReminderOnHud"] = m_isRemoveBindsReminderOnHud;
     j["m_isDashBlurEffectDisabled"] = m_isDashBlurEffectDisabled;
     j["m_isHitMarkerDisabled"] = m_isHitMarkerDisabled;
 
+
     //! gameplay settings:
     j["m_isForceAiHaste"] = m_isForceAiHaste;
-
+    j["m_isSpeedBoosInHudMap"] = m_isSpeedBoosInHudMap;
 
 
     //! other settings
@@ -321,7 +358,7 @@ void modSettings::saveSettings()
 
 
     //! mod debug
-    j["m_reloadImguiHooksKeyName"] = m_reloadImguiHooksKeyName;
+    //j["m_reloadImguiHooksKeyName"] = m_reloadImguiHooksKeyName;
     //j["m_devModeKeyStr"] = m_devModeKeyStr;
     //j["m_isDebugMode"] = m_isDebugMode;
    //j["m_isPlayModLoadedBeep"] = m_isPlayModLoadedBeep;
@@ -452,11 +489,18 @@ void modSettings::setIsUseDedicatedNadeKeys(bool value) {
 }
 
 unsigned int modSettings::getToggleModSettingsVkCode() {
+    //return K_Utils::convertKeyStrToVkCode(m_toggleModSettingsKeyStr, modSettingsDefault::defaultToggleModSettingsVkCode);
     return m_toggleModSettingsVkCode;
 }
 
 void modSettings::setToggleModSettingsVkCode(unsigned int vkcode) {
+
     m_toggleModSettingsVkCode = vkcode;
+    m_toggleModSettingsKeyStr = K_Utils::convertVkCodeToKeyStr(vkcode);
+
+
+    //logInfo("setToggleModSettingsVkCode: m_toggleModSettingsVkCode: %u", m_toggleModSettingsVkCode);
+
 }
 
 
@@ -714,12 +758,62 @@ void modSettings::setCustomDotCrosshairCooldownColorImU32(ImU32 packedValue)
     m_customDotCrosshairCooldownColorImU32 = packedValue;
 }
 
+
+
+ImU32 modSettings::getCustomDotCrosshairHealthAndArmorFullColor() {
+    return m_customDotCrosshairHealthAndArmorFullColorImU32;
+}
+
+ void modSettings::setCustomDotCrosshairHealthAndArmorFullColor(ImU32 color) {
+    m_customDotCrosshairHealthAndArmorFullColorImU32 = color;
+}
+
+// Getter and Setter for m_customDotCrosshairArmorFullColorImU32
+ImU32 modSettings::getCustomDotCrosshairArmorFullColor() {
+    return m_customDotCrosshairArmorFullColorImU32;
+}
+
+ void modSettings::setCustomDotCrosshairArmorFullColor(ImU32 color) {
+    m_customDotCrosshairArmorFullColorImU32 = color;
+}
+
+// Getter and Setter for m_customDotCrosshairHealthFullColorImU32
+ImU32 modSettings::getCustomDotCrosshairHealthFullColor() {
+    return m_customDotCrosshairHealthFullColorImU32;
+}
+
+ void modSettings::setCustomDotCrosshairHealthFullColor(ImU32 color) {
+    m_customDotCrosshairHealthFullColorImU32 = color;
+}
+
+// Getter and Setter for m_customDotCrosshairWarningColorImU32
+ImU32 modSettings::getCustomDotCrosshairWarningColor() {
+    return m_customDotCrosshairWarningColorImU32;
+}
+
+ void modSettings::setCustomDotCrosshairWarningColor(ImU32 color) {
+    m_customDotCrosshairWarningColorImU32 = color;
+}
+
+
+
+
+
 float modSettings::getImguiCustomDotCrosshairRadiusPix() {
     return  m_imguiCustomDotCrosshairRadiusPix;        
 }
 
 void modSettings::setImguiCustomDotCrosshairRadiusPix(float value) {
     m_imguiCustomDotCrosshairRadiusPix = value;
+}
+
+
+float modSettings::getImguiCustomDotCrosshairOutlineThickness() {
+    return m_imguiCustomDotCrosshairOutlineThickness;
+}
+
+void modSettings::setImguiCustomDotCrosshairOutlineThickness(float val) {
+    m_imguiCustomDotCrosshairOutlineThickness = val;
 }
 
 bool modSettings::getCustomCrosshairIsShowHealthAsColor() {
@@ -1078,6 +1172,7 @@ void modSettings::setkaibzHudIceCooldownColorImU32(ImU32 color) {
 
 
 
+
 //! helper
 bool modSettings::isImmersiveCrosshairModeEnabled() {
 	return (m_immersiveCrosshairLevel == (int)ImmersiveCrosshairLevel::HAR_ADS || m_immersiveCrosshairLevel == (int)ImmersiveCrosshairLevel::HAR_ADS_BALISTA_BOTH || m_immersiveCrosshairLevel == (int)ImmersiveCrosshairLevel::HAR_ADS_BALISTA_ADS);
@@ -1166,6 +1261,26 @@ void modSettings::setOverrideRadMeterColor(int value) {
     m_OverrideRadMeterColor = value;
 }
 
+void modSettings::setOverrideLowAmmoWarningColor(int value)
+{
+    m_OverrideLowAmmoWarningColor = value;
+}
+
+int modSettings::getOverrideLowAmmoWarningColor() {
+    return m_OverrideLowAmmoWarningColor;
+}
+
+
+ bool modSettings::getIsRemoveHudLowWarnings() {
+    return m_isRemoveHudLowWarnings;
+}
+
+// Setter
+ void modSettings::setIsRemoveHudLowWarnings(bool value) {
+    m_isRemoveHudLowWarnings = value;
+}
+
+
 
 void modSettings::resetGameHudColorsToDefault() {
 
@@ -1180,6 +1295,7 @@ void modSettings::resetGameHudColorsToDefault() {
     modSettings::setOverrideIceGrenadeColor(defaultColorInt);
     modSettings::setOverrideIceGrenadeCooldownColor(defaultColorInt);
     modSettings::setOverrideRadMeterColor(defaultColorInt);
+    modSettings::setOverrideLowAmmoWarningColor(defaultColorInt);
 
     modSettings::setIsWeaponBarColored(true);
 }
@@ -1301,6 +1417,13 @@ void modSettings::SetIsForceAiHaste(bool value) {
 }
 
 
+bool modSettings::getIsSpeedBoostInHudMap() {
+    return m_isSpeedBoosInHudMap;
+}
+
+void modSettings::setIsSpeedBoostInHudMap(bool value) {
+    m_isSpeedBoosInHudMap = value;
+}
 
 
 
@@ -1335,22 +1458,11 @@ bool modSettings::getIsUseImgui()
 //}
 
 
-//void modSettings::setReloadImguiHooksVkKey() {
-//    auto it = ValidKeyBindsMap.find(m_reloadImguiHooksKeyName);
-//    if (it != ValidKeyBindsMap.end()) {
-//        m_reloadImguiHooksVk_Key = it->second;
-//        logInfo("setReloadImguiHooksVkKey: m_reloadImguiHooksVk_Key to default: %zu", m_reloadImguiHooksVk_Key);
-//       
-//    }
-//    else {
-//        logWarn("setReloadImguiHooksVkKey: failed to parse vk code setting it to default: %zu", modSettingsDefault::g_defaultReloadImguiHooksVkCode);
-//        m_reloadImguiHooksVk_Key = modSettingsDefault::g_defaultReloadImguiHooksVkCode;
-//    }
-//
-//    if (m_reloadImguiHooksVk_Key == m_toggleModSettingsVkCode) {
-//        logErr("setReloadImguiHooksVkKey: m_reloadImguiHooksVk_Key is the same as m_toggleModSettingsVkCode, user will not be able to reload imgui graphic hooks ! please set the m_reloadImguiHooksKeyName in the json file to another key name ");
-//    }
-//}
+
+
+
+
+
 
 
 //bool modSettings::isDevMode() {

@@ -74,7 +74,6 @@
     //logInfo("checkWeaponSwitch called");
 
 
-
     static weaponSlot_t lastCurrentWeaponSlot = weaponSlot_t::UNDEFINED;
 
     uint64_t epochNowMs = K_Utils::EpochMillis();

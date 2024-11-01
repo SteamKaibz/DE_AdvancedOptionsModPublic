@@ -43,7 +43,7 @@
     <ClInclude Include="DE\idMapInstanceLocalManager.h" />
     <ClInclude Include="Common\MinHookManager.h" />
     <ClInclude Include="DE\idWeaponManager.h" />
-    <ClInclude Include="DE\GameVersionInfoManager.h" />
+    <ClInclude Include="DE\GameInfoManager.h" />
     <ClInclude Include="DE\idHudManager.h" />
     <ClInclude Include="DE\idLib_Static.h" />
     <ClInclude Include="DE\idResourceManager.h" />
@@ -176,7 +176,7 @@
     <ClCompile Include="DE\ControllerLayout.cpp" />
     <ClCompile Include="DE\CustomWeapon.cpp" />
     <ClCompile Include="DE\GameHudColorsManager.cpp" />
-    <ClCompile Include="DE\GameVersionInfoManager.cpp" />
+    <ClCompile Include="DE\GameInfoManager.cpp" />
     <ClCompile Include="DE\idCmd.cpp" />
     <ClCompile Include="DE\idConsoleLocalManager.cpp" />
     <ClCompile Include="DE\idDeclGlobalShellManager.cpp" />

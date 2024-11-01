@@ -33,7 +33,7 @@ bool idCvarManager::acquireFindInternalFuncPtr() {
 		return false;
 	}
 	__int64 vtblAddr = *(__int64*)m_idCVarSystemLocal;
-	__int64 findCvarFuncAddr = *(__int64*)(vtblAddr + UndocumentedOffsets::CvarFindInternalVtbFuncOffset);
+	__int64 findCvarFuncAddr = *(__int64*)(vtblAddr + GameOffsets::CvarFindInternalVtbFuncOffset);
 	
 	m_findInternalFp = reinterpret_cast<cvarFindInternal_t>(findCvarFuncAddr);
 
@@ -50,18 +50,18 @@ bool idCvarManager::acquireFindInternalFuncPtr() {
 
 
 
-bool idCvarManager::acquireSetInternalFuncAddr(__int64 funcAddr) {
-	if (MemHelper::isBadReadPtr((void*)funcAddr)) {
-		logErr("acquireSetInternalFuncAddr: failed to handleChange funcAddr (bad ptr): %p", (void*)funcAddr);
-		//m_idCVarSystemLocal_SetInternalFuncAddr = 0;
-		m_setCvarFp = nullptr;
-		return false;
-	}
-	//m_idCVarSystemLocal_SetInternalFuncAddr = funcAddr;
-	m_setCvarFp = reinterpret_cast<idInternalCVar__Set>(funcAddr);
-	logInfo("acquireSetInternalFuncAddr: m_setCvarFp has been set to : %p", m_setCvarFp);
-	return true;
-}
+//bool idCvarManager::acquireSetInternalFuncAddr(__int64 funcAddr) {
+//	if (MemHelper::isBadReadPtr((void*)funcAddr)) {
+//		logErr("acquireSetInternalFuncAddr: failed to handleChange funcAddr (bad ptr): %p", (void*)funcAddr);
+//		//m_idCVarSystemLocal_SetInternalFuncAddr = 0;
+//		m_setCvarFp = nullptr;
+//		return false;
+//	}
+//	//m_idCVarSystemLocal_SetInternalFuncAddr = funcAddr;
+//	m_setCvarFp = reinterpret_cast<idInternalCVar__Set>(funcAddr);
+//	logInfo("acquireSetInternalFuncAddr: m_setCvarFp has been set to : %p", m_setCvarFp);
+//	return true;
+//}
 
 
 
@@ -127,21 +127,21 @@ std::string idCvarManager::getCvarString(std::string cvarStr) {
 
 
 //? the idea is that we should not use those cause this will not change any flag the game might use so use idCmd instead.
-bool idCvarManager::setCvar(std::string cvarStr, std::string val) {
-	if (MemHelper::isBadReadPtr((void*)m_idCVarSystemLocal)) {
-		logErr("setCvar: m_idCVarSystemLocal is bad ptr: %p returning", (void*)m_idCVarSystemLocal);
-		return false;
-	}	
-	idCVar* cvarPtr = getCvarPtr(cvarStr);	
-	if (cvarPtr) {		
-		m_setCvarFp(cvarPtr, val.c_str(), 1);
-		return true;
-	}
-	else {
-		logErr("setCvar failed to find cvar: %s", cvarStr.c_str());
-		return false;
-	}	
-}
+//bool idCvarManager::setCvar(std::string cvarStr, std::string val) {
+//	if (MemHelper::isBadReadPtr((void*)m_idCVarSystemLocal)) {
+//		logErr("setCvar: m_idCVarSystemLocal is bad ptr: %p returning", (void*)m_idCVarSystemLocal);
+//		return false;
+//	}	
+//	idCVar* cvarPtr = getCvarPtr(cvarStr);	
+//	if (cvarPtr) {		
+//		m_setCvarFp(cvarPtr, val.c_str(), 1);
+//		return true;
+//	}
+//	else {
+//		logErr("setCvar failed to find cvar: %s", cvarStr.c_str());
+//		return false;
+//	}	
+//}
 
 
 //? the idea is that we should not use those cause this will not change any flag the game might use so use idCmd instead.

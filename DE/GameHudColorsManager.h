@@ -68,61 +68,66 @@ private:
 	inline static idColor m_fragNadePulseColor = colorGreen;
 	inline static idColor m_iceNadePulseColor = colorBlue;
 	inline static bool m_isEquipmentFlag = false;
-	inline static __int64 m_currentEquipmentArrowSpriteInstanceAddr = 0;
-	inline static __int64 m_EquipmentBackerSpriteInstanceAddr = 0;
-	inline static __int64  m_healthIconOuterSpriteAddr = 0;
-	inline static __int64  m_healthIconBgSpriteAddr = 0;
-	inline static __int64  m_healthTextSpriteIdAddr = 0;
-	inline static __int64  m_healthPipsOutlineSpriteIdAddr = 0;
-	inline static __int64  m_healthPipsGradientBottomSpriteAddr = 0;
-	inline static __int64  m_healthPipsGradientTopSpriteAddr = 0;
-	inline static __int64  m_healthBgLeftLeftSpriteAddr = 0;
-	inline static __int64  m_healthRightSideMiddleMiddleSpriteAddr = 0;
-	inline static __int64  m_healthRightSideRightRightSpriteAddr = 0;
-	inline static __int64  m_healthGlowSpriteIdSpriteAddr = 0;
-	inline static __int64  m_healthPulseLoopSpriteAddr = 0;
-	inline static __int64  m_healthBottomAdornmentSpriteAddr = 0;
-	inline static __int64 m_healthRightSideAddAmountSpriteAddr = 0;
-	inline static __int64 m_healthrightSideRightborderSpriteAddr = 0;
-	inline static __int64 m_armorBarGradientSpriteAddr = 0;
-	inline static __int64 m_armorBarBaseSpriteAddr = 0;
-	inline static __int64 m_armorRightSideSpriteAddr = 0;
-	inline static __int64 m_armorTextSpriteAddr = 0;
-	inline static __int64 m_armorIconSpritAddr = 0;
-	inline static __int64 m_armorIconGlowSpriteAddr = 0;
-	inline static __int64 m_armorInfoSpriteAddr = 0;
-	inline static __int64 m_armorBgSpriteAddr = 0;
-	inline static __int64 m_weaponInfoCoolDownSpriteAddr = 0;
-	inline static __int64 m_weaponInfoBgModlessSpriteAddr = 0;
-	inline static __int64 m_weaponInfoTextSpriteAddr = 0;
-	inline static __int64 m_weaponInfoBgSpriteAddr = 0;
-	inline static __int64 m_bloodPunchBgPulseSpriteAddr = 0;
-	inline static __int64 m_bloodPunchChargeGlowBgSpriteAddr = 0;
-	inline static __int64 m_bloodPunchBgImgSpriteAddr = 0;
-	inline static __int64 m_bloodPunchBorderImgSpriteAddr = 0;
-	inline static __int64 m_bloodPunchIconOnSpriteAddr = 0;
-	inline static __int64 m_bloodPunchIconOffSpriteAddr = 0;
-	inline static __int64 m_bloodPunchReadyFlashSpriteAddr = 0;
-	inline static __int64 m_bloodPunchFillRightGlowSpriteAddr = 0;
-	inline static __int64 m_bloodPunchFillRightImgSpriteAddr = 0;
-	inline static __int64 m_bloodPunchFillLeftGlowSpriteAddr = 0;
-	inline static __int64 m_bloodPunchFillLeftImgSpriteAddr = 0;
-	inline static __int64 m_bloodPunchTextSpriteAddr = 0;
-	inline static __int64 m_bloodPunchBindKbmSpriteAddr = 0;
-	inline static __int64 m_bloodPunchBindJoySpriteAddr = 0;
-	inline static __int64 m_bloodPunchChargeBgSpriteAddr = 0;
-	inline static __int64 m_bloodPunchImgImgSpriteAddr = 0;
-	inline static __int64 m_radSuitBarGradientSpriteAddr = 0;
-	inline static __int64 m_radSuitBarBaseSpriteAddr = 0;
-	inline static __int64 m_radSuitRightSideSpriteAddr = 0;
-	inline static __int64 m_radSuitTextSpriteAddr = 0;
-	inline static __int64 m_radSuitIconImgSpriteAddr = 0;
-	inline static __int64 m_radSuitGlowImgSpriteAddr = 0;
-	inline static __int64 m_radSuitBgSpriteAddr = 0;
-	inline static __int64 m_radSuitBgPulseSpriteAddr = 0;
-	inline static __int64 m_fragCoolDownFillGlowSpriteAddr = 0;
-	inline static __int64 m_debug_EquipmentSpriteInstanceAddr = 0;
-	inline static __int64 m_weaponInfoBigBarSpriteAddr = 0;
+
+	inline static idSWFSpriteInstance* m_currentEquipmentArrowSpriteInstanceAddr = 0;
+	inline static idSWFSpriteInstance* m_EquipmentBackerSpriteInstanceAddr = 0;
+	inline static idSWFSpriteInstance* m_healthIconOuterSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_healthIconBgSpriteAddr = 0;
+	inline static idSWFSpriteInstance*  m_healthTextSpriteIdAddr = 0;
+	inline static idSWFSpriteInstance*  m_healthPipsOutlineSpriteIdAddr = 0;
+	inline static idSWFSpriteInstance*  m_healthPipsGradientBottomSpriteAddr = 0;
+	inline static idSWFSpriteInstance*  m_healthPipsGradientTopSpriteAddr = 0;
+	inline static idSWFSpriteInstance*  m_healthBgLeftLeftSpriteAddr = 0;
+	inline static idSWFSpriteInstance*  m_healthRightSideMiddleMiddleSpriteAddr = 0;
+	inline static idSWFSpriteInstance*  m_healthRightSideRightRightSpriteAddr = 0;
+	inline static idSWFSpriteInstance*  m_healthGlowSpriteIdSpriteAddr = 0;
+	inline static idSWFSpriteInstance*  m_healthPulseLoopSpriteAddr = 0;
+	inline static idSWFSpriteInstance*  m_healthBottomAdornmentSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_healthRightSideAddAmountSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_healthrightSideRightborderSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_armorBarGradientSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_armorBarBaseSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_armorRightSideSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_armorTextSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_armorIconSpritAddr = 0;
+	inline static idSWFSpriteInstance* m_armorIconGlowSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_armorInfoSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_armorBgSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_weaponInfoCoolDownSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_weaponInfoBgModlessSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_weaponInfoTextSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_weaponInfoBgSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchBgPulseSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchChargeGlowBgSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchBgImgSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchBorderImgSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchIconOnSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchIconOffSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchReadyFlashSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchFillRightGlowSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchFillRightImgSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchFillLeftGlowSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchFillLeftImgSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchTextSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchBindKbmSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchBindJoySpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchChargeBgSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_bloodPunchImgImgSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_radSuitBarGradientSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_radSuitBarBaseSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_radSuitRightSideSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_radSuitTextSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_radSuitIconImgSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_radSuitGlowImgSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_radSuitBgSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_radSuitBgPulseSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_fragCoolDownFillGlowSpriteAddr = 0;
+	inline static idSWFSpriteInstance* m_debug_EquipmentSpriteInstanceAddr = 0;
+	inline static idSWFSpriteInstance* m_weaponInfoBigBarSpriteAddr = 0;
+
+	//! cached the ptrs so we that we only logged each sprite instance once, this is used mainly to get the path hash of a specific sprite instance we're looking for.
+	inline static std::unordered_set<idSWFSpriteInstance*> debug_LoggedSprinteInstances;
+
 	inline static int m_debugLastHash = 0;
 	inline static std::vector<__int64> m_debugSpriteInstanceAddressesVec;
 	inline static size_t m_debugIndex = 0;
@@ -132,6 +137,38 @@ private:
 	inline  static std::vector<int32_t> fragNadeSpriteIdsVec = { fragCoolDownFillGlowSpriteId, fragCoolDownInnerFillSpriteId, fragCoolDownFillFillSpriteId, fragIconSpriteId };
 	inline  static std::vector<unsigned int> m_HudEquipmentFragHashIdsVec{ 0xE187B796, 0x69411733, 0x163F64A6, 0x5D8A8852, 0x766C6A57, 0x17F43D45 };
 	inline  static std::vector<unsigned int> m_HudEquipmentFragIconHashIdsVec{ 0x9BA03A81, 0xFFB27971 };
+	
+	
+	/*
+	_root/lowAmmo//glow, hash: 48DCE082 (dec: 1222434946)
+	_root/lowAmmo//decor, hash: D2918D10 (dec: -762213104)
+	_root/lowAmmo//decor_outline, hash: F19B2C13 (dec: -241488877)
+	_root/lowAmmo//decor, hash: D2918D10 (dec: -762213104)
+	_root/lowAmmo//decor_outline, hash: F19B2C13 (dec: -241488877)
+	_root/lowAmmo/info/message, hash: C76E7720 (dec: -949061856)
+	*/	
+	inline  static std::vector<unsigned int> m_HudLowAmmoWarningShapeHashIdsVec{0x48DCE082, 0xD2918D10, 0xF19B2C13 }; 
+
+	/*
+	_root/lowHealth///hex_base, hash: F6439B40 (dec: -163341504)
+	_root/lowHealth///hex_overlay, hash: D838A581 (dec: -667376255)
+	_root/lowHealth/warningGlow/glow, hash: 92ACC4FD (dec: -1834171139)
+	_root/lowHealth/decorLeft/decor, hash: 129982B8 (dec: 312050360)
+	_root/lowHealth/decorLeft/decor_outline, hash: 5C6F9BB (dec: 96926139)
+	_root/lowHealth/decorRight/decor, hash: 5F904459 (dec: 1603290201)
+	_root/lowHealth/decorRight/decor_outline, hash: D3768A5C (dec: -747206052)
+	_root/lowHealth/fontGlow/frameSlayer, hash: 12A63624 (dec: 312882724)
+	_root/lowHealth/fontGlow/frameDemonLeft, hash: 1F439E4C (dec: 524525132)
+	_root/lowHealth/fontGlow/frameDemonRight, hash: C9868C77 (dec: -913929097)
+	_root/lowHealth/txt/base, hash: 41867A5A (dec: 1099332186)
+	_root/lowHealth/txt/pulse, hash: F0171930 (dec: -266921680)
+	_root/lowHealth/icon, hash: EEA450C4 (dec: -291221308)	
+	*/
+
+	//! low ammor warning and low health warning
+	inline static std::vector<unsigned int> m_HudLowWarningElementsHashIdsVec{ 0x48DCE082, 0xD2918D10 ,0xF19B2C13, 0xC76E7720,  0xF6439B40,  0xD838A581, 0x92ACC4FD , 0x129982B8, 0x5C6F9BB, 0x5F904459, 0xD3768A5C, 0x12A63624, 0x41867A5A, 0xF0171930, 0xEEA450C4 };
+
+
 	inline  static int m_debugNamedColorIndex = -1;
 	inline  static float const m_epsilon = 0.001f;
 
@@ -156,9 +193,9 @@ public:
 
 	static void setIconWhiteBlendColor(const idColor& baseColor, idColor& destColor, float blendFactor);
 
-	static void setIconExtraBorderColor(const idColor& baseColor, idColor& destColor);
+	//static void setIconExtraBorderColor(const idColor& baseColor, idColor& destColor);
 
-	static void setIconBackgroundColor(const idColor& baseColor, idColor& destColor);
+	//static void setIconBackgroundColor(const idColor& baseColor, idColor& destColor);
 
 	static const idColor* getCustomIdColor(int namedColorId);
 
@@ -184,9 +221,13 @@ public:
 
 	static bool isHudElementWeaponColor(int namedColorId);
 
+	static bool isHudElementLowAmmoWarningShape(int fullPathHash);
+
+	static bool isHudElementLowWarning(int fullPathHash);
+
 	static void forceUpdateHudElementsColors();
 
-	static unsigned int getColor(__int64 spriteInstanceAddr, unsigned int namedColorId);
+	static unsigned int getColor(idSWFSpriteInstance* spritInstancePtr, unsigned int namedColorId);
 
 	static __int32 getOriginalColorAlt(int spriteId);
 
@@ -194,7 +235,7 @@ public:
 
 	static bool isEquipmentArrow(__int64 spriteInstanceAddr);
 
-	static void acquireMonitoredSpriteInstanceAddr(__int64 addr);
+	static void acquireMonitoredSpriteInstanceAddr(idSWFSpriteInstance* spriteInstance);
 
 	static swfRect_t getFragIconCoords();
 
@@ -203,6 +244,15 @@ public:
 	static swfRect_t getEquipmentBackerBounds();
 
 	static swfRect_t getSpriteBounds(int spriteHashId);
+
+
+
+	static void debugLogUniqueSpriteInstance(idSWFSpriteInstance* idSWFSpriteInstance, const std::unordered_set<std::string>& excludeFilter);
+
+	static void debugLogUniqueSpriteInstance(idSWFSpriteInstance* idSWFSpriteInstance);
+
+	static std::string spriteInstancegetFullPathStr(const idSWFSpriteInstance* instance);
+
 
 	static unsigned int debugLogInstancesDefaultNamesColors(__int64 spriteInstanceAddr, unsigned int namedColorId);
 

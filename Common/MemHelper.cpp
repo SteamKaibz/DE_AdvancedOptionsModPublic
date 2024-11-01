@@ -320,7 +320,6 @@ static auto pattern_to_byte = [](const char* pattern)
 
 DWORD64 MemHelper::PatternScan(const char* szModule, const char* signature)
 {
-	logDebug("PatternScan");
 
 	MODULEINFO mInfo;
 	HMODULE hModule = GetModuleHandleA(szModule);
@@ -366,7 +365,6 @@ DWORD64 MemHelper::PatternScan(const char* szModule, const char* signature)
 //! gpt proposition for improvment...update Night and day difference...the mod load almost instantly
 DWORD64 MemHelper::ModulePatternScan(std::string scanFriendlyName, const char* signature)
 {
-	logDebug("ModulePatternScan");
 
 	MODULEINFO mInfo;
 	HMODULE hModule = GetModuleHandleA(Config::getCurrentModuleNameStrToLower().c_str());

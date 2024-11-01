@@ -40,6 +40,7 @@ void DebugGui::showDebugWindow(bool* p_open) {
     ImGuiDebugWin::AddMessage("DEBUG GUI:\n");   
 
     //? keep those comments:
+    ImGuiDebugWin::AddMessage(idMapInstanceLocalManager::getDbgStrForImgui());
     ImGuiDebugWin::AddMessage(idPlayer_K::getDbgStrForImgui());
     ImGuiDebugWin::AddMessage(idHudManager::getDdgStrForImgui());  
 

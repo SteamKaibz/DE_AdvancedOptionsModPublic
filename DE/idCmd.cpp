@@ -28,7 +28,7 @@ bool idCmd::acquirreExecuteCommandTextFuncPtr() {
 	}
 
 	__int64 vtblAddr = *(__int64*)m_idCmdSystemLocal;
-	__int64 cmdExecuteFuncAddr = *(__int64*)(vtblAddr + UndocumentedOffsets::CmdExecuteFuncAddrOffset);
+	__int64 cmdExecuteFuncAddr = *(__int64*)(vtblAddr + GameOffsets::CmdExecuteFuncAddrOffset);
 	//__int64 cmdExecuteFuncAddr = *(__int64*)(vtblAddr + 0x40);
 	m_idCmdSystemLocal_ExecuteFp = reinterpret_cast<idCmdSystemLocal_Execute_t>(cmdExecuteFuncAddr);
 	logInfo("acquirreExecuteCommandTextFuncPtr: m_idCmdSystemLocal_ExecuteFp set to %p", m_idCmdSystemLocal_ExecuteFp);
@@ -137,11 +137,13 @@ void idCmd::setGameSpeed(gameSpeed_K gameSpeed) {
 
 		 float currentFovF = idCvarManager::getCvarFloat("g_fov");
 		 if (currentFovF > 120.0f) {
-			 idCvarManager::setCvar("g_fov", "120");
+			 executeCommandText("g_fov 120");
+			/* idCvarManager::setCvar("g_fov", "120");*/
 			 logInfo("setMinMaxFov: current fov is over max value, setting it to 120");
 		 }
 		 else if (currentFovF < 90.0f) {
-			 idCvarManager::setCvar("g_fov", "90");
+			 executeCommandText("g_fov 90");
+			 //idCvarManager::setCvar("g_fov", "90");
 			 logInfo("setMinMaxFov: current fov is below min value, setting it to 90");
 		 }
 	 }
@@ -156,7 +158,7 @@ void idCmd::setGameSpeed(gameSpeed_K gameSpeed) {
  void idCmd::setHandsFov(int iniFileValue) {
 	
 	std::string valAsStr = getHandsFovCmdAsStr(iniFileValue);
-	logInfo("Setting hands fov to: %s ", valAsStr.c_str());
+	//logInfo("Setting hands fov to: %s ", valAsStr.c_str());
 	executeCommandText(valAsStr.c_str());
 
 	//return m_pIdCvar_Set((__m128i***)m_handsFovScale_SideNotificationOffset, valAsStr.c_str(), 4);
@@ -314,6 +316,24 @@ void idCmd::setGameSpeed(gameSpeed_K gameSpeed) {
 
 	 executeCommandText(cmdStr.c_str());
  }
+
+
+
+ void idCmd::setPlayerSprintSpeed(float speedF) {
+
+	 std::string cmdStr = "pm_sprintspeed ";
+	 cmdStr += std::to_string(speedF);
+
+	 logInfo("setPlayerSprintSpeed: debug, speedF: %.3f cmdStr: %s", speedF, cmdStr.c_str());
+
+	 executeCommandText(cmdStr.c_str());
+ }
+
+
+
+
+
+
 
 
 

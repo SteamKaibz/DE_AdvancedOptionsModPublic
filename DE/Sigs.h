@@ -9,6 +9,22 @@
 
 //? update 29/8/24 some of those sig will not work in ida anymore...BUT they will still work in-game. Maybe cause of an error with decompiler with rev3. Many funcs in rev3 have a jmp like :JUMPOUT(0x14577C5i64); but if you compare the assembly between rev2 and 3 the code is almost the same aside from the jmpouts which is why the sigs still work in rev3.
 
+
+#ifdef GAME_VERSION_SANDBOX
+
+static const char idInternalCVar_SetSig[] = "E8 ? ? ? ? FF C7 48 83 C3 60";
+//static const char idMapInstanceLocal_idGlobalEncounterManagerSig[] = "48 8B 8F ? ? ? ? E8 ? ? ? ? 4C 8B 74 24 ? 48 8B D7";
+static const char idMapInstanceLocal_idGlobalEncounterManagerSig[] = "48 8D 8F ? ? ? ? E8 ? ? ? ? 48 8B 8F ? ? ? ? E8 ? ? ? ? 4C 8B 74 24";
+
+#else 
+//! vanilla
+static const char idInternalCVar_SetSig[] = "48 89 5C 24 08 57 48 83 EC 20 48 8B FA 48 8B D9 45 84 C0 75 7F";
+//static const char idMapInstanceLocal_idGlobalEncounterManagerSig[] = "48 8B 8F ? ? ? ? E8 ? ? ? ? 45 0F B6 45";
+static const char idMapInstanceLocal_idGlobalEncounterManagerSig[] = "48 8D 8F ? ? ? ? E8 ? ? ? ? 48 8B 8F ? ? ? ? E8 ? ? ? ? 45 0F B6 45";
+
+#endif
+
+
 static const char idGameLocalSig[] = "48 8B 0D ?? ?? ?? ?? 48 85 C9 74 0E 48 8B 01 FF 90 ?? ?? ?? ?? 0F B6 D0";
 
 static const char getIdPlayerFuncSig[] = "48 8B C1 83 FA 0B";
@@ -39,11 +55,7 @@ static const char consoleUnlockAltSig[] = "48 8B CE 44 8B F0 41 FF 51";
 //"4C8B0F4?????????????????????41FF51??4C??????"
 
 
-#ifdef GAME_VERSION_SANDBOX
-static const char idInternalCVar_SetSig[] = "E8 ? ? ? ? FF C7 48 83 C3 60";
-#else
-static const char idInternalCVar_SetSig[] = "48 89 5C 24 08 57 48 83 EC 20 48 8B FA 48 8B D9 45 84 C0 75 7F";
-#endif
+
 
 
 
@@ -190,7 +202,9 @@ static const char SwitchEquipmentItemFpSig[] = "85 D2 0F 88 ? ? ? ? 55";
 static const char consoleLogFpSig[] = "48 89 4C 24 ? 48 89 54 24 ? 4C 89 44 24 ? 4C 89 4C 24 ? 48 83 EC 28 BA ? ? ? ? 4C 8D 4C 24 ? 4C 8B C1 8B CA";
 
 
+static const char GpuInfoStartSig[] = "48 8B 15 ? ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? 48 8D 15";
 
+static const char AiCountInfoSig[] = "48 8B 81 ? ? ? ? F3 44 0F 11 44 24";
 
 
 

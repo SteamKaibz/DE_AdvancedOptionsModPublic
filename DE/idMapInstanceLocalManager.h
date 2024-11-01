@@ -7,23 +7,33 @@
 
 
 
+typedef const char*(__fastcall* idMapInstance_getCurrentMapNameFp)(__int64 idMapInstanceAddr);
+
+
 //! Also called gameLocal but using idMapInstance so there is less potential confusion with idGameSystemLocal 
 
 class idMapInstanceLocalManager {
 
 
 private:
+	static inline const int m_globalEncounterID_None = -1;
+	//! this is techically correct but it should be good enough to identify if id is valid or not
+	static inline const int m_globalEncounterID_ERROR = 0x7FFFFFFF;
 
+private:
 
+	static inline idMapInstance_getCurrentMapNameFp m_getCurrentMapNameFp = nullptr;
 
 	static inline __int64 m_idGameSystemLocalAdrr = 0;
 	static inline int m_idGameSystemLocalMapInstanceOffset = 0;	
-	static inline __int64 m_idMapInstanceLocalPtr = 0;
+	static inline __int64 m_idMapInstanceLocalPtP = 0;
+	//static inline int m_AiCountPtr_Offset = 0; // don't need this anymore as idGlobalEncounterManager is better to get if slayer is has enemy ai in the area or not, which is what we need for the faster slayer in hub mod feature.
+	static inline int m_idGlobalEncounterManager_Offset = 0;
 
 
 	static inline char* m_lastIdPlayerCharPtr = nullptr;
 	//static inline int m_getIdPlayer_1_Offset = 0;  //! hard coded value in code we get with scan
-	static inline const __int64 m_undocumentedIdGameTimeManagerLocalOffset = UndocumentedOffsets::IdGameTimeManagerLocalOffset;//ida: GetGameMs_D06DD0
+	static inline const __int64 m_undocumentedIdGameTimeManagerLocalOffset = GameOffsets::IdGameTimeManagerLocalOffset;//ida: GetGameMs_D06DD0
 
 
 
@@ -31,8 +41,26 @@ public:
 
 	static bool acquirreIdGameSystemLocalPtrAdrr(__int64 idGameSystemLocalPtrAdrr);
 
-	static __int64 getIdMapInstanceLocalPtr();
+	static __int64 getIdMapInstanceLocalPtP();
 
+	static __int64 getIdMapInstanceLocal();
+
+	static bool acquireIdGlobalEncounterManagerOffset(__int64 addr);
+
+	//static bool acquireAiCountPtrOffset(__int64 addr);
+
+	//static bool isAnyAiAliveInLevel();
+
+
+	static std::string getCurrentMapNameStr();
+
+	static idGlobalEncounterManager* getidMapInstanceLocalManagerPtr();
+
+	static int getCurrentGlobalEncounterID();
+
+	static bool isEncounterActive();
+
+	static std::string getDbgStrForImgui();
 
 	//! this is used to find idPlayer ptr offset in GameLocal
 	//! ida: return idPlayer::CastTo_2125F50(*(_QWORD *)(idGameLocal_a1 + 8i64 * a2 + 0x1AF8));

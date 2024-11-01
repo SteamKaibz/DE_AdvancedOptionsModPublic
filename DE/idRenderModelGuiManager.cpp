@@ -202,7 +202,6 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 }
 
 //! this is just a version that does not check for bad ptr to try to optimize the render of ice icon(the check is already done in the container func.
-
  void idRenderModelGuiManager::setColorNoCheck(__int64 idRenderModelGuiAdrr, const idColor& idColor) {
 
 	*(unsigned int*)(idRenderModelGuiAdrr + m_packedColorOffset) = idColor.PackColor();
@@ -245,18 +244,7 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 	return getScreenHeight() / 2.0f;
 }
 
- void idRenderModelGuiManager::drawDrawStretchPicTest5(__int64 idRenderModelGuiAdrr, float x, float y, float width, float height, __int64 matPtr) {
-	//__int64 matPtr = MaterialLib::getRocketIconMtr();
-	//__int64 matPtr = MaterialLib::getWhite();
-	if (MemHelper::isBadReadPtr((void*)matPtr)) return;
-	pidRenderModelGui_DrawStretchPic(idRenderModelGuiAdrr, x, y, 0.0, width, height, s1, t1, s2, t2, matPtr);
-}
-
- void idRenderModelGuiManager::debugDrawColoredRect(__int64 idRenderModelGuiAdrr, float x, float y, float width, float height, idColor color) {
-	__int64 matPtr = MaterialLib::getWhite();
-	setColor(idRenderModelGuiAdrr, color);
-	pidRenderModelGui_DrawStretchPic(idRenderModelGuiAdrr, x, y, 0.0, width, height, s1, t1, s2, t2, matPtr);
-}
+ 
 
  float idRenderModelGuiManager::getFontScaleFromWidthV2(idVec4 rect, size_t strLettersCount) {
 
@@ -280,13 +268,6 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 
 }
 
- void idRenderModelGuiManager::debugDrawString(__int64 idRenderModelGuiAdr, idColor color, const char* text, float x, float y, float scale) {
-	if (MemHelper::isBadReadPtr((void*)idRenderModelGuiAdr)) {
-		logErr("debugDrawString: idRenderModelGuiAdr is bad ptr");
-		return;
-	}
-	m_pidRenderModelGui_DrawString(idRenderModelGuiAdr, x, y, text, (__int64)&color, 0, scale);
-}
 
 //! because we don't stretch the string vertically a string height value will be a ratio of the charwidth and charheight
 
@@ -368,7 +349,7 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
  void idRenderModelGuiManager::drawIceNadeCooldownText(__int64 idRenderModelGuiAdr, idColor color, std::string textStr, idVec4 rect, float textScaleF, bool isDebug) {
 	setIceNadeCooldDownTextScale(rect, textScaleF);
 	adjustRectHeightToFitTheStr(rect, textStr.size());
-	//rect.y -= rect.h;
+	
 	if (isDebug) {
 		debugDrawColoredRect(idRenderModelGuiAdr, rect.x, rect.y, rect.w, rect.h, colorOrange);
 		debugDrawString(idRenderModelGuiAdr, colorPurple, idFontManager::getCurrentFontAsStr().c_str(), getScreenWidth() / 2, getScreenHeight() / 2, 2);
@@ -380,101 +361,16 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 	auto offsetsVec2 = getGlyphOffset(rect, textStr.c_str(), computedTextScale);
 
 	m_pidRenderModelGui_DrawString(idRenderModelGuiAdr, rect.x + offsetsVec2.x, rect.y + offsetsVec2.y, textStr.c_str(), (__int64)&color, 0, computedTextScale);
-}
-
-//! Will drawn a string, scaling it horizontally to fill the rect width, however it will not scale it vertically.
-//! A 1 char length str will be 3 times bigger than a 3 chars lenght string, so if you want to do a countdown make sure the char count is the same, meaning if count from 60 to 0, from 10 to 0 the count should be 09, 08...
-//! if you want to use this to print the health with 3 numbers, you use a space to make sure the text keep the same width, for ex text can be 200 or 'space'10, or 'space''scpace'0 
-
- void idRenderModelGuiManager::drawStringCenteredInBounds(__int64 idRenderModelGuiAdr, idColor color, std::string textStr, idVec4 rect, bool isDebug) {
-	adjustRectHeightToFitTheStr(rect, textStr.size());
-	//? doing this so where we set our bl rect will be the start of the string, a bit like a cursor BUT WE COULD MAKE IT LOOK BETTER
-	rect.y -= rect.h;
-	if (isDebug) {
-		debugDrawColoredRect(idRenderModelGuiAdr, rect.x, rect.y, rect.w, rect.h, colorOrange);
-		debugDrawString(idRenderModelGuiAdr, colorPurple, idFontManager::getCurrentFontAsStr().c_str(), getScreenWidth() / 2, getScreenHeight() / 2, 2);
-		//debugDrawString(idRenderModelGuiAdr, colorPurple, idFontManager::getCurrentFontAsStr().c_str(), getScreenWidth(idRenderModelGuiAdr) / 2, getScreenHeigth(idRenderModelGuiAdr) / 2, 2);
-	}
-	float computedTextScale = idRenderModelGuiManager::getFontScaleFromWidthV3(rect, textStr.size());
-	//logInfo("computedTextScale: %.2f", computedTextScale);
-	float stringHeight = computedTextScale * getSmallCharHeight();
-	auto offsetsVec2 = getGlyphOffset(rect, textStr.c_str(), computedTextScale);
-
-	//logInfo("drawStringCenteredInBounds: current font is %s offsetsVec2.x: %.2f, offsetsVec2.y: %.2f rect: %s", idFontManager::getCurrentFontAsStr().c_str(), offsetsVec2.x, offsetsVec2.y, rect.getStrData().c_str());
-
-	m_pidRenderModelGui_DrawString(idRenderModelGuiAdr, rect.x + offsetsVec2.x, rect.y + offsetsVec2.y, textStr.c_str(), (__int64)&color, 0, computedTextScale);
-}
-
- void idRenderModelGuiManager::drawAllNeededIconsTest(__int64 idRenderModelGuiAdrr) {
-	float x = 50.0f;
-	float y = 100.0f;
-	float width = 30;
-	float height = 30;
-	__int64 matPtr = 0;
-
-
-	setColor(idRenderModelGuiAdrr, colorGreen);
-
-
-
-	x += 40.0f;
-
-	//logInfo("drawAllNeededIconsTest:  idRenderModelGuiAdrr: %p  MaterialLib::getHealthMtr(): %p ", (void*)idRenderModelGuiAdrr, (void*)MaterialLib::getHealthMtr());
-
-	drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getHealthMtr());
-	x += 50.0f;
-	drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getArmorMtr());
-	x += 50.0f;
-	drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getDashMtr());
-	x += 50.0f;
-	drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getBloodPunchMtr());
-	setColor(idRenderModelGuiAdrr, colorYellow);
-	x += 50.0f;
-	drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getCrucibleMtr());
-	x += 50.0f;
-	drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getHammerMtr());
-	x += 50.0f;
-	drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getFlameBelchMtr());
-	x += 50.0f;
-	drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getFluelAmmoMtr());
-	x += 50.0f;
-	drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getFragGrenadeMtr());
-	x += 50.0f;
-	drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getIceGrenadeMtr());
-
-}
-
- void idRenderModelGuiManager::drawDrawStretchPicBounds(__int64 idRenderModelGuiAdrr, idVec4 bounds, __int64 matPtr) {
-	//__int64 matPtr = MaterialLib::getRocketIconMtr();
-	//__int64 matPtr = MaterialLib::getWhite();
-	if (MemHelper::isBadReadPtr((void*)matPtr)) return;
-	pidRenderModelGui_DrawStretchPic(idRenderModelGuiAdrr, bounds.x, bounds.y, 0.0, bounds.w, bounds.h, s1, t1, s2, t2, matPtr);
-}
-
- void idRenderModelGuiManager::debugDrawMaterialLibMatr(__int64 idRenderModelGuiAdrr, __int64 matr, std::string materialNameStr) {
-	swfRect_t smallSwfRect(50, 50, 50, 50);
-	swfRect_t midSwfRect(200, 200, 100, 100);
-	swfRect_t BigSwfRect(400, 400, 200, 200);
-	swfRect_t Big2SwfRect(600, 400, 200, 400);
-
-	drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, smallSwfRect, matr, colorWhite);
-	drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, midSwfRect, matr, colorYellow);
-	drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, BigSwfRect, matr, colorGreen);
-	drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, Big2SwfRect, matr, colorPurple);
-
-	debugDrawString(idRenderModelGuiAdrr, colorOrange, materialNameStr.c_str(), 50.0f, getScreenHeight() - 100, 1.0f);
-	//debugDrawString(idRenderModelGuiAdrr, colorOrange, materialNameStr.c_str(), 50.0f, getScreenHeigth(idRenderModelGuiAdrr) - 100, 1.0f);
-
  }
 
- void idRenderModelGuiManager::drawIceIcon(__int64 idRenderModelGuiAdrr, CustomIceNadeIconUIData& data) {
-	
+
+
+ void idRenderModelGuiManager::drawIceIcon(__int64 idRenderModelGuiAdrr, CustomIceNadeIconUIData& data) {	
 	
 	 if (MemHelper::isBadReadPtr((void*)idRenderModelGuiAdrr)) {
 		logErr("drawIceIcon: idRenderModelGuiAdrr is bad ptr: %p not drawing (how did that happen???)", (void*)idRenderModelGuiAdrr);
 		return;
-	 }
-	
+	 }	
 
 	drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, data.outerIconBounds, data.extraBorderMrt, data.extraBorderColor);
 	drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, data.outerIconBounds, data.backgroundMrt, data.backgroundColor);
@@ -482,10 +378,9 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 	drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, data.innerIconBounds, data.iconMrt, data.iconColor);
 	if (data.isIceOnCoolDown) {
 		drawIceNadeCooldownTextWithOutline(idRenderModelGuiAdrr, colorLtGrey, data.cooldownText, idVec4(data.innerIconBounds), .8f, 1.0f, false);
-
-	}
-	
+	}	
  }
+
 
  void idRenderModelGuiManager::drawDrawStretchPicSwfRect(__int64 idRenderModelGuiAdrr, swfRect_t swfRect, __int64 matPtr, const idColor& idColor, bool isMiroredX, bool isMiroredY) {
 
@@ -525,41 +420,36 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 	float height = swfRect.br.y - swfRect.tl.y;
 
 	pidRenderModelGui_DrawStretchPic(idRenderModelGuiAdrr, x, y, 0.0, width, height, s1, t1, s2, t2, matPtr);
-}
+ }
 
-// void idRenderModelGuiManager::drawDrawStretchPicWhiteMatrSwfRect(__int64 idRenderModelGuiAdrr, swfRect_t swfRect, const idColor& idColor, bool isMiroredX, bool isMiroredY) {
-//
-//	if (!m_staticMaterialWhiteAddr) {
-//		logErr("m_staticMaterialWhiteAddr is null can not draw ");
-//		return;
-//	}
-//
-//	//DrawStretchPic(x, y, 0.0, w, h, 0.0, 0.0, 1.0, 1.0, whitemat);
-//	float s1 = 0.0;
-//	float t1 = 0.0;
-//	float s2 = 1.0;
-//	float t2 = 1.0;
-//
-//	setColorNoCheck(idRenderModelGuiAdrr, idColor);
-//	//setColor(idRenderModelGuiAdrr, idColor);
-//
-//	if (isMiroredX) {
-//		s1 = 1.0;
-//		s2 = 0.0;
-//		//pidRenderModelGui_DrawStretchPic(m_idRenderModelGuiPtr, x, y, 0.0, width, height, 1.0, 0.0, 0.0, 1.0, matPtr);
-//	}
-//	if (isMiroredY) {
-//		t1 = 1.0;
-//		t2 = 0.0;
-//		//pidRenderModelGui_DrawStretchPic(m_idRenderModelGuiPtr, x, y, 0.0, width, height, 0.0, 1.0, 1.0, 0.0, matPtr);
-//	}
-//	float x = swfRect.tl.x;
-//	float y = swfRect.tl.y;
-//	float width = swfRect.br.x - swfRect.tl.x;
-//	float height = swfRect.br.y - swfRect.tl.y;
-//
-//	pidRenderModelGui_DrawStretchPic(idRenderModelGuiAdrr, x, y, 0.0, width, height, s1, t1, s2, t2, m_staticMaterialWhiteAddr);
-//}
+
+
+
+
+
+
+
+ void idRenderModelGuiManager::debugDrawMaterialLibMatr(__int64 idRenderModelGuiAdrr, __int64 matr, std::string materialNameStr) {
+	 swfRect_t smallSwfRect(50, 50, 50, 50);
+	 swfRect_t midSwfRect(200, 200, 100, 100);
+	 swfRect_t BigSwfRect(400, 400, 200, 200);
+	 swfRect_t Big2SwfRect(600, 400, 200, 400);
+
+	 drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, smallSwfRect, matr, colorWhite);
+	 drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, midSwfRect, matr, colorYellow);
+	 drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, BigSwfRect, matr, colorGreen);
+	 drawDrawStretchPicSwfRect(idRenderModelGuiAdrr, Big2SwfRect, matr, colorPurple);
+
+	 debugDrawString(idRenderModelGuiAdrr, colorOrange, materialNameStr.c_str(), 50.0f, getScreenHeight() - 100, 1.0f);
+	 //debugDrawString(idRenderModelGuiAdrr, colorOrange, materialNameStr.c_str(), 50.0f, getScreenHeigth(idRenderModelGuiAdrr) - 100, 1.0f);
+
+ }
+
+
+
+
+
+
 
  void idRenderModelGuiManager::drawDrawStretchPicTest3(__int64 idRenderModelGuiAdrr, float x, float y, float width, float height, __int64 matPtr, const idColor& idColor, bool isMiroredX, bool isMiroredY) {
 	//static bool BasPtrThisError = false;
@@ -652,7 +542,7 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 
 		//logInfo("debugDrawStringInRect: y_offset_v30: %.2f smallCharHeight_Plus_YArg_v22: %.2f y_fromDrawStringFunc: %.2f  normalizedRect.y: %.2f  y_final_offset: %.2f", y_offset_v30, smallCharHeight_Plus_YArg_v22, y_fromDrawStringFunc, normalizedRect.y, y_final_offset);
 
-		logInfo("debugDrawStringInRect:  x_final_offset before font offset adjustment:  %.2f y_final_offset before font offset adjustment: %.2f and normalizedRect: %s", x_final_offset, y_final_offset, normalizedRect.getStrData().c_str());
+		//logInfo("debugDrawStringInRect:  x_final_offset before font offset adjustment:  %.2f y_final_offset before font offset adjustment: %.2f and normalizedRect: %s", x_final_offset, y_final_offset, normalizedRect.getStrData().c_str());
 
 
 		auto currentFont = idFontManager::getCurrentFont();
@@ -770,3 +660,136 @@ std::string idRenderModelGuiManager::getDbgStrForImgui() {
 
 	//return rect.x + ((rect.w - strPixelSize) /2) + (Eternal90_text_x_Offset_base * fontScale) / strLettersCount;
 }
+
+
+ void idRenderModelGuiManager::drawAllNeededIconsTest(__int64 idRenderModelGuiAdrr) {
+	 float x = 50.0f;
+	 float y = 100.0f;
+	 float width = 30;
+	 float height = 30;
+	 __int64 matPtr = 0;
+
+
+	 setColor(idRenderModelGuiAdrr, colorGreen);
+
+
+
+	 x += 40.0f;
+
+	 //logInfo("drawAllNeededIconsTest:  idRenderModelGuiAdrr: %p  MaterialLib::getHealthMtr(): %p ", (void*)idRenderModelGuiAdrr, (void*)MaterialLib::getHealthMtr());
+
+	 drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getHealthMtr());
+	 x += 50.0f;
+	 drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getArmorMtr());
+	 x += 50.0f;
+	 drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getDashMtr());
+	 x += 50.0f;
+	 drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getBloodPunchMtr());
+	 setColor(idRenderModelGuiAdrr, colorYellow);
+	 x += 50.0f;
+	 drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getCrucibleMtr());
+	 x += 50.0f;
+	 drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getHammerMtr());
+	 x += 50.0f;
+	 drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getFlameBelchMtr());
+	 x += 50.0f;
+	 drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getFluelAmmoMtr());
+	 x += 50.0f;
+	 drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getFragGrenadeMtr());
+	 x += 50.0f;
+	 drawDrawStretchPicTest5(idRenderModelGuiAdrr, x += 10, y += 10, 30, 30, MaterialLib::getIceGrenadeMtr());
+
+ }
+
+
+ void idRenderModelGuiManager::debugDrawString(__int64 idRenderModelGuiAdr, idColor color, const char* text, float x, float y, float scale) {
+	 if (MemHelper::isBadReadPtr((void*)idRenderModelGuiAdr)) {
+		 logErr("debugDrawString: idRenderModelGuiAdr is bad ptr");
+		 return;
+	 }
+	 m_pidRenderModelGui_DrawString(idRenderModelGuiAdr, x, y, text, (__int64)&color, 0, scale);
+ }
+
+
+
+ void idRenderModelGuiManager::drawDrawStretchPicTest5(__int64 idRenderModelGuiAdrr, float x, float y, float width, float height, __int64 matPtr) {
+	 //__int64 matPtr = MaterialLib::getRocketIconMtr();
+	 //__int64 matPtr = MaterialLib::getWhite();
+	 if (MemHelper::isBadReadPtr((void*)matPtr)) return;
+	 pidRenderModelGui_DrawStretchPic(idRenderModelGuiAdrr, x, y, 0.0, width, height, s1, t1, s2, t2, matPtr);
+ }
+
+ void idRenderModelGuiManager::debugDrawColoredRect(__int64 idRenderModelGuiAdrr, float x, float y, float width, float height, idColor color) {
+	 __int64 matPtr = MaterialLib::getWhite();
+	 setColor(idRenderModelGuiAdrr, color);
+	 pidRenderModelGui_DrawStretchPic(idRenderModelGuiAdrr, x, y, 0.0, width, height, s1, t1, s2, t2, matPtr);
+ }
+
+
+ //! Will drawn a string, scaling it horizontally to fill the rect width, however it will not scale it vertically.
+//! A 1 char length str will be 3 times bigger than a 3 chars lenght string, so if you want to do a countdown make sure the char count is the same, meaning if count from 60 to 0, from 10 to 0 the count should be 09, 08...
+//! if you want to use this to print the health with 3 numbers, you use a space to make sure the text keep the same width, for ex text can be 200 or 'space'10, or 'space''scpace'0 
+
+ void idRenderModelGuiManager::drawStringCenteredInBounds(__int64 idRenderModelGuiAdr, idColor color, std::string textStr, idVec4 rect, bool isDebug) {
+	 adjustRectHeightToFitTheStr(rect, textStr.size());
+	 //? doing this so where we set our bl rect will be the start of the string, a bit like a cursor BUT WE COULD MAKE IT LOOK BETTER
+	 rect.y -= rect.h;
+	 if (isDebug) {
+		 debugDrawColoredRect(idRenderModelGuiAdr, rect.x, rect.y, rect.w, rect.h, colorOrange);
+		 debugDrawString(idRenderModelGuiAdr, colorPurple, idFontManager::getCurrentFontAsStr().c_str(), getScreenWidth() / 2, getScreenHeight() / 2, 2);
+		 //debugDrawString(idRenderModelGuiAdr, colorPurple, idFontManager::getCurrentFontAsStr().c_str(), getScreenWidth(idRenderModelGuiAdr) / 2, getScreenHeigth(idRenderModelGuiAdr) / 2, 2);
+	 }
+	 float computedTextScale = idRenderModelGuiManager::getFontScaleFromWidthV3(rect, textStr.size());
+	 //logInfo("computedTextScale: %.2f", computedTextScale);
+	 float stringHeight = computedTextScale * getSmallCharHeight();
+	 auto offsetsVec2 = getGlyphOffset(rect, textStr.c_str(), computedTextScale);
+
+	 //logInfo("drawStringCenteredInBounds: current font is %s offsetsVec2.x: %.2f, offsetsVec2.y: %.2f rect: %s", idFontManager::getCurrentFontAsStr().c_str(), offsetsVec2.x, offsetsVec2.y, rect.getStrData().c_str());
+
+	 m_pidRenderModelGui_DrawString(idRenderModelGuiAdr, rect.x + offsetsVec2.x, rect.y + offsetsVec2.y, textStr.c_str(), (__int64)&color, 0, computedTextScale);
+ }
+
+
+
+ void idRenderModelGuiManager::drawDrawStretchPicBounds(__int64 idRenderModelGuiAdrr, idVec4 bounds, __int64 matPtr) {
+	 //__int64 matPtr = MaterialLib::getRocketIconMtr();
+	 //__int64 matPtr = MaterialLib::getWhite();
+	 if (MemHelper::isBadReadPtr((void*)matPtr)) return;
+	 pidRenderModelGui_DrawStretchPic(idRenderModelGuiAdrr, bounds.x, bounds.y, 0.0, bounds.w, bounds.h, s1, t1, s2, t2, matPtr);
+ }
+
+
+
+ // void idRenderModelGuiManager::drawDrawStretchPicWhiteMatrSwfRect(__int64 idRenderModelGuiAdrr, swfRect_t swfRect, const idColor& idColor, bool isMiroredX, bool isMiroredY) {
+//
+//	if (!m_staticMaterialWhiteAddr) {
+//		logErr("m_staticMaterialWhiteAddr is null can not draw ");
+//		return;
+//	}
+//
+//	//DrawStretchPic(x, y, 0.0, w, h, 0.0, 0.0, 1.0, 1.0, whitemat);
+//	float s1 = 0.0;
+//	float t1 = 0.0;
+//	float s2 = 1.0;
+//	float t2 = 1.0;
+//
+//	setColorNoCheck(idRenderModelGuiAdrr, idColor);
+//	//setColor(idRenderModelGuiAdrr, idColor);
+//
+//	if (isMiroredX) {
+//		s1 = 1.0;
+//		s2 = 0.0;
+//		//pidRenderModelGui_DrawStretchPic(m_idRenderModelGuiPtr, x, y, 0.0, width, height, 1.0, 0.0, 0.0, 1.0, matPtr);
+//	}
+//	if (isMiroredY) {
+//		t1 = 1.0;
+//		t2 = 0.0;
+//		//pidRenderModelGui_DrawStretchPic(m_idRenderModelGuiPtr, x, y, 0.0, width, height, 0.0, 1.0, 1.0, 0.0, matPtr);
+//	}
+//	float x = swfRect.tl.x;
+//	float y = swfRect.tl.y;
+//	float width = swfRect.br.x - swfRect.tl.x;
+//	float height = swfRect.br.y - swfRect.tl.y;
+//
+//	pidRenderModelGui_DrawStretchPic(idRenderModelGuiAdrr, x, y, 0.0, width, height, s1, t1, s2, t2, m_staticMaterialWhiteAddr);
+//}

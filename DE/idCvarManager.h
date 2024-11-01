@@ -1,8 +1,8 @@
 #pragma once
 
 
-
-#include "idLib_Dynamic.h"
+#include "idLib_Static.h"
+//#include "idLib_Dynamic.h"
 #include "MemHelper.h"
 #include "TypeInfoManager.h"
 
@@ -23,7 +23,7 @@ private:
 
 	static inline __int64 m_idCVarSystemLocal = 0;
 
-	static inline idInternalCVar__Set m_setCvarFp = nullptr;
+	//static inline idInternalCVar__Set m_setCvarFp = nullptr;
 	static inline cvarFindInternal_t m_findInternalFp = nullptr;
 
 	//! cached cvars for performance
@@ -45,7 +45,7 @@ public:
 
 	static std::string getCvarString(std::string cvarStr);
 
-	static bool setCvar(std::string cvarStr, std::string val);
+	//static bool setCvar(std::string cvarStr, std::string val);
 
 	//static bool setCvarFast(idCVar* cvar, const char* valStr);
 

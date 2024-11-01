@@ -26,18 +26,14 @@
 
 
 
-
-
 class modSettings
 {
 public:
 
-	//static const inline unsigned int DefaultGameSpeedKeyVkCode = VK_F1;
-	
+	//static const inline unsigned int DefaultGameSpeedKeyVkCode = VK_F1;	
 	
 	/*static const inline bool DefaulIsUseImgui = true;
 	static const inline bool DefaulIsLogConsoleToLogFile = false;*/
-
 
 	
 
@@ -52,6 +48,8 @@ private:
 	static inline bool m_isUseDedicatedNadeKeys = modSettingsDefault::defaultIsUseDedicatedNadeKeys;
 
 	static inline unsigned int m_toggleModSettingsVkCode = modSettingsDefault::defaultToggleModSettingsVkCode;	
+	static inline std::string m_toggleModSettingsKeyStr = modSettingsDefault::defaultToggleModSettingsStr;
+
 	static inline ImU32 m_modSettingsShortcutTextColorImU32 = modSettingsDefault::defaultmodSettingsShortcutTextColorImU32;
 
 	static inline bool m_isDisableNewCampaignPopUp = modSettingsDefault::defaultIsDisableNewCampaignPopUp;
@@ -85,10 +83,13 @@ private:
 	static inline int m_OverrideIceGrenadeCoolDown_Color = modSettingsDefault::g_defaultOverrideIceGrenadeCoolDown_Color;
 
 	static inline bool m_IsWeaponBarColored = modSettingsDefault::g_defaultIsWeaponBarColored;
-
 	
 	static inline int m_OverrideRadMeterColor = modSettingsDefault::g_defaultOverrideRadMeterColor;
 
+	static inline int m_OverrideLowAmmoWarningColor = modSettingsDefault::g_defaultOverrideLowAmmoWarningColor;
+
+
+	static inline bool m_isRemoveHudLowWarnings = modSettingsDefault::g_defaultIsRemoveHudLowWarnings;
 
 
 	static inline float m_assaultRiflePrecisionBoltMouseSens = modSettingsDefault::g_defaultPrecisionBoltMouseSens;
@@ -106,7 +107,6 @@ private:
 
 	//static inline int m_handsFOV = modSettingsDefault::g_defaultHandsFOV;
 
-
 		  
 	static inline float m_reticleScale = Reticle::g_defaultReticleScale;
 		  
@@ -121,13 +121,27 @@ private:
 	//! kaibz crosshair
 	static inline bool m_useImGuiCustomDotCrosshair = modSettingsDefault::g_defaultUseImguiCustomDotCrosshair;
 
+
 	static inline float m_imguiCustomDotCrosshairRadiusPix = modSettingsDefault::g_defaultimguiCustomDotCrosshairRadiusPix;
+	static inline float m_imguiCustomDotCrosshairOutlineThickness = modSettingsDefault::g_defaultImguiCustomDotCrosshairOutlineThickness;
 
 	static inline ImU32 m_customDotCrosshairColorImU32 = modSettingsDefault::g_defaultCustomDotCrosshairColorImU32;
 	
 	static inline ImU32 m_customDotCrosshairCooldownColorImU32 = modSettingsDefault::g_defaultCustomDotCrosshairCooldownColorImU32;
 
+
+	static inline ImU32 m_customDotCrosshairHealthAndArmorFullColorImU32 = modSettingsDefault::g_defaultCustomDotCrosshairHealthAndArmorFullColorImU32;
+
+	static inline ImU32 m_customDotCrosshairArmorFullColorImU32 = modSettingsDefault::g_defaultCustomDotCrosshairArmorFullColorImU32;
+
+	static inline ImU32 m_customDotCrosshairHealthFullColorImU32 = modSettingsDefault::g_defaultCustomDotCrosshairHealthFullColorImU32;
+
+	static inline ImU32 m_customDotCrosshairWarningColorImU32 = modSettingsDefault::g_defaultCustomDotCrosshairWarningColorImU32;
+
+
 	static inline bool m_customCrosshairIsShowHealthAsColor = modSettingsDefault::g_defaultCustomDotCrosshairIsShowHealthAsColor;
+
+
 
 
 	//! kaibz hud
@@ -151,13 +165,16 @@ private:
 	static inline ImU32 m_kaibzHudBloodPunch1ColorImU32 = modSettingsDefault::g_defaultkaibzHudBloodPunch1ColorImU32;
 	static inline ImU32 m_kaibzHudBloodPunch2ColorImU32 = modSettingsDefault::g_defaultkaibzHudBloodPunch2ColorImU32;
 	static inline ImU32 m_kaibzHudBloodPunchDesperateColorImU32 = modSettingsDefault::g_defaultkaibzHudBloodPunchDesperateColorImU32;
+
 	static inline ImU32 m_kaibzHudHealthMaxColorImU32 = modSettingsDefault::g_defaultkaibzHudHealthMaxColorImU32;
 	static inline ImU32 m_kaibzHudHealthColorImU32 = modSettingsDefault::g_defaultkaibzHudHealthColorImU32;
 	static inline ImU32 m_kaibzHudArmorMaxColorImU32 = modSettingsDefault::g_defaultkaibzHudArmorMaxColorImU32;
 	static inline ImU32 m_kaibzHudArmorColorImU32 = modSettingsDefault::g_defaultkaibzHudArmorColorImU32;
+	
 	static inline ImU32 m_kaibzHudRadsuitColorImU32 = modSettingsDefault::g_defaultkaibzHudRadsuitColorImU32;
 	static inline ImU32 m_kaibzHudOxygenColorImU32 = modSettingsDefault::g_defaultkaibzHudOxygenColorImU32;
 	static inline ImU32 m_kaibzHudAmmoColorImU32 = modSettingsDefault::g_defaultkaibzHudAmmoColorImU32;
+	
 	static inline ImU32 m_kaibzHudHammerCrucibleColorImU32 = modSettingsDefault::g_defaultkaibzHudHammerCrucibleColorImU32;
 	static inline ImU32 m_kaibzHudFlameBelchColorImU32 = modSettingsDefault::g_defaultkaibzHudFlameBelchColorImU32;
 	static inline ImU32 m_kaibzHudFuel1ColorImU32 = modSettingsDefault::g_defaultkaibzHudFuel1ColorImU32;
@@ -167,6 +184,10 @@ private:
 	static inline ImU32 m_kaibzHudFrag2ColorImU32 = modSettingsDefault::g_defaultkaibzHudFrag2ColorImU32;
 	static inline ImU32 m_kaibzHudIceColorImU32 = modSettingsDefault::g_defaultkaibzHudIceColorImU32;
 	static inline ImU32 m_kaibzHudIceCooldownColorImU32 = modSettingsDefault::g_defaultkaibzHudIceCooldownColorImU32;
+
+
+
+
 
 	
 		  
@@ -190,6 +211,7 @@ private:
 	
 	//! Gameplay Settings:
 	static inline bool m_isForceAiHaste = modSettingsDefault::g_defaultisForceAiHaste;
+	static inline bool m_isSpeedBoosInHudMap = modSettingsDefault::g_defaultIsSpeedBoostInHubMap;
 
 	
 	//! mod settings
@@ -201,8 +223,8 @@ private:
 	//static inline bool m_isPlayModLoadedBeep = modSettingsDefault::g_defaultIsSoundBeepWhenModLoaded;
 
 	//! debug settings
-	static inline unsigned int m_reloadImguiHooksVk_Key = 0;
-	static inline std::string m_reloadImguiHooksKeyName = modSettingsDefault::g_defaultReloadImguiHooksKeyName;
+	//static inline unsigned int m_reloadImguiHooksVk_Key = 0;
+	//static inline std::string m_reloadImguiHooksKeyName = modSettingsDefault::g_defaultReloadImguiHooksKeyName;
 	//! this is just a way to enabling devmode easily by editing the json file and making sure user can't accidentaly enable it as it would potentially mess with their binds.
 	//static inline std::string m_devModeKeyStr = modSettingsDefault::g_defaultDevModeKey;
 	
@@ -295,8 +317,23 @@ public:
 	static ImU32 getCustomDotCrosshairCooldownColorImU32();
 	static void setCustomDotCrosshairCooldownColorImU32(ImU32 packedValue);
 
+	static ImU32 getCustomDotCrosshairHealthAndArmorFullColor();
+	static void setCustomDotCrosshairHealthAndArmorFullColor(ImU32 color);
+
+	static ImU32 getCustomDotCrosshairArmorFullColor();
+	static void setCustomDotCrosshairArmorFullColor(ImU32 color);
+
+	static ImU32 getCustomDotCrosshairHealthFullColor();
+	static void setCustomDotCrosshairHealthFullColor(ImU32 color);
+
+	static ImU32 getCustomDotCrosshairWarningColor();
+	static void setCustomDotCrosshairWarningColor(ImU32 color);
+
 	static float getImguiCustomDotCrosshairRadiusPix();
 	static void setImguiCustomDotCrosshairRadiusPix(float value);
+
+	static float getImguiCustomDotCrosshairOutlineThickness();
+	static void setImguiCustomDotCrosshairOutlineThickness(float val);
 
 	static bool getCustomCrosshairIsShowHealthAsColor();
 	static void setCustomCrosshairIsShowHealthAsColor(bool value);
@@ -468,6 +505,10 @@ public:
 	static int getOverrideIceGrenadeCooldownColor();
 	static bool getIsWeaponBarColored();
 	static int getOverrideRadMeterColor();
+	static int getOverrideLowAmmoWarningColor();
+
+	static bool getIsRemoveHudLowWarnings();
+	static void setIsRemoveHudLowWarnings(bool value);
 
 	static void setOverrideBloodPunchColor1(int value);
 	static void setOverrideBloodPunchColor2(int value);
@@ -479,6 +520,7 @@ public:
 	static void setOverrideIceGrenadeCooldownColor(int value);
 	static void setIsWeaponBarColored(bool value);
 	static void setOverrideRadMeterColor(int value);
+	static void setOverrideLowAmmoWarningColor(int value);
 
 	static void resetGameHudColorsToDefault();
 
@@ -533,10 +575,20 @@ public:
 	static bool GetIsForceAiHaste();
 	static void SetIsForceAiHaste(bool value);
 
+	static bool getIsSpeedBoostInHudMap();
+	static void setIsSpeedBoostInHudMap(bool value);
+
 
 
 	//! mod settings 
 	static bool getIsUseImgui();
+
+	//static unsigned int convertKeyStrToVkCode(std::string keyStr, unsigned int defaultVKCode);
+
+	//static std::string convertVkCodeToKeyStr(unsigned int vkCode);
+
+
+	//void setReloadImguiHooksVkKey();
 
 	//static bool isLogConsoleToLogFile();
 	//static void setIsLogConsoleToLogFile(bool isLogConsole);	
