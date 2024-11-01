@@ -1624,6 +1624,9 @@ enum idWeapon_chargeState_t : int32_t {
 };
 
 
+
+
+
 // 
 //? generated classes for for DE_VERSION_SANDBOX Game Build: 20240822-095543-coral-blue (Sand_V2)
 
@@ -1634,6 +1637,7 @@ struct idActor;
 struct idDeclAbility_Dash;
 struct idDeclCampaign;
 struct idDeclFX;
+struct idDeclGlobalFontTable;
 struct idDeclGlobalShell;
 struct idDeclHUDElement;
 struct idDeclHUDElement_idHudSWFInfo_t;
@@ -1805,8 +1809,12 @@ static_assert(sizeof(glyphInfo_t) == 10, "Size of glyphInfo_t is wrong !");
 
 
 struct fontInfo_t {
-	// Offset: 0x0 (0d) Size: 0x18 (24d)
-	char pad_0[24];
+	// Offset: 0x0 (0d)  Size: 0x8 (8d)
+	idMaterial2* material;
+	// Offset: 0x8 (8d)  Size: 0x8 (8d)
+	idMaterial2* snapLabelMaterial;
+	// Offset: 0x10 (16d)  Size: 0x8 (8d)
+	idMaterial2* worldSpaceMaterial;
 	// Offset: 0x18 (24d)  Size: 0x2 (2d)
 	short imageWidth;
 	// Offset: 0x1A (26d)  Size: 0x2 (2d)
@@ -1825,8 +1833,8 @@ struct fontInfo_t {
 	short numGlyphs;
 	// Offset: 0x28 (40d)  Size: 0x8 (8d)
 	glyphInfo_t* glyphData;
-	// Offset: 0x30 (48d) Size: 0x8 (8d)
-	char pad_End[8];
+	// Offset: 0x30 (48d)  Size: 0x8 (8d)	This is a sorted array of all characters in the font. This is a 1 to 1 mapping of glyphData
+	unsigned int* charIndex;
 }; // size: 0x38 (Size Dec: 56)
 static_assert(sizeof(fontInfo_t) == 56, "Size of fontInfo_t is wrong !");
 
@@ -1839,10 +1847,64 @@ struct idFont {
 	idFont* alias;
 	// Offset: 0x60 (96d)  Size: 0x8 (8d)	If the font is NOT an alias, this is where the font data is located
 	fontInfo_t* fontInfo;
-	// Offset: 0x68 (104d) Size: 0x38 (56d)
-	char pad_End[56];
+	// Offset: 0x68 (104d)  Size: 0x4 (4d)	store a hash of the name of the font
+	int fontNameHash;
+	// Offset: 0x6c (108d) Size: 0x4 (4d)
+	char pad_108[4];
+	// Offset: 0x70 (112d)  Size: 0x8 (8d)
+	idFont* boldFont;
+	// Offset: 0x78 (120d)  Size: 0x8 (8d)
+	idFont* italicFont;
+	// Offset: 0x80 (128d)  Size: 0x1 (1d)
+	bool allowUnderline;
+	// Offset: 0x81 (129d) Size: 0x7 (7d)
+	char pad_129[7];
+	// Offset: 0x88 (136d)  Size: 0x18 (24d)    (idList < idFont::idFontRange , TAG_IDLIST , false >)
+	idList altGlyphs;
 }; // size: 0xa0 (Size Dec: 160)
 static_assert(sizeof(idFont) == 160, "Size of idFont is wrong !");
+
+
+// idDeclGlobalFontTable : idDeclTypeInfo : idDecl : idResource
+struct idDeclGlobalFontTable {
+	// Offset: 0x0 (0d) Size: 0x88 (136d)
+	char pad_0[136];
+	// Offset: 0x88 (136d)  Size: 0x8 (8d)	SWF_FONT_ETERNAL_BOLD
+	idFont* eternal_bold;
+	// Offset: 0x90 (144d)  Size: 0x8 (8d)	SWF_FONT_ETERNAL_REG
+	idFont* eternal_reg;
+	// Offset: 0x98 (152d)  Size: 0x8 (8d)	SWF_FONT_ETERNAL_NUM
+	idFont* eternal_num;
+	// Offset: 0xA0 (160d)  Size: 0x8 (8d)	SWF_FONT_TT_SUPERMOLOT
+	idFont* tt_supermolot;
+	// Offset: 0xA8 (168d)  Size: 0x8 (8d)	SWF_FONT_ID_TACTICAL
+	idFont* idTactical;
+	// Offset: 0xB0 (176d)  Size: 0x8 (8d)	SWF_FONT_EUROSTILECONREG
+	idFont* eurostileconreg;
+	// Offset: 0xB8 (184d)  Size: 0x8 (8d)	SWF_FONT_ETERNAL_REG_JAPANESE
+	idFont* eternal_reg_ja;
+	// Offset: 0xC0 (192d)  Size: 0x8 (8d)	SWF_FONT_ETERNAL_BOLD_JAPANESE
+	idFont* eternal_bold_ja;
+	// Offset: 0xC8 (200d)  Size: 0x8 (8d)	SWF_FONT_ETERNAL_REG_SCHINESE
+	idFont* eternal_reg_zh_cn;
+	// Offset: 0xD0 (208d)  Size: 0x8 (8d)	SWF_FONT_ETERNAL_BOLD_SCHINESE
+	idFont* eternal_bold_zh_cn;
+	// Offset: 0xD8 (216d)  Size: 0x8 (8d)	SWF_FONT_ETERNAL_REG_TCHINESE
+	idFont* eternal_reg_zh_tw;
+	// Offset: 0xE0 (224d)  Size: 0x8 (8d)	SWF_FONT_ETERNAL_BOLD_TCHINESE
+	idFont* eternal_bold_zh_tw;
+	// Offset: 0xE8 (232d)  Size: 0x8 (8d)	SWF_FONT_ETERNAL_REG_KOREAN
+	idFont* eternal_reg_ko;
+	// Offset: 0xF0 (240d)  Size: 0x8 (8d)	SWF_FONT_ETERNAL_BOLD_KOREAN
+	idFont* eternal_bold_ko;
+	// Offset: 0xF8 (248d)  Size: 0x8 (8d)	Font used for debug guis
+	idFont* debugGUIFont;
+	// Offset: 0x100 (256d)  Size: 0x70 (112d)    (idArray < const idFont * , 14 >)
+	const idFont* fontTypes_ptr[14];
+	// Offset: 0x170 (368d)  Size: 0x58 (88d)    (idGrowableList < unsigned int , 16 , TAG_IDLIST >)
+	char materialLocks[88];
+}; // size: 0x1c8 (Size Dec: 456)
+static_assert(sizeof(idDeclGlobalFontTable) == 456, "Size of idDeclGlobalFontTable is wrong !");
 
 
 // idDeclInventory : idGameDeclTypeInfo : idDeclTypeInfo : idDecl : idResource

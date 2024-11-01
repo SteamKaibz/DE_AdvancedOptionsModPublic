@@ -457,6 +457,9 @@ int Exit() {
 
 
 LONG WINAPI CrashDumpExeptionFilter(PEXCEPTION_POINTERS pExceptionPointers) {
+
+	ShowErrorMessageBox("Mod Crash", "The mod/game has crashed. If it happens frequently, check the folder: ...Steam\steamapps\common\DOOMEternal for a DE_AdvancedOptionsMod.dmp file and contact the mod author on Nexus");
+
 	const HANDLE hFile = CreateFileA("DE_AdvancedOptionsMod.dmp", GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (hFile == INVALID_HANDLE_VALUE)
@@ -471,7 +474,7 @@ LONG WINAPI CrashDumpExeptionFilter(PEXCEPTION_POINTERS pExceptionPointers) {
 
 	MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hFile, MiniDumpNormal, &info, nullptr, nullptr);
 	
-	CloseHandle(hFile);
+	CloseHandle(hFile);	
 
 	return EXCEPTION_EXECUTE_HANDLER;
 }

@@ -236,7 +236,6 @@ WNDPROC pOriginalWndProc = nullptr;
 LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
 
-
 	if (uMsg == WM_KEYDOWN) {
 
 		if (Config::isDevMode()) {
@@ -449,6 +448,22 @@ LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 				
 				logInfo("HookedWndProc: VK_NUMPAD3 pressed ");				
 				
+
+			}
+
+			else if (wParam == VK_NUMPAD4) {
+
+				logInfo("HookedWndProc: VK_NUMPAD4 pressed crashing on purpose...");
+
+				volatile int* tmp = nullptr;
+				int tmp1 = *tmp;
+
+			}
+
+			else if (wParam == VK_NUMPAD5) {
+
+				logInfo("HookedWndProc: VK_NUMPAD4 pressed ");
+
 
 			}
 

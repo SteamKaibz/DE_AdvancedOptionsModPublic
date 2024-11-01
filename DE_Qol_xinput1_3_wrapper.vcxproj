@@ -401,7 +401,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\</OutDir>
     <IntDir>build\$(PlatformName)\$(Configuration)\</IntDir>
-    <TargetName>msimg32</TargetName>
+    <TargetName>DE_Dev_Vanilla</TargetName>
     <LibraryPath>$(VC_LibraryPath_x64);$(VULKAN_SDK)\Lib;$(WindowsSDK_LibraryPath_x64);$(SolutionDir)MinHookLibX64;$(LibraryPath)</LibraryPath>
     <IncludePath>$(SolutionDir)include;$(VULKAN_SDK)\Include;$(IncludePath);</IncludePath>
   </PropertyGroup>
