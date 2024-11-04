@@ -374,6 +374,7 @@ struct idResourceList {
 }; // Size: 0x30 (Size Dec: 48)
 
 
+
 struct swfRect_t;
 
 
@@ -418,6 +419,30 @@ struct idMat3 {
 	idVec3 mat[3];
 }; // Size: 0x24 (Size Dec: 36)
 
+//struct swfRect_t {
+//	//Offset 0,	 size 8
+//	idVec2 tl;
+//	//Offset 8,	 size 8
+//	idVec2 br;
+//
+//	swfRect_t() {}
+//
+//	swfRect_t(float x, float y, float w, float h)
+//	{
+//		tl.x = x;
+//		tl.y = y;
+//		br.x = x + w;
+//		br.y = y + h;
+//	}
+//	float getWidth() {
+//		return br.x - tl.x;
+//	}
+//	float getHeight() {
+//		return br.y - tl.y;
+//	}
+//};
+
+
 struct swfRect_t {
 	//Offset 0,	 size 8
 	idVec2 tl;
@@ -439,6 +464,140 @@ struct swfRect_t {
 	float getHeight() {
 		return br.y - tl.y;
 	}
+
+	float getLeft() {
+		return tl.x;
+	}
+
+	float getRight() {
+		return br.x;
+	}
+
+	float getTop() {
+		return tl.y;
+	}
+
+	float getBottom() {
+		return br.y;
+	}
+
+
+	// Setters for dimensions and positions
+	void setWidth(float newWidth) {
+		br.x = tl.x + newWidth; // Adjust the right edge based on the new width
+	}
+
+	void setHeight(float newHeight) {
+		br.y = tl.y + newHeight; // Adjust the bottom edge based on the new height
+	}
+
+	void setLeft(float newLeft) {
+		float width = getWidth();
+		tl.x = newLeft;
+		br.x = newLeft + width;
+	}
+
+	void setTop(float newTop) {
+		float height = getHeight();
+		tl.y = newTop;
+		br.y = newTop + height;
+	}
+
+	void setPosition(float x, float y) {
+		float width = getWidth();
+		float height = getHeight();
+		tl.x = x;
+		tl.y = y;
+		br.x = x + width;
+		br.y = y + height;
+	}
+
+	void setPosition_Y(float y) {
+		float height = getHeight();
+		tl.y = y;
+		br.y = y + height;
+	}
+
+	//? edu: this will not work, because you modify tl.Y so getHeight() is not right anymore....
+	/*void setPosition_Y(float y) {
+		tl.y = y;
+		br.y = y + getHeight();
+	}*/
+
+
+	swfRect_t getRectScaled(float scale) {
+		float newWidth = getWidth() * scale;
+		float newHeight = getHeight() * scale;
+
+		// Adjust x and y by half the difference in width and height
+		float offsetX = (newWidth - getWidth()) / 2;
+		float offsetY = (newHeight - getHeight()) / 2;
+
+		float newX = tl.x - offsetX;
+		float newY = tl.y - offsetY;
+
+		return swfRect_t(newX, newY, newWidth, newHeight);
+	}
+
+	swfRect_t getRectScaledV2(float scale) {
+		float absScale = std::abs(scale);
+		float newWidth = getWidth() * absScale;
+		float newHeight = getHeight() * absScale;
+
+		// Adjust x and y by half the difference in width and height
+		float offsetX = (getWidth() - newWidth) / 2;
+		float offsetY = (getHeight() - newHeight) / 2;
+
+		// Calculate new coordinates based on whether scale is positive or negative
+		float newX = tl.x + offsetX;
+		float newY = tl.y + offsetY;
+
+		return swfRect_t(newX, newY, newWidth, newHeight);
+	}
+
+
+	//swfRect_t getRectScaledV2(float scale) {
+	//	float newWidth = getWidth() * std::abs(scale);  // Ensures scaling works symmetrically
+	//	float newHeight = getHeight() * std::abs(scale);
+
+	//	// Adjust x and y by half the difference in width and height
+	//	float offsetX = (newWidth - getWidth()) / 2.0f;
+	//	float offsetY = (newHeight - getHeight()) / 2.0f;
+
+	//	float newX = (scale >= 0) ? tl.x - offsetX : tl.x + offsetX;
+	//	float newY = (scale >= 0) ? tl.y - offsetY : tl.y + offsetY;
+
+	//	return swfRect_t(newX, newY, newWidth, newHeight);
+	//}
+
+	swfRect_t getRectOutlineBounds(float outlineThickness) {
+		float newX = tl.x - outlineThickness;
+		float newY = tl.y - outlineThickness;
+		float newWidth = getWidth() + 2 * outlineThickness;
+		float newHeight = getHeight() + 2 * outlineThickness;
+
+		return swfRect_t(newX, newY, newWidth, newHeight);
+	}
+
+	//! just offseted on x/y
+	swfRect_t getTextOutlineBounds(float outlineThickness) {
+		float newX = tl.x - outlineThickness;
+		float newY = tl.y - outlineThickness;
+
+		return swfRect_t(newX, newY, getWidth(), getHeight());
+	}
+
+	//std::string getDbgInfoStr() {
+	//	std::string resultStr;
+	//	resultStr += "tlx: " + K_Utils::toStringWithPrecision(tl.x, 2);
+	//	resultStr += " tly: " + K_Utils::toStringWithPrecision(tl.y, 2);
+	//	resultStr += " brx: " + K_Utils::toStringWithPrecision(br.x, 2);
+	//	resultStr += " bry: " + K_Utils::toStringWithPrecision(br.y, 2);
+	//	resultStr += " width: " + K_Utils::toStringWithPrecision(getWidth(), 2);
+	//	resultStr += " height: " + K_Utils::toStringWithPrecision(getHeight(), 2);
+	//	return resultStr;
+	//}
+
 };
 
 
@@ -679,3 +838,62 @@ struct idColor {
 		a = _a;
 	}*/
 };
+
+
+//! 3/11/24 putting idMaterial2 in static cause i need it there and it's the same in sand and van.
+// idMaterial2 : idDeclTypeInfo : idDecl : idResource
+struct idMaterial2 {
+	// Offset: 0x0 (0d) Size: 0x370 (880d)
+	char pad_0[880];
+	// Offset: 0x370 (880d)  Size: 0x2 (2d)
+	unsigned short MaterialIndex;
+	// Offset: 0x372 (882d) Size: 0x26 (38d)
+	char pad_End[38];
+}; // size: 0x398 (Size Dec: 920)
+
+
+
+
+
+//! because those are not listed in idLib we still have to declare them dynamically in this....idLib_Static file...
+
+#ifdef GAME_VERSION_SANDBOX
+
+//! unfortunately no definition of it in idLib. inspired by wolf2
+struct idRenderModelGui {
+	char pad_0[0x4E0];
+	unsigned int currentVertexColor; //! sig: 8B 87 ? ? ? ? 4B 8D 0C 40 F3 0F 10 AD or check 622D11 in ida rev2.
+
+}; // size: ????
+
+
+#else
+
+//? not using whiteMaterial in debug hud as it can be not null.
+//struct idDebugHUDLocal {
+//	char pad_0[0x60];
+//	idMaterial2* whiteMaterial;
+//};
+
+//! unfortunately no definition of it in idLib. inspired by wolf2
+struct idRenderModelGui {
+	char pad_0[0x4D0];
+	unsigned int currentVertexColor; //! sig: 8B 87 ? ? ? ? 4B 8D 0C 40 F3 0F 10 AD or check 622D11 in ida rev2.
+
+}; // size: ????
+
+
+#endif
+
+
+//! 3/11/24 this is used for idFont* idResourceListManager::find_idFont(std::string fontNameStr) because the resource list of idFonts is not just font pointers and as i can't find this struct in idLib i have to create it here.
+struct idFontResContainer {
+	int unknown0;
+	int unknown1;
+	int unknown2;
+	int unknown3;
+	//idFont* font;
+	void* fontVoidPtr; //! void* cause can not define idFont in static lib
+};
+
+

@@ -60,6 +60,8 @@ public:
     static inline uintptr_t SyncEndFuncAdd = 0;
     static inline uintptr_t RenderSpriteFuncAdd = 0;
     static inline uintptr_t IdUsercmdGenLocalSendBtnPressFuncAdd = 0;
+    static inline uintptr_t PerfMetrics_DrawGraphsFuncAdd = 0;
+    static inline uintptr_t IdDebugHUDLocal_RenderFuncAdd = 0;
     static inline uintptr_t ConsoleLogFuncAdd = 0;
 
 

@@ -1,6 +1,22 @@
 #include "idResourceManager.h"
 
- std::string idResourceManager::getDeclWeaponName(idDeclWeapon* idDeclWeaponPtr) {
+
+std::string idResourceManager::getName(idResource* idResourceObj)
+{
+    if (MemHelper::isBadReadPtr(idResourceObj)) {
+        logErr("getName: bad ptr for idResourceObj: %p returning empty str", idResourceObj);
+    }
+    else if (MemHelper::isBadReadPtr(&idResourceObj->name) || MemHelper::isBadReadPtr(&idResourceObj->name.str)) {
+        logErr("getName:: bad ptr found for ->name or ->name.str derivedObjPtr addr: %p returning empty str", idResourceObj);
+    }
+    else {
+        return std::string(idResourceObj->name.str);
+    }
+    logErr("getName: failed to find name");
+    return std::string();
+}
+
+std::string idResourceManager::getDeclWeaponName(idDeclWeapon* idDeclWeaponPtr) {
     idResource* idResourceObj = (idResource*)idDeclWeaponPtr;
     if (MemHelper::isBadReadPtr(idResourceObj)) {
         logErr("getDeclWeaponName: bad ptr for idResourceObj: %p returning empty str", idResourceObj);

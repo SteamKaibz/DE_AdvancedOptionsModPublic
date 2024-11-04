@@ -10,8 +10,6 @@
 
 
 
-
-
 //! proxy gen:
 #pragma region Proxy
 struct msimg32_dll {
@@ -208,7 +206,7 @@ void modInit() {
 	
 	//! not setting font here not only because for some reason in the log:  ERR| set: m_monoSpaceFontAddr is bad ptr can not set font but also because we don't need it as we just use the default font anyway, until may be someday we decide to implement stats. Update found a better way to get monoSpaceFontAddr check the func.
 	//! Update: not sure we need this anymore, at least atm.
-	idFontManager::init();
+	//idFontManager::init();
 
 	//! ensuring we can draw icons on the game's hud
 	idCmd::forceDebug_hud_string();
@@ -370,7 +368,7 @@ bool InitializeHooks() {
 		return false;
 	}
 
-	//! commented out for sandbox debug
+
 	p_RenderSprite_Target = reinterpret_cast<RenderSprite_t>(Scanner::RenderSpriteFuncAdd);
 	if (MH_CreateHook(reinterpret_cast<void**>(p_RenderSprite_Target), &RenderSprite_Hook, reinterpret_cast<void**>(&p_RenderSprite_Original)) != MH_OK) {
 		logErr("Failed to create RenderSprite hook.");
@@ -378,7 +376,7 @@ bool InitializeHooks() {
 	}
 
 
-	//! commented out for sandbox debug
+
 	p_idUsercmdGenLocalSendBtnPressMB_t_Target = reinterpret_cast<idUsercmdGenLocalSendBtnPressMB_t>(Scanner::IdUsercmdGenLocalSendBtnPressFuncAdd);
 	if (MH_CreateHook(reinterpret_cast<void**>(p_idUsercmdGenLocalSendBtnPressMB_t_Target), &idUsercmdGenLocalSendBtnPressMB_Hook, reinterpret_cast<void**>(&p_idUsercmdGenLocalSendBtnPressMB_t)) != MH_OK) {
 		logErr("Failed to create idUsercmdGenLocalSendBtnPressMB_t_Target hook.");
@@ -386,6 +384,21 @@ bool InitializeHooks() {
 	}
 
 
+	p_perfMetrics_DrawGraphs_Target = reinterpret_cast<perfMetrics_DrawGraphs_t>(Scanner::PerfMetrics_DrawGraphsFuncAdd);
+	if (MH_CreateHook(reinterpret_cast<void**>(p_perfMetrics_DrawGraphs_Target), &perfMetrics_DrawGraphs_Hook, reinterpret_cast<void**>(&p_perfMetrics_DrawGraphs)) != MH_OK) {
+		logErr("Failed to create perfMetrics_DrawGraphs hook.");
+		return false;
+	}
+
+	p_Render_t_Target = reinterpret_cast<idDebugHUDLocal_Render_t>(Scanner::IdDebugHUDLocal_RenderFuncAdd);
+	if (MH_CreateHook(reinterpret_cast<void**>(p_Render_t_Target), &idDebugHUDLocal_Render_Hook, reinterpret_cast<void**>(&p_Render_t)) != MH_OK) {
+		logErr("Failed to create Render hook.");
+		return false;
+	}
+
+
+
+	//! special
 	if ((Config::isDevMode()) && Config::isLogIdConsoleToFile()) {
 
 		pIdLib_PrintfTarget = reinterpret_cast<IdLib_Printf>(Scanner::ConsoleLogFuncAdd);
@@ -440,12 +453,32 @@ DWORD __stdcall EjectThread(LPVOID lpParameter) {
 }
 
 
-void ShowErrorMessageBox(std::string titleStr, std::string message) {
+//void ShowErrorMessageBox(std::string titleStr, std::string message) {
+//	MessageBox(NULL,
+//		message.c_str(),
+//		titleStr.c_str(),
+//		MB_OK | MB_ICONERROR);
+//}
+
+//? 1/11/24 keep in mind the MessageBox will be behind the game window IF the game is NOT fullscreen, which is fine as 99% of users will play fullscreen.
+void ShowErrorMessageBox(const std::string& titleStr, const std::string& message) {
 	MessageBox(NULL,
 		message.c_str(),
 		titleStr.c_str(),
-		MB_OK | MB_ICONERROR);
+		MB_OK | MB_ICONERROR | MB_TOPMOST); //! making sure pop up is NOT behind the game window
 }
+
+
+//? 1/11/24 not needed after all
+//void ShowErrorMessageBoxNewThread(const std::string& titleStr, const std::string& message) {
+//	std::thread([titleStr, message]() {
+//		MessageBox(NULL,
+//			message.c_str(),
+//			titleStr.c_str(),
+//			MB_OK | MB_ICONERROR);
+//		}).detach(); 
+//}
+
 
 
 int Exit() {
@@ -458,7 +491,10 @@ int Exit() {
 
 LONG WINAPI CrashDumpExeptionFilter(PEXCEPTION_POINTERS pExceptionPointers) {
 
-	ShowErrorMessageBox("Mod Crash", "The mod/game has crashed. If it happens frequently, check the folder: ...Steam\steamapps\common\DOOMEternal for a DE_AdvancedOptionsMod.dmp file and contact the mod author on Nexus");
+	// doesn't work ofc, the mod closes so, so does the thread...
+	/*ShowErrorMessageBoxNewThread("Mod Crash", "The mod/game has crashed. If it happens frequently, check the folder: ...Steam\\steamapps\\common\\DOOMEternal for a DE_AdvancedOptionsMod.dmp file and contact the mod author on Nexus");*/
+
+	ShowErrorMessageBox("Mod Crash", "The mod/game has crashed. \nIf it happens frequently, check the folder: ...Steam\\steamapps\\common\\DOOMEternal for a DE_AdvancedOptionsMod.dmp file and contact mod author on Nexus");
 
 	const HANDLE hFile = CreateFileA("DE_AdvancedOptionsMod.dmp", GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
@@ -616,22 +652,14 @@ DWORD WINAPI ModMain() {
 
 	
 
-		if (GameVersionInfoManager::isNewGameUpdateReleased()) {
-			logWarn("This version of the game: %s is newer than the version the mod was made for, mod 'may' not work as attended or not work at all.", GameVersionInfoManager::getBuildVersionStr().c_str());
+	/*if (GameVersionInfoManager::isNewGameUpdateReleased()) {
+		logWarn("This version of the game: %s is newer than the version the mod was made for, mod 'may' not work as attended or not work at all.", GameVersionInfoManager::getBuildVersionStr().c_str());
 
-		}
-		else {
-			logInfo("Game build Version is as expected: %s", GameVersionInfoManager::getBuildVersionStr().c_str());
-		}
+	}
+	else {
+		logInfo("Game build Version is as expected: %s", GameVersionInfoManager::getBuildVersionStr().c_str());
 	}*/
-		if (GameVersionInfoManager::isNewGameUpdateReleased()) {
-			logWarn("This version of the game: %s is newer than the version the mod was made for, mod 'may' not work as attended or not work at all.", GameVersionInfoManager::getBuildVersionStr().c_str());
-
-		}
-		else {
-			logInfo("Game build Version is as expected: %s", GameVersionInfoManager::getBuildVersionStr().c_str());
-		}
-	}*/
+	
 
 
 	/*if (Config::get() != ModConfig::nexusRelease) {

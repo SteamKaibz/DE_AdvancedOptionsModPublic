@@ -425,11 +425,59 @@
 	}
 
 
+	idDeclGlobalFontTable* TypeInfoManager::getGlobalFontTable() {
+		__int64 engine_t = get_engine_t();
+		if (engine_t) {
+
+			classVariableInfo_t* globalFontTableVarInfo = findClassField("engine_t", "globalFontTable");
+			if (!globalFontTableVarInfo) {
+				logErr("getGlobalFontTable: globalFontTableVarInfo is nullptr");
+				return nullptr;
+			}
+
+			int globalFontTableOffset = globalFontTableVarInfo->offset;
+			__int64 globalFontTabletPtP = engine_t + globalFontTableOffset;
+			if (!MemHelper::isBadReadPtr((void*)globalFontTabletPtP)) {
+				logInfo("getGlobalFontTable: found globalFontTabletPtP at: %p", (void*)globalFontTabletPtP);
+				idDeclGlobalFontTable* globalFontTablePtr = (idDeclGlobalFontTable*)*(__int64*)globalFontTabletPtP;
+				if (!MemHelper::isBadReadPtr(globalFontTablePtr)) {
+					logInfo("getGlobalFontTable: found globalFontTable at: %p", globalFontTablePtr);
+					return globalFontTablePtr;
+				}
+			}
+		}
+		logErr("getGlobalFontTable: engine_t is null or found bad ptr while searching for globalFontTable addr, returning nullptr");
+		return nullptr;
+	}
+
+	//! just a test to see if we get the local debughud
+	void* TypeInfoManager::getdebugHUD() {
+		__int64 engine_t = get_engine_t();
+		if (engine_t) {
+
+			classVariableInfo_t* debugHUDVarInfo = findClassField("engine_t", "debugHUD");
+			if (!debugHUDVarInfo) {
+				logErr("getdebugHUD: debugHUDVarInfo is nullptr");
+				return nullptr;
+			}
+
+			int debugHUDOffset = debugHUDVarInfo->offset;
+			__int64 debugHUDPtP = engine_t + debugHUDOffset;
+			if (!MemHelper::isBadReadPtr((void*)debugHUDPtP)) {
+				logInfo("getdebugHUD: found debugHUDPtP at: %p", (void*)debugHUDPtP);
+				void* debugHUDVoidPtr = (void*)*(__int64*)debugHUDPtP;
+				if (!MemHelper::isBadReadPtr(debugHUDVoidPtr)) {
+					logInfo("getdebugHUD: found debugHUDVoidPtr at: %p", debugHUDVoidPtr);
+					return debugHUDVoidPtr;
+				}
+			}
+		}
+		logErr("getdebugHUD: engine_t is null or found bad ptr while searching for debugHUDVoidPtr, returning nullptr");
+		return nullptr;
+	}
 
 
-
-	__int64 TypeInfoManager::getGlobalFontTable() {
-		logDebug("getGlobalFontTable");
+	/*__int64 TypeInfoManager::getGlobalFontTable() {
 		__int64 engine_t = get_engine_t();
 		if (engine_t) {
 
@@ -452,7 +500,7 @@
 		}
 		logErr("getGlobalFontTable: engine_t is null or found bad ptr while searching for globalFontTable addr, returning 0");
 		return 0;
-	}
+	}*/
 
 
 	void TypeInfoManager::debugLog_typeInfoGenerated_t()

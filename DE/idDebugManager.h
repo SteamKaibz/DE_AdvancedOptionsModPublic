@@ -91,7 +91,7 @@
 ////f
 ////	int m_fontIndex = 0;
 ////
-////	std::vector<idFontEnum> m_idFontsVec{ idFontEnum::eternal88 , idFontEnum::eternal90 , idFontEnum::ttSuper98 , idFontEnum::ttSuperA0 , idFontEnum::idTacticA8 ,idFontEnum::defaultCourrierF8 };
+////	std::vector<idFontHash> m_idFontsVec{ idFontHash::eternal88 , idFontHash::eternal90 , idFontHash::ttSuper98 , idFontHash::ttSuperA0 , idFontHash::idTacticA8 ,idFontHash::defaultCourrierF8 };
 ////
 ////	HudData hudData;
 ////
@@ -268,11 +268,11 @@
 ////	//		static float textScale = 4.0f;
 ////
 ////	//		//! text scale cycle
-////	//		//font.set(idFontEnum::eternal88);
-////	//		////font.set(idFontEnum::idTacticA8);
+////	//		//font.set(idFontHash::eternal88);
+////	//		////font.set(idFontHash::idTacticA8);
 ////
-////	//		//fontStr = font.getFontAsStr(idFontEnum::eternal88);
-////	//		////fontStr = font.getFontAsStr(idFontEnum::idTacticA8);
+////	//		//fontStr = font.getFontAsStr(idFontHash::eternal88);
+////	//		////fontStr = font.getFontAsStr(idFontHash::idTacticA8);
 ////
 ////	//		//if (EpochMillis() - lastChangeMs > 2000) { //! change x seconds.
 ////
@@ -284,9 +284,9 @@
 ////	//		//	}
 ////	//		//}
 ////
-////	//		//font.set(idFontEnum::eternal90);
-////	//		font.set(idFontEnum::defaultCourrierF8);
-////	//		fontStr = font.getFontAsStr(idFontEnum::defaultCourrierF8);
+////	//		//font.set(idFontHash::eternal90);
+////	//		font.set(idFontHash::defaultCourrierF8);
+////	//		fontStr = font.getFontAsStr(idFontHash::defaultCourrierF8);
 ////
 ////	//		//if (EpochMillis() - lastChangeMs > 1000) { //! change x seconds.
 ////	//		//	lastChangeMs = EpochMillis();
@@ -451,7 +451,7 @@
 ////	//		idRenderModelGui::drawSomeTextTest(debugStr6.c_str(), 50, 150, 1, colorGreen);	
 ////
 ////
-////	//		//font.set(idFontEnum::defaultCourrierF8); //? attempting to have the console readable..
+////	//		//font.set(idFontHash::defaultCourrierF8); //? attempting to have the console readable..
 ////
 ////	//	}
 ////	//	catch (const std::exception& ex)
@@ -817,7 +817,7 @@
 ////	//	//float crosshairOutlineSize = 1.0f;
 ////	//	std::string output = "drawCrosshairCrossGpt: crosshairWidth: " + crosshairWidthTxt + " crosshairHeigth: " + crosshairHeigthTxt + " crosshairOutlineSize " + crosshairOulineSizeTxt;
 ////
-////	//	font.set(idFontEnum::defaultCourrierF8);
+////	//	font.set(idFontHash::defaultCourrierF8);
 ////	//	idRenderModelGui::drawSomeTextTest(output.c_str(), 50, 300, 1.5, colorWhite);
 ////	//	/*float crosshairSize = 16;
 ////	//	float crosshairOurlineSize = 4;*/
@@ -863,7 +863,7 @@
 ////	//	std::string crosshairOulineSizeTxt = std::to_string(crosshairOutlineSize);
 ////	//	std::string output = "CrosshairDotOutlineGPT: VectorCrosshair size: " + crosshairSizeTxt + " VectorCrosshair outline size: " + crosshairOulineSizeTxt;
 ////
-////	//	font.set(idFontEnum::defaultCourrierF8);
+////	//	font.set(idFontHash::defaultCourrierF8);
 ////	//	idRenderModelGui::drawSomeTextTest(output.c_str(), 50, 300, 2, colorWhite);
 ////
 ////	//	//__int64 crosshairMaterial = ... // Choose the material for the crosshair
@@ -920,8 +920,8 @@
 ////	
 ////
 ////
-////	//void drawAllCharactersOfFont(idFontEnum idFontEnum) {
-////	//	font.set(idFontEnum);
+////	//void drawAllCharactersOfFont(idFontHash idFontHash) {
+////	//	font.set(idFontHash);
 ////
 ////	//	float x = 50;
 ////	//	float y = 50;
@@ -987,28 +987,28 @@
 ////
 ////
 ////	/*void fontsTest() {
-////		set(idFontEnum::eternal88);
+////		set(idFontHash::eternal88);
 ////		gui.drawSomeTextTest("eternal88", 50, 50, 1);
 ////		gui.drawSomeTextTest("100 + . *", 400, 50, 2);
-////		set(idFontEnum::idTacticA8);
+////		set(idFontHash::idTacticA8);
 ////		gui.drawSomeTextTest("idTacticA8", 50, 100, 1);
 ////		gui.drawSomeTextTest("100 + . *", 400, 100, 2);
-////		set(idFontEnum::eternal90);
+////		set(idFontHash::eternal90);
 ////		gui.drawSomeTextTest("eternal90", 50, 150, 1);
 ////		gui.drawSomeTextTest("100 + . *", 400, 150, 2);
-////		set(idFontEnum::euroStilB0);
+////		set(idFontHash::euroStilB0);
 ////		gui.drawSomeTextTest("EeuroStilB0", 50, 200, 1);
 ////		gui.drawSomeTextTest("100 + . * ", 400, 200, 2);
-////		set(idFontEnum::ttSuper98);
+////		set(idFontHash::ttSuper98);
 ////		gui.drawSomeTextTest("TtSuper98 100", 50, 250, 1);
 ////		gui.drawSomeTextTest("100 + . *", 400, 250, 3);
-////		set(idFontEnum::ttSuperA0);
+////		set(idFontHash::ttSuperA0);
 ////		gui.drawSomeTextTest("TtSuperA0", 50, 300, 1);
 ////		gui.drawSomeTextTest("100 + . *", 400, 300, 2);
-////		set(idFontEnum::defaultCourrierF8);
+////		set(idFontHash::defaultCourrierF8);
 ////		gui.drawSomeTextTest("defaultCourrierF8", 50, 350, 1);
 ////		gui.drawSomeTextTest("100 + . *", 400, 350, 2);
-////		set(idFontEnum::defaultCourrierF8);
+////		set(idFontHash::defaultCourrierF8);
 ////	}*/
 ////
 ////

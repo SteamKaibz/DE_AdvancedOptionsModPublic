@@ -165,6 +165,12 @@ std::string K_Utils::getBoolAsStr(bool isTrue) {
 	return "false";
 }
 
+std::string K_Utils::toStringWithPrecision(float value, int nDecimals) {
+	std::ostringstream out;
+	out << std::fixed << std::setprecision(nDecimals) << value;
+	return out.str();
+}
+
 
 std::string K_Utils::floatToStringWithoutTrailingZeros(float value) {
 	std::stringstream ss;

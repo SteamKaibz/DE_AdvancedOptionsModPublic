@@ -14,6 +14,8 @@ private:
 public:
 
 
+    static std::string getName(idResource* idResourceObj);
+
     static std::string getDeclWeaponName(idDeclWeapon* idDeclWeaponPtr);
 
     static std::string getDeclWeaponReticleName(idDeclWeaponReticle* idDeclWeaponReticlePtr);

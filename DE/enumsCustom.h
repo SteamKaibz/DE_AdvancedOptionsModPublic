@@ -572,26 +572,49 @@ enum class ModFileToDelete {
 	DINPUT8
 };
 
-enum class idFontEnum : unsigned int {
-	unknown = 0,		//! works
-	eternal88 = 1,		//! works
-	eternal90 = 2,		//! thin font 
-	ttSuper98 = 3,		//! 7 segments style
-	ttSuperA0 = 4,		//! stylish 
-	idTacticA8 = 5,		//! flatter 
-	euroStilB0 = 6,		//! very thin and low alpha value
-	//eternalB8,		//! no display (for fr at least)
-	/*eternalC0,
-	dfpop3w1C8,
-	dfpop2w9D0,
-	dfpop1w5D8,
-	dfpop3w1E0,
-	koreantkE8,
-	koreansnF0,*/
-	defaultCourrierF8 = 7,
-	MAX_ID_FONTS
 
+enum class idFontHash : uint32_t {
+	unknown = 0,
+	courier = 0x3918FE2D,
+	eternal_bold = 0x506496C8,
+	eternal_reg = 0xA6BCB879,
+	eternal_num = 0x81ED4377,
+	tt_supermolot = 0xC6CE5974,
+	idTactical = 0x76E299DB,
+	eurostileconreg = 0xFF76BFA6	
 };
+
+
+/*
+21:55:33.774       idFontManager.cpp:315   INFO| font: courier hash: 957939245 (hex: 0x3918FE2D enum val: addr: 000001EEACC63160
+21:55:33.774       idFontManager.cpp:316   INFO| font: eternal bold hash: 1348769480 (hex: 0x506496C8 enum val: addr: 000001ED9F91CFF0
+21:55:33.774       idFontManager.cpp:317   INFO| font: eternal regular hash: -1497581447 (hex: 0xA6BCB879 enum val: addr: 000001ED9F91C440
+21:55:33.774       idFontManager.cpp:318   INFO| font: eternal numeral regular hash: -2115157129 (hex: 0x81ED4377 enum val: addr: 000001ED9F91C5A0
+21:55:33.774       idFontManager.cpp:319   INFO| font: tt supermolot hash: -959555212 (hex: 0xC6CE5974 enum val: addr: 000001EEACC62DF0
+21:55:33.774       idFontManager.cpp:320   INFO| font: idtactical_regular hash: 1994562011 (hex: 0x76E299DB enum val: addr: 000001EEACC61CC0
+21:55:33.774       idFontManager.cpp:321   INFO| font: eurostileconreg hash: -8994906 (hex: 0xFF76BFA6 enum val: addr: 000001EEACC62D40
+*/
+
+//enum class idFontHash : unsigned int {
+//	unknown = 0,		//! works
+//	eternal88 = 1,		//! works
+//	eternal90 = 2,		//! thin font 
+//	ttSuper98 = 3,		//! 7 segments style
+//	ttSuperA0 = 4,		//! stylish 
+//	idTacticA8 = 5,		//! flatter 
+//	euroStilB0 = 6,		//! very thin and low alpha value
+//	//eternalB8,		//! no display (for fr at least)
+//	/*eternalC0,
+//	dfpop3w1C8,
+//	dfpop2w9D0,
+//	dfpop1w5D8,
+//	dfpop3w1E0,
+//	koreantkE8,
+//	koreansnF0,*/
+//	defaultCourrierF8 = 7,
+//	MAX_ID_FONTS
+//
+//};
 
 
 enum class UI_Scalling {

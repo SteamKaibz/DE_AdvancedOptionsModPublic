@@ -23,12 +23,12 @@ bool idDeclInfo::acquirreIdDeclInfo_FindWithInheritanceFuncPtr(__int64 ptr) {
 
 }
 
- __int64 idDeclInfo::getMaterialPtr(const char* matNameStr, unsigned int extraInfo) {
+idMaterial2* idDeclInfo::getMaterialPtr(const char* matNameStr, unsigned int extraInfo) {
     if (MemHelper::isBadReadPtr((void*)m_idDeclInfoTemplate_idMaterial2Ptr)) {
         logErr("getMaterialPtr: m_idDeclInfoTemplate_idMaterial2Ptr is bad ptr, returning 0. ");
-        return 0;
+        return nullptr;
     }
-    return pidDeclInfo_FindWithInheritance(m_idDeclInfoTemplate_idMaterial2Ptr, matNameStr, extraInfo);
+    return (idMaterial2 * )pidDeclInfo_FindWithInheritance(m_idDeclInfoTemplate_idMaterial2Ptr, matNameStr, extraInfo);
 }
 
  //? side note this doesn't work to get idDeclGlobalShell using a idDeclGlobalShell and idDeclGlobalShell as the name and extra info 1, it actually return a idMaterial2 for idDeclGlobalShell....(?!)

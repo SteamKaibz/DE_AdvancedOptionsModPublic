@@ -448,15 +448,26 @@ LRESULT CALLBACK HookedWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 				
 				logInfo("HookedWndProc: VK_NUMPAD3 pressed ");				
 				
-
+				//idFontManager::setConsoleFont(idFontHash::eternal88);
 			}
 
 			else if (wParam == VK_NUMPAD4) {
 
-				logInfo("HookedWndProc: VK_NUMPAD4 pressed crashing on purpose...");
+				logInfo("HookedWndProc: VK_NUMPAD4 pressed ");
 
+				
+				/*uintptr_t resAddr = idResourceListManager::getIdResourceListForClsName("idFont");
+				logInfo("resAddr: %p", (void*)resAddr);*/
+
+			/*	idDebugHUDLocal* dbgHud = TypeInfoManager::getdebugHUD();
+				logInfo("dbgHud: %p", dbgHud);*/
+
+				//idFontManager::debugLogFonts();
+
+				//idFontManager::setConsoleFont(idFontHash::idTacticA8);
+				/*logWarn("!!!!!!crashing on purpose !!!!!");
 				volatile int* tmp = nullptr;
-				int tmp1 = *tmp;
+				int tmp1 = *tmp;*/
 
 			}
 
@@ -1187,7 +1198,7 @@ __int64 __fastcall printOutlinedStringMB_hook(
 	
 
 	
-	__int64 gui = *(__int64*)idRenderModelGui_a1PtrToPtr;	
+	idRenderModelGui* gui = (idRenderModelGui * )*(__int64*)idRenderModelGui_a1PtrToPtr;
 
 	auto iceNadeIconData = CustomIceNadeIconManager::getData();
 	iceNadeIconData.updateMaterials(); //? this could be the answer to the crashing when loading levels....fingers crossed...Might be a bit slower than before cause of matr fetching (?)...Update no more crash indeed so far.
@@ -1442,10 +1453,48 @@ __int64 __fastcall idUsercmdGenLocalSendBtnPressMB_Hook(__int64 idUsercmdGenLoca
 }
 
 
+//? i'm getting crash here, not sure if it's the hook itself or the newly modify draw function yet....
+//! hooking this to hopefully render custom menus and may be custom hub not sure yet.
+typedef __int64(__fastcall* perfMetrics_DrawGraphs_t)(_QWORD* a1, idRenderModelGui* gui_a2);
 
 
+perfMetrics_DrawGraphs_t p_perfMetrics_DrawGraphs = nullptr;
+perfMetrics_DrawGraphs_t p_perfMetrics_DrawGraphs_Target = nullptr;
 
 
+__int64 __fastcall perfMetrics_DrawGraphs_Hook(_QWORD* a1, idRenderModelGui* gui_a2) {
+
+
+	//swfRect_t dbgRect(50.0f, 50.0f, 100.0f, 100.0f);
+	//idRenderModelGuiManager::drawSwfRectMaterial_V2(gui_a2, dbgRect, MaterialLib::getMaterialPtr("_white", 0), colorGreen);
+	
+	return p_perfMetrics_DrawGraphs(a1, gui_a2);
+}
+
+
+//! we used to hook this a loooong time ago and we had issues but using it again now, no issues at all and it doesn't crash when loading/unloading level. may be it's because the was get get the material before render, we'll have to look into that...
+typedef void(__fastcall* idDebugHUDLocal_Render_t)(__int64 idDebugHUDLocal_a1, idRenderModelGui* gui_a2);
+idDebugHUDLocal_Render_t p_Render_t = nullptr;
+idDebugHUDLocal_Render_t p_Render_t_Target = nullptr;
+
+
+void __fastcall idDebugHUDLocal_Render_Hook(__int64 idDebugHUDLocal_a1, idRenderModelGui* gui_a2) {
+	
+	/*swfRect_t dbgRect(50.0f, 50.0f, 100.0f, 100.0f);
+	idMaterial2* material = MaterialLib::getMaterialPtr("_white", 0);
+	idRenderModelGuiManager::drawSwfRectMaterial_V2(gui_a2, dbgRect, colorGreen, material);*/
+
+	//std::string testStr = "Hello";
+	//std::string testStr = "HelioA 115 191";
+	//swfRect_t dbgRect(50.0f, 50.0f, 500.0f, 60.0f);
+	//idRenderModelGuiManager::drawStringForRectHeigth_V2(gui_a2, dbgRect, testStr, idFontHash::eurostileconreg, colorWhite, false, textAlignment::left, true);
+
+
+	idRenderModelGuiManager::debugDrawAllFonts(gui_a2);
+
+
+	p_Render_t(idDebugHUDLocal_a1, gui_a2);
+}
 
 
 
@@ -2030,11 +2079,11 @@ __int64 __fastcall idUsercmdGenLocalSendBtnPressMB_Hook(__int64 idUsercmdGenLoca
 //	//? *** START 7/3/23 0:42 this is what you have to uncomment when you're done with your test of DrawStretchPic hook for g_material test ****
 //	////! this should hopefully prevent message in the console being unreadable
 //	//if (id_ConsoleLocal.isConsoleOpened()) {
-//	//	id_ConsoleLocal.setFont(idFontEnum::defaultCourrierF8);
+//	//	id_ConsoleLocal.setFont(idFontHash::defaultCourrierF8);
 //	//	return pidRenderModelGui_DrawString(gui_a1, x_a2, y_a3, text_a4, idColor_a5, a6, scale_a7);
 //	//}
 //	//else {
-//	//	id_ConsoleLocal.setFont(idFontEnum::ttSuper98); //! numeral font
+//	//	id_ConsoleLocal.setFont(idFontHash::ttSuper98); //! numeral font
 //	//	
 //	//}
 //
@@ -2979,7 +3028,7 @@ char __fastcall GetPerfMetricsStrHook(__int64 idConsoleLocal, __int64 a2, float*
 //
 //	//? apparently uncommenting this will make the idConsole totally white, haven't figured out why.
 //	//if (id_ConsoleLocal.isConsoleOpened()) {
-//	//	id_ConsoleLocal.setFont(idFontEnum::defaultCourrierF8);
+//	//	id_ConsoleLocal.setFont(idFontHash::defaultCourrierF8);
 //	//	*(unsigned int*)(gui_a1 + 0x4D0) = colorWhite.PackColor(); //! set pic color	
 //	//	//if (*(unsigned int*)(gui_a1 + 0x4D0) != colorWhite.PackColor()) {
 //	//	//	*(unsigned int*)(gui_a1 + 0x4D0) = colorWhite.PackColor(); //! set pic color	

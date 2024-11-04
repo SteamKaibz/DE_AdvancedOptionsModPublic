@@ -23,7 +23,7 @@ private:
 
 	//static bool m_isMaterialDebugMode;
 
-	static __int64 m_testMtr;
+	static inline idMaterial2*  m_testMtr;
 
 	static idDeclInfo m_idDeclInfo;
 
@@ -46,7 +46,7 @@ public:
 	static void setNextTestMtr();
 
 	//! material to display
-	static __int64 getTestMtr();
+	static idMaterial2* getTestMtr();
 
 	//! just use another function to find the name of the material itself
 	/*static std::string getLiveTestMtrStr() {

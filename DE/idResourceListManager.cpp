@@ -44,6 +44,56 @@
 
 
 
+ //! 3/11/24
+ idResourceList* idResourceListManager::getIdResourceListForClsName_V2(std::string inputStr) {
+     auto pidResourceList__ForClassNameFunc = reinterpret_cast<idResourceList__ForClassName>(m_idResourceListForClassNameAddr);
+     uintptr_t resourceListAddr = pidResourceList__ForClassNameFunc(inputStr.c_str());
+     return  (idResourceList *) resourceListAddr;
+ }
+
+
+ //! return the actual list of resources we're interested in
+ idList* idResourceListManager::getIdListForClsName(std::string inputStr) {
+
+     idResourceList* resListPtr  = getIdResourceListForClsName_V2(inputStr);   
+     if (resListPtr && resListPtr->resourceList) {
+         resourceList_t_K* resourceListPtr = resListPtr->resourceList;
+         return &resourceListPtr->declList;
+     }
+     logErr("getIdListForClsName: failed for %s", inputStr.c_str());
+     return nullptr;
+ }
+
+ //! because courier is not in the idDeclGlobalFontTable (aside when game starts and we dont modify the debugFont) we had to get here, other wise when using Xenos it will be a pain to get it back as we modify the debugFont ptr. 
+ idFont* idResourceListManager::find_idFont(std::string fontNameStr) {
+
+     idList* fontsStructIdlist = getIdListForClsName("idFont");
+     if (!fontsStructIdlist) {
+         logErr("find_idFont: failed to find font: %s", fontNameStr.c_str());
+         return nullptr;
+     }
+     
+     idFontResContainer* containerPtr = (idFontResContainer*)fontsStructIdlist->list;
+     //logInfo("find_idFont: DBG: fontsStructIdlist: %p", fontsStructIdlist);
+     for (size_t i = 0; i < fontsStructIdlist->num; i++)
+     {        
+         if (containerPtr && containerPtr->fontVoidPtr) {
+             idFont* idFontPtr = (idFont*)containerPtr->fontVoidPtr;
+             std::string fontName = idResourceManager::getName((idResource*)idFontPtr);
+             logInfo("find_idFont: DBG: found font with name: %s", fontName.c_str());
+             if (idResourceManager::getName((idResource*)idFontPtr) == fontNameStr) {
+                 return idFontPtr;
+             }            
+         }
+         containerPtr++;
+     }
+
+     return nullptr;
+ }
+
+
+
+
 
  idDeclGlobalShell* idResourceListManager::getIdDeclGlobalShellPtr() {
 
@@ -89,7 +139,6 @@
     auto result = resourceListPtr + 0x10;
     logInfo("getResourceListFirstElementPtr: for class: %s  found resource list start addr: %p ", classname, (void*)result);
     return result;
-
  }
 
  
@@ -270,7 +319,6 @@
          }
          containerPtr++;
      }
-
  }
 
 

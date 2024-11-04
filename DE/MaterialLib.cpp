@@ -7,13 +7,17 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 
 
 
+idMaterial2* MaterialLib::getMaterialPtr(const char* matNameStr, unsigned int extraInfo) {
+	return (idMaterial2 *)m_idDeclInfo.getMaterialPtr(matNameStr, extraInfo);
+}
+
 //! extra info is still unknow, but it's not related to get the material low/high res.
 
- __int64 MaterialLib::get(const char* matNameStr, unsigned int extraInfo) {
+idMaterial2* MaterialLib::get(const char* matNameStr, unsigned int extraInfo) {
 	return m_idDeclInfo.getMaterialPtr(matNameStr, extraInfo);
 }
 
- __int64 MaterialLib::get(hudSpriteId_t hudSpriteId) {
+ idMaterial2* MaterialLib::get(hudSpriteId_t hudSpriteId) {
 	switch (hudSpriteId)
 	{
 	case HUD_SPRITE_ID_UNKNOWN:
@@ -51,7 +55,7 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 	}
 }
 
- __int64 MaterialLib::getWhite() {
+ idMaterial2* MaterialLib::getWhite() {
 	return  m_idDeclInfo.getMaterialPtr("_white", 0);
 	/*if (!m_cached_whiteMatr) {
 	m_cached_whiteMatr =  m_idDeclInfo.getMaterialPtr("_white", 0);
@@ -62,7 +66,7 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 
 //? doesn't work it's not green:
 
- __int64 MaterialLib::getGreen() {
+ idMaterial2* MaterialLib::getGreen() {
 	return  m_idDeclInfo.getMaterialPtr("_green", 0);
 	/*if (!m_cached_greenMatr) {
 	m_cached_greenMatr = m_idDeclInfo.getMaterialPtr("_green", 0);
@@ -75,7 +79,7 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 
 //? setting the bool to 1 will do nothing to prevent the current flickering of the texture
 
- __int64 MaterialLib::getFragGrenadeMtr() {
+ idMaterial2* MaterialLib::getFragGrenadeMtr() {
 	return m_idDeclInfo.getMaterialPtr("swf/hud/hud_abilityindicators_singlestack_textures/swf_images/icons/icon_grenade_frag_", 0);
 	/*if (!m_cached_FragNadeMtr) {
 	m_cached_FragNadeMtr =  m_idDeclInfo.getMaterialPtr("swf/hud/hud_abilityindicators_singlestack_textures/swf_images/icons/icon_grenade_frag_", 0);
@@ -83,7 +87,7 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 	return m_cached_FragNadeMtr;*/
 }
 
- __int64 MaterialLib::getFlameBelchMtr() {
+ idMaterial2* MaterialLib::getFlameBelchMtr() {
 	return m_idDeclInfo.getMaterialPtr("swf/hud/hud_abilityindicators_singlestack_textures/swf_images/icons/icon_ability_flame_belch_racecar_", 0);
 	/*if (!m_cached_FlameBelchMtr) {
 	m_cached_FlameBelchMtr =  m_idDeclInfo.getMaterialPtr("swf/hud/hud_abilityindicators_singlestack_textures/swf_images/icons/icon_ability_flame_belch_racecar_", 0);
@@ -91,7 +95,7 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 	return m_cached_FlameBelchMtr;*/
 }
 
- __int64 MaterialLib::getFluelAmmoMtr() {
+ idMaterial2* MaterialLib::getFluelAmmoMtr() {
 	return m_idDeclInfo.getMaterialPtr("swf/hud/hud_abilityindicators_singlestack_textures/swf_images/icons/icon_ammo_fuel_", 0);
 	/*if (!m_cached_FuelMtr) {
 	m_cached_FuelMtr = m_idDeclInfo.getMaterialPtr("swf/hud/hud_abilityindicators_singlestack_textures/swf_images/icons/icon_ammo_fuel_", 0);
@@ -99,7 +103,7 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 	return m_cached_FuelMtr;*/
 }
 
- __int64 MaterialLib::getHammerMtr() {
+ idMaterial2* MaterialLib::getHammerMtr() {
 	return m_idDeclInfo.getMaterialPtr("swf/hud/hud_abilityindicators_singlestack_textures/swf_images/icons/icon_ammo_hammer_racecar_", 0);
 	/*if (!m_cached_HammerMtr) {
 	m_cached_HammerMtr = m_idDeclInfo.getMaterialPtr("swf/hud/hud_abilityindicators_singlestack_textures/swf_images/icons/icon_ammo_hammer_racecar_", 0);
@@ -107,7 +111,7 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 	return m_cached_HammerMtr;*/
 }
 
- __int64 MaterialLib::getCrucibleMtr() {
+ idMaterial2* MaterialLib::getCrucibleMtr() {
 	return  m_idDeclInfo.getMaterialPtr("swf/hud/hud_reticle_textures/swf_images/reticles/crucible/ret_center_circle_4pins_", 0);
 	/*if (!m_cached_CrucibleMtr) {
 	m_cached_CrucibleMtr = m_idDeclInfo.getMaterialPtr("swf/hud/hud_reticle_textures/swf_images/reticles/crucible/ret_center_circle_4pins_", 0);
@@ -115,7 +119,7 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 	return m_cached_CrucibleMtr;*/
 }
 
- __int64 MaterialLib::getBloodPunchMtr() {
+ idMaterial2* MaterialLib::getBloodPunchMtr() {
 	return  m_idDeclInfo.getMaterialPtr("swf/hud/hud_abilityindicators_singlestack_textures/swf_images/icons/icon_rune_bloodpunch_racecar_", 0);
 	/*	if (!m_cached_bloodPunchMtr) {
 	m_cached_bloodPunchMtr = m_idDeclInfo.getMaterialPtr("swf/hud/hud_abilityindicators_singlestack_textures/swf_images/icons/icon_rune_bloodpunch_racecar_", 0);
@@ -123,7 +127,7 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 	return m_cached_bloodPunchMtr;*/
 }
 
- __int64 MaterialLib::getDashMtr() {
+ idMaterial2* MaterialLib::getDashMtr() {
 	return  m_idDeclInfo.getMaterialPtr("swf/hud/hud_dash_textures/swf_images/hud/buffs/hud_slayer_rune_container_corner_", 0);
 	/*if (!m_cached_dashMtr) {
 	m_cached_dashMtr = m_idDeclInfo.getMaterialPtr("swf/hud/hud_dash_textures/swf_images/hud/buffs/hud_slayer_rune_container_corner_", 0);
@@ -131,7 +135,7 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 	return m_cached_dashMtr;*/
 }
 
- __int64 MaterialLib::getHealthMtr() {
+ idMaterial2* MaterialLib::getHealthMtr() {
 	return m_idDeclInfo.getMaterialPtr("swf/hud/hud_healthinfo_textures/swf_images/icons/icon_health_new_", 0);
 	/*if (!m_cached_healthMtr) {
 	m_cached_healthMtr = m_idDeclInfo.getMaterialPtr("swf/hud/hud_healthinfo_textures/swf_images/icons/icon_health_new_", 0);
@@ -139,7 +143,7 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 	return m_cached_healthMtr;*/
 }
 
- __int64 MaterialLib::getArmorMtr() {
+ idMaterial2* MaterialLib::getArmorMtr() {
 	return  m_idDeclInfo.getMaterialPtr("swf/hud/hud_healthinfo_textures/swf_images/icons/icon_armor_", 0);
 	/*if (!m_cached_armorMtr) {
 	m_cached_armorMtr = m_idDeclInfo.getMaterialPtr("swf/hud/hud_healthinfo_textures/swf_images/icons/icon_armor_", 0);
@@ -147,7 +151,7 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 	return m_cached_armorMtr;*/
 }
 
- __int64 MaterialLib::getIceGrenadeMtr() {
+ idMaterial2* MaterialLib::getIceGrenadeMtr() {
 
 	return m_idDeclInfo.getMaterialPtr("swf/hud/hud_abilityindicators_singlestack_textures/swf_images/icons/callouts/icon_callout_ice_bomb_", 0);
 	/*if (!m_cached_IceNadeStarIconMtr) {
@@ -156,7 +160,7 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 	return m_cached_IceNadeStarIconMtr;*/
 }
 
- __int64 MaterialLib::getIceNadeBorderMtr() {
+ idMaterial2* MaterialLib::getIceNadeBorderMtr() {
 	return m_idDeclInfo.getMaterialPtr("swf/hud/hud_weaponinfo_textures/swf_images/hud/ammo_equipment/equipment_new/hud_slayer_equipment_fill_1pip_backer_", 0);
 
 	/*if (!m_cached_IceNadeBorderMtr) {
@@ -169,7 +173,7 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 	//return  m_idDeclInfo.getMaterialPtr("swf/hud/hud_weaponinfo_textures/swf_images/hud/ammo_equipment/equipment_new/hud_slayer_equipment_fill_1pip_fill_", 0);
 }
 
- __int64 MaterialLib::getIceNadeExtraBorderMtr() {
+ idMaterial2* MaterialLib::getIceNadeExtraBorderMtr() {
 	return m_idDeclInfo.getMaterialPtr("swf/hud/hud_weaponinfo_textures/swf_images/hud/ammo_equipment/equipment_new/hud_slayer_equipment_fill_1pip_fill_", 0);
 
 	/*if (!m_cached_IceNadeExtraBorderMtr) {
@@ -178,7 +182,7 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 	//return m_cached_IceNadeExtraBorderMtr;	
 }
 
- __int64 MaterialLib::getIceNadeBackgroundMtr() {
+ idMaterial2* MaterialLib::getIceNadeBackgroundMtr() {
 
 	return m_idDeclInfo.getMaterialPtr("swf/hud/hud_healthinfo_textures/swf_images/hud/health_bars/hud_slayer_radsuit_iconbacker_", 0);
 
@@ -194,27 +198,27 @@ bool MaterialLib::m_isdebugMatrVecInitialized = false;
 	//return  m_idDeclInfo.getMaterialPtr("swf/hud/hud_weaponinfo_textures/swf_images/hud/ammo_equipment/equipment_new/hud_slayer_equipment_fill_1pip_backer_", 0); // this is same as border, weird.
 }
 
- __int64 MaterialLib::getShellIconMtr() {
+ idMaterial2* MaterialLib::getShellIconMtr() {
 	return  m_idDeclInfo.getMaterialPtr("art/ui/icons/ammo/shells", 0);
 }
 
- __int64 MaterialLib::getBulletIconMtr() {
+ idMaterial2* MaterialLib::getBulletIconMtr() {
 	return  m_idDeclInfo.getMaterialPtr("art/ui/icons/ammo/bullets", 0);
 }
 
- __int64 MaterialLib::getRocketIconMtr() {
+ idMaterial2* MaterialLib::getRocketIconMtr() {
 	return  m_idDeclInfo.getMaterialPtr("art/ui/icons/ammo/rocket", 0);
 }
 
- __int64 MaterialLib::getCellIconMtr() {
+ idMaterial2* MaterialLib::getCellIconMtr() {
 	return  m_idDeclInfo.getMaterialPtr("swf/hud/hud_reticle_textures/swf_images/icons/icon_ammo_cell_", 0);
 }
 
- __int64 MaterialLib::getCursorEmptyMtr() {
+ idMaterial2* MaterialLib::getCursorEmptyMtr() {
 	return  m_idDeclInfo.getMaterialPtr("textures/guis/cursor_empty", 0);
 }
 
- __int64 MaterialLib::getMtr(std::string matrStr) {
+ idMaterial2* MaterialLib::getMtr(std::string matrStr) {
 	return  m_idDeclInfo.getMaterialPtr(matrStr.c_str(), 0);
 }
 

@@ -155,6 +155,8 @@ public:
 
 	static std::string getBoolAsStr(bool isTrue);
 
+    static std::string toStringWithPrecision(float value, int nDecimals);
+
 	static std::string floatToStringWithoutTrailingZeros(float value);
 
 	static bool caseInsensitiveCompare(const std::string& str1, const std::string& str2);

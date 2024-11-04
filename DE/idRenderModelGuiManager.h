@@ -23,18 +23,22 @@ private:
 	//static const unsigned int m_screenHeighthOffset;
 
 	//! idRenderModelGui::DrawString(this, float x,float y,const char* string,const idColor* defaultColor,bool forceColor,const float scale)
-	typedef __int64(__fastcall* idRenderModelGui_DrawString)(__int64 a1, float a2, float a3, const char* a4, __int64 a5, char a6, float a7);
+	typedef __int64(__fastcall* idRenderModelGui_DrawString)(idRenderModelGui* gui, float a2, float a3, const char* a4, __int64 a5, char a6, float a7);
 	static inline idRenderModelGui_DrawString m_pidRenderModelGui_DrawString = 0;
 	//idRenderModelGui_DrawString m_pidRenderModelGui_DrawString = reinterpret_cast<idRenderModelGui_DrawString>(MemHelper::getFuncAddr(0x6239F0));
 
 	//! DrawStretchPic(guiPtr, x, y, z, w, h, s1, t1, s2, t2, mapPtr)
-	typedef void(__fastcall* idRenderModelGui_DrawStretchPic)(__int64 a1, float a2, float a3, float a4, float a5, float a6, float a7, float a8, float a9, float a10, __int64 a11);
+	typedef void(__fastcall* idRenderModelGui_DrawStretchPic)(idRenderModelGui* gui, float a2, float a3, float a4, float a5, float a6, float a7, float a8, float a9, float a10, idMaterial2* mtr_a11);
 	static inline idRenderModelGui_DrawStretchPic pidRenderModelGui_DrawStretchPic = 0;
+	
+	//typedef void(__fastcall* idRenderModelGui_DrawStretchPic_V2)(idRenderModelGui* gui, float x_a2, float y_a3, float z_a4, float w_a5, float h_a6, float s1_a7, float t1_a8, float s2_a9, float t2_a10, idMaterial2* mtr_a11);
+	
+	
 	//idRenderModelGui_DrawStretchPic pidRenderModelGui_DrawStretchPic = reinterpret_cast<idRenderModelGui_DrawStretchPic>(MemHelper::getFuncAddr(0x498ED0));
 
 
 
-	static inline const unsigned int m_packedColorOffset = GameOffsets::RenderModelGui_PackedColorOffset;
+	//static inline const unsigned int m_packedColorOffset = GameOffsets::RenderModelGui_PackedColorOffset;
 	//static inline const unsigned int m_packedColorOffset = 0x4D0;
 
 	//? why do we have those as we have m_screenWidthAddr below ?????
@@ -67,8 +71,8 @@ private:
 	//! hard coded address of _white material that seems to be available during all game life time
 	//static inline __int64 m_staticMaterialWhiteAddr = 0; 
 
-
-
+	//! there is a _white in idDebugHud let's see if it's constant for all game lifespan
+	static inline idMaterial2* m_cachedWhiteMaterial = nullptr;
 
 
 
@@ -89,10 +93,31 @@ public:
 	static inline int DrawStringCounter = 0;
 	
 
+	//static inline idRenderModelGui_DrawStretchPic_V2 m_drawStretchPicFp_V2 = nullptr;
+
 	static std::string getDbgStrForImgui();
 
 	//static bool acquireStaticWhiteMaterialAddr(__int64 addr);
 	
+
+	static void parseTextColor(char colorCode, idColor& outColor);
+
+	static void paintChar(idRenderModelGui* gui, float x, float y, const scaledGlyphInfo_t& glyphInfo);
+
+	static void drawStringForRectHeigth_V2(idRenderModelGui* gui, swfRect_t bounds, std::string text, idFontHash fontHash, const idColor& color, bool forceColor, textAlignment alignment, bool isDebug);
+
+	
+
+	static void drawSwfRectMaterial_V2(idRenderModelGui* gui, swfRect_t swfRect, const idColor& color, idMaterial2* material);
+
+	static void setColor_V2(idRenderModelGui* gui, const idColor& idColor);
+
+	static bool acquirreWhiteMaterial();
+
+	static std::string debugGetFontNameString(idFontHash fontHash);
+
+	static void debugDrawAllFonts(idRenderModelGui* gui);
+
 
 	static bool acquirreDrawStretchPicFuncAdd(__int64 fAdd);
 
@@ -129,13 +154,13 @@ public:
 	static unsigned  GetStringWidthInPixels(const char* string, const float scale);
 
 
-	static unsigned int getCurrentPackedColor(__int64 idRenderModelGuiAdr);
+	//static unsigned int getCurrentPackedColor(__int64 idRenderModelGuiAdr);
 
 	//! this is just a version that does not check for bad ptr to try to optimize the render of ice icon(the check is already done in the container func.
-	static void setColorNoCheck(__int64 idRenderModelGuiAdrr, const idColor& idColor);
+	static void setColorNoCheck(idRenderModelGui* gui, const idColor& idColor);
 
 
-	static void setColor(__int64 idRenderModelGuiAdrr, const idColor& idColor);
+	static void setColor(idRenderModelGui* gui, const idColor& idColor);
 
 
 	//? getting rid of those cause it looks we can get those using other means
@@ -143,17 +168,17 @@ public:
 
 	//static float getScreenHeigth(__int64 idRenderModelGuiAddr);
 
-	static float getCenterX(__int64 idRenderModelGuiAddr);
+	static float getCenterX(idRenderModelGui* gui);
 
-	static float getCenterY(__int64 idRenderModelGuiAddr);
+	static float getCenterY(idRenderModelGui* gui);
 
 
 	
 
-	static void drawDrawStretchPicTest5(__int64 idRenderModelGuiAdrr, float x, float y, float width, float height, __int64 matPtr);
+	static void drawDrawStretchPicTest5(idRenderModelGui* gui, float x, float y, float width, float height, idMaterial2* matPtr);
 
 
-	static void debugDrawColoredRect(__int64 idRenderModelGuiAdrr, float x, float y, float width, float height, idColor color);
+	static void debugDrawColoredRect(idRenderModelGui* gui, float x, float y, float width, float height, idColor color);
 
 	
 
@@ -163,53 +188,53 @@ public:
 
 		
 
-	static void debugDrawString(__int64 idRenderModelGuiAdr, idColor color, const char* text, float x, float y, float scale);
+	static void debugDrawString(idRenderModelGui* gui, idColor color, const char* text, float x, float y, float scale);
 
 	//! because we don't stretch the string vertically a string height value will be a ratio of the charwidth and charheight
 	static void adjustRectHeightToFitTheStr(idVec4& rect, size_t strCharCount);
 
 
-	static idVec2 getGlyphOffset(idVec4 rect, const char* str, float textScale);
+	//static idVec2 getGlyphOffset(idVec4 rect, const char* str, float textScale);
 
 
 	static void setIceNadeCooldDownTextScale(idVec4& rectRef, float rectPrct);
 	
 
-	static void drawIceNadeCooldownTextWithOutline(__int64 idRenderModelGuiAdr, idColor color, std::string textStr, idVec4 rect, float textScaleF, float outlineOffset, bool isDebug = false);
+	static void drawIceNadeCooldownTextWithOutline(idRenderModelGui* gui, idColor color, std::string textStr, idVec4 rect, float textScaleF, float outlineOffset, bool isDebug = false);
 
 
-	static void drawIceNadeCooldownText(__int64 idRenderModelGuiAdr, idColor color, std::string textStr, idVec4 rect, float textScaleF, bool isDebug = false);
+	static void drawIceNadeCooldownText(idRenderModelGui* gui, idColor color, std::string textStr, idVec4 rect, float textScaleF, bool isDebug = false);
 
 
 	//! Will drawn a string, scaling it horizontally to fill the rect width, however it will not scale it vertically.
 	//! A 1 char length str will be 3 times bigger than a 3 chars lenght string, so if you want to do a countdown make sure the char count is the same, meaning if count from 60 to 0, from 10 to 0 the count should be 09, 08...
 	//! if you want to use this to print the health with 3 numbers, you use a space to make sure the text keep the same width, for ex text can be 200 or 'space'10, or 'space''scpace'0 
-	static void drawStringCenteredInBounds(__int64 idRenderModelGuiAdr, idColor color, std::string textStr, idVec4 rect, bool isDebug = false);
+	//static void drawStringCenteredInBounds(__int64 idRenderModelGuiAdr, idColor color, std::string textStr, idVec4 rect, bool isDebug = false);
 
 
 
 
-	static void drawAllNeededIconsTest(__int64 idRenderModelGuiAdrr);
+	//static void drawAllNeededIconsTest(idRenderModelGui* gui);
 
 
-	static void drawDrawStretchPicBounds(__int64 idRenderModelGuiAdrr, idVec4 bounds, __int64 matPtr);
+	static void drawDrawStretchPicBounds(idRenderModelGui* gui, idVec4 bounds, idMaterial2* matPtr);
 	
 	
 
-	static void debugDrawMaterialLibMatr(__int64 idRenderModelGuiAdrr, __int64 matr, std::string materialNameStr);
+	static void debugDrawMaterialLibMatr(idRenderModelGui* gui, idMaterial2* matr, std::string materialNameStr);
 
 
-	static void drawIceIcon(__int64 idRenderModelGuiAdrr, CustomIceNadeIconUIData& data);
+	static void drawIceIcon(idRenderModelGui* gui, CustomIceNadeIconUIData& data);
 
 
-	static void drawDrawStretchPicSwfRect(__int64 idRenderModelGuiAdrr, swfRect_t swfRect, __int64 matPtr, const idColor& idColor, bool isMiroredX = false, bool isMiroredY = false);
+	static void drawDrawStretchPicSwfRect(idRenderModelGui* gui, swfRect_t swfRect, idMaterial2* matPtr, const idColor& idColor, bool isMiroredX = false, bool isMiroredY = false);
 
 	//static void drawDrawStretchPicWhiteMatrSwfRect(__int64 idRenderModelGuiAdrr, swfRect_t swfRect, const idColor& idColor, bool isMiroredX = false, bool isMiroredY = false);
 
 
 
 
-	static void drawDrawStretchPicTest3(__int64 idRenderModelGuiAdrr, float x, float y, float width, float height, __int64 matPtr, const idColor& idColor,  bool isMiroredX = false, bool isMiroredY = false);
+	static void drawDrawStretchPicTest3(idRenderModelGui* gui, float x, float y, float width, float height, idMaterial2* matPtr, const idColor& idColor,  bool isMiroredX = false, bool isMiroredY = false);
 
 
 
@@ -219,7 +244,7 @@ public:
 
 	//! this will make the string as big as it can be, meaning that if the string is 1 char length it will be 3 times bigger than a 3 chars lenght string, so the idea is that you always make sure that your string lenght is the same, meaning that if you do a count down from 60 to 0, from 10 to 0 the count will be 09, 08...
 	//! if you want to use this to print the health with 3 numbers, you use a space to make sure the text keep the same width, for ex text can be 200 or 'space'10, or 'space''scpace'0 
-	static void debugDrawStringInRect(__int64 idRenderModelGuiAdr, idColor color, std::string textStr, idVec4 rect);
+	//static void debugDrawStringInRect(__int64 idRenderModelGuiAdr, idColor color, std::string textStr, idVec4 rect);
 
 
 

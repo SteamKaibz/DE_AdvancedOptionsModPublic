@@ -37,6 +37,7 @@
 		return false;
 	}
 
+		
 	
 	//? not using this, not safe enough, will use execute command instead
 	/*if (!idCvarManager::acquireSetInternalFuncAddr((uintptr_t)MemHelper::ModulePatternScan("idInternalCVar_SetSig", idInternalCVar_SetSig))) {
@@ -202,28 +203,30 @@
 		anyScanFailed = true;
 	}*/
 
-	if (!idFontManager::acquirreSetMonospaceFondOffsetAddr(MemHelper::ModulePatternScan("fontSetInSetUpMonoSpaceFontSig", fontSetInSetUpMonoSpaceFontSig) + 3)) {
+	//! 2/11/24 we should not need those with our new methods to draw on screen
+	/*if (!idFontManager::acquirreSetMonospaceFondOffsetAddr(MemHelper::ModulePatternScan("fontSetInSetUpMonoSpaceFontSig", fontSetInSetUpMonoSpaceFontSig) + 3)) {
 		logErr("scanForAddrs failed for fontSetInSetUpMonoSpaceFontSig");
 		return false;
-	}	
+	}*/	
 
-	if (!idFontManager::acquirreDrawStringFontOffsetAddr(MemHelper::ModulePatternScan("fontSetInDrawStringSig", fontSetInDrawStringSig) + 30)) {
+	/*if (!idFontManager::acquirreDrawStringFontOffsetAddr(MemHelper::ModulePatternScan("fontSetInDrawStringSig", fontSetInDrawStringSig) + 30)) {
 		logErr("scanForAddrs failed for fontSetInDrawStringSig");
 		return false;
-	}
+	}*/
 
 
-	if (!idFontManager::acquirreConsoleHistoryFontOffsetAddr(MemHelper::ModulePatternScan("fontSetInConsoleHistorySig", fontSetInConsoleHistorySig) + 3)) {
+	/*if (!idFontManager::acquirreConsoleHistoryFontOffsetAddr(MemHelper::ModulePatternScan("fontSetInConsoleHistorySig", fontSetInConsoleHistorySig) + 3)) {
 		logErr("scanForAddrs failed for fontSetInConsoleHistorySig");
 		return false;
-	}
+	}*/
 
 
 	//std::string getGlyphDataFuncSig = "89 54 24 10 53 48 83 EC 20 48 8B D9 48 8B 49 58";
 	/*if (Config::isSandboxModule()) {
 		getGlyphDataFuncSig = "89 54 24 10 57 48 83 EC 30 48 8B F9 48 8B 49 58";
 	}	*/
-	if (!idFontManager::acquirreIdFontGetGlyphDataFuncAddr((uintptr_t)MemHelper::ModulePatternScan("getGlyphDataFuncSig", getGlyphDataFuncSig))) {
+	//if (!idFontManager::acquirreIdFontGetGlyphDataFuncAddr((uintptr_t)MemHelper::ModulePatternScan("getGlyphDataFuncSig", getGlyphDataFuncSig))) {
+	if (!idFontManager::acquirreIdFontGetGlyphDataFuncPtr((uintptr_t)MemHelper::ModulePatternScan("getGlyphDataFuncSig", getGlyphDataFuncSig))) {
 		logErr("scanForAddrs failed for getGlyphDataFuncSig");
 		return false;
 	}
@@ -447,6 +450,21 @@
 		logErr("scanForAddrs failed for IdUsercmdGenLocalSendBtnPressFpSig");
 		return false;
 	}
+
+
+	PerfMetrics_DrawGraphsFuncAdd = (uintptr_t)MemHelper::ModulePatternScan("PerfMetrics_DrawGraphsFpSig", PerfMetrics_DrawGraphsFpSig);
+	if (MemHelper::isBadReadPtr((void*)PerfMetrics_DrawGraphsFuncAdd)) {
+		logErr("scanForAddrs failed for PerfMetrics_DrawGraphsFpSig");
+		return false;
+	}
+
+	IdDebugHUDLocal_RenderFuncAdd = (uintptr_t)MemHelper::ModulePatternScan("idDebugHUDLocal_RenderFpSig", idDebugHUDLocal_RenderFpSig);
+	if (MemHelper::isBadReadPtr((void*)IdDebugHUDLocal_RenderFuncAdd)) {
+		logErr("scanForAddrs failed for idDebugHUDLocal_RenderFpSig");
+		return false;
+	}
+
+
 	/*if (!MinHookManager::SetIdUsercmdGenLocalSendBtnPressFuncAdd((uintptr_t)MemHelper::ModulePatternScan("SetIdUsercmdGenLocalSendBtnPressFpSig", IdUsercmdGenLocalSendBtnPressFpSig))) {
 		logErr("scanForAddrs failed for IdUsercmdGenLocalSendBtnPressFpSig");
 		return false;
@@ -486,6 +504,12 @@
 
 	if (!idResourceListManager::acquireGetResourceFp((uintptr_t)MemHelper::ModulePatternScan("getResourceFpSig", getResourceFpSig))) {
 		logErr("scanForAddrs failed for getResourceFpSig");
+		return false;
+	}
+
+	
+	if (!idFontManager::init(TypeInfoManager::getGlobalFontTable())) { //! 3/11/24 this need to happen afte resList func has been set
+		logErr("scanForAddrs failed for init");
 		return false;
 	}
 

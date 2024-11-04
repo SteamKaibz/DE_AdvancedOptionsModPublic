@@ -6,7 +6,7 @@ int MaterialDebug::m_testMaterialNameIndex = 0;
 
 //bool MaterialDebug::m_isMaterialDebugMode;
 
-__int64 MaterialDebug::m_testMtr;
+//idMaterial2* MaterialDebug::m_testMtr;
 
 idDeclInfo MaterialDebug::m_idDeclInfo;
 
@@ -147,7 +147,7 @@ std::vector<std::string> MaterialDebug::m_materialsNamesVec = { "art/ui/icons/ar
 
 //! material to display
 
- __int64 MaterialDebug::getTestMtr() {
+ idMaterial2* MaterialDebug::getTestMtr() {
 	if (!m_testMtr) {
 		setNextTestMtr(); //! bit of a hack but i'm tired.
 	}

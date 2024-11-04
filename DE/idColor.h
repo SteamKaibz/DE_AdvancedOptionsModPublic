@@ -41,6 +41,7 @@ static constexpr idColor 	colorPurple = idColor{ 1.00f, 0.0f, 0.72f, 1.00f }; //
 //static constexpr idColor 	colorPurple = idColor{ 0.60f, 0.00f, 0.60f, 1.00f };
 static constexpr idColor 	colorPink = idColor{ 0.73f, 0.40f, 0.48f, 1.00f };
 static constexpr idColor 	colorBrown = idColor{ 0.40f, 0.35f, 0.08f, 1.00f };
+static constexpr idColor	colorVeryLtGrey = idColor{ 0.90f, 0.90f, 0.90f, 1.00f };
 static constexpr idColor 	colorWhite = idColor{ 1.00f, 1.00f, 1.00f, 1.00f };
 static constexpr idColor 	colorLtGrey = idColor{ 0.75f, 0.75f, 0.75f, 1.00f };
 static constexpr idColor 	colorMdGrey = idColor{ 0.50f, 0.50f, 0.50f, 1.00f };

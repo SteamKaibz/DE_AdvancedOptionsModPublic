@@ -144,11 +144,13 @@ namespace GameOffsets {
 
 #ifdef GAME_VERSION_SANDBOX
 	const __int64 IdGameTimeManagerLocalOffset = 0x125F80; //! updated for sandbox. check rev2 in ida: idGameTimeManagerLocal_GetGameMs_D06DD0((__int64)	
-	const int RenderModelGui_PackedColorOffset = 0x4E0; //! sig: 8B 87 ? ? ? ? 4B 8D 0C 40 F3 0F 10 AD or check 622D11 in ida rev2.
+	//! update 3/11/24 moved to idLib static 
+	//const int RenderModelGui_PackedColorOffset = 0x4E0; //! sig: 8B 87 ? ? ? ? 4B 8D 0C 40 F3 0F 10 AD or check 622D11 in ida rev2.
 #else
 	const __int64 IdGameTimeManagerLocalOffset = 0x125A60; //! check rev2 in ida: idGameTimeManagerLocal_GetGameMs_D06DD0((__int64)
 	//const __int64 CurrentGameModeOffset = 0x6B07DB5; //! not used anymore.	
-	const int RenderModelGui_PackedColorOffset = 0x4D0; //! sig: 8B 87 ? ? ? ? 4B 8D 0C 40 F3 0F 10 AD or check 622D11 in ida rev2.
+	//! update 3/11/24 moved to idLib static 
+	//const int RenderModelGui_PackedColorOffset = 0x4D0; //! sig: 8B 87 ? ? ? ? 4B 8D 0C 40 F3 0F 10 AD or check 622D11 in ida rev2.
 	//? this one is a good example of smth we should not do, because this offset if different in Vanilla/Sandbox but because the offset in the Vtable of the idMapInstance ptr is the same in both version we should and will use the function ptr instead.
 	/*const __int64 MapInstance_CurrentMapPath = 0x9A068;*/
 

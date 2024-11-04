@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <vector>
 #include "MemHelper.h"
+#include "idLib_Static.h"
 #include "idLib_Dynamic.h"
 #include "../Common/K_Utils.h"
 #include "idResourceManager.h"
@@ -81,6 +82,12 @@ public:
     static void getidDeclWeaponResourceListTest();
 
     static uintptr_t getIdResourceListForClsName(std::string inputStr);
+
+    static idResourceList* getIdResourceListForClsName_V2(std::string inputStr);
+
+    static idList* getIdListForClsName(std::string inputStr);
+
+    static idFont* find_idFont(std::string fontNameStr);
 
     //! from __int64 __fastcall getResourceFromidResourceList_t_MB_A511B0(__int64 resourceList_t_a1, int a2)
     //static __int64 getResource(void* resourceList_t_a1, int a2);

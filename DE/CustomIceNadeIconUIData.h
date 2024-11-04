@@ -29,10 +29,10 @@ public:
 	idColor borderColor;
 	idColor backgroundColor;
 	idColor iconColor; //! the actual star like icon color
-	__int64 extraBorderMrt;
-	__int64 borderMrt;
-	__int64 backgroundMrt;
-	__int64 iconMrt;
+	idMaterial2* extraBorderMrt;
+	idMaterial2* borderMrt;
+	idMaterial2* backgroundMrt;
+	idMaterial2* iconMrt;
 	std::string cooldownText = "??";
 
 

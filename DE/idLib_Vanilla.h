@@ -1718,16 +1718,7 @@ struct alignas(8) idStr {
 static_assert(sizeof(idStr) == 48, "Size of idStr is wrong !");
 
 
-// idMaterial2 : idDeclTypeInfo : idDecl : idResource
-struct idMaterial2 {
-	// Offset: 0x0 (0d) Size: 0x370 (880d)
-	char pad_0[880];
-	// Offset: 0x370 (880d)  Size: 0x2 (2d)
-	unsigned short MaterialIndex;
-	// Offset: 0x372 (882d) Size: 0x26 (38d)
-	char pad_End[38];
-}; // size: 0x398 (Size Dec: 920)
-static_assert(sizeof(idMaterial2) == 920, "Size of idMaterial2 is wrong !");
+
 
 
 struct tagData_t {

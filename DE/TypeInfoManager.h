@@ -8,7 +8,6 @@
 
 
 
-
 class TypeInfoManager {
 
 private:
@@ -90,7 +89,11 @@ public:
 
 	static __int64 getIdDebugHudAddr();
 
-	static __int64 getGlobalFontTable();
+	static idDeclGlobalFontTable* getGlobalFontTable();
+
+	void* getdebugHUD();
+
+	//static idDebugHUDLocal* getdebugHUD();
 
 
 

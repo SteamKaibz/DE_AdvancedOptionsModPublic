@@ -49,38 +49,33 @@ public:
 	
 		
 
+	static idMaterial2* getMaterialPtr(const char* matNameStr, unsigned int extraInfo);
+
 	//! extra info is still unknow, but it's not related to get the material low/high res.
-	static __int64 get(const char* matNameStr, unsigned int extraInfo = 0);
+	static  idMaterial2* get(const char* matNameStr, unsigned int extraInfo = 0);
 
 
-	static __int64 get(hudSpriteId_t hudSpriteId);
+	static  idMaterial2* get(hudSpriteId_t hudSpriteId);
 
-	static __int64 getWhite();
+	static  idMaterial2* getWhite();
 
 	//? doesn't work it's not green:
-	static __int64 getGreen();
+	static  idMaterial2* getGreen();
 
 	
 
 	//? setting the bool to 1 will do nothing to prevent the current flickering of the texture
-	static __int64 getFragGrenadeMtr();
+	static  idMaterial2* getFragGrenadeMtr();
 	
 
-	static __int64 getFlameBelchMtr();
-
-	static __int64 getFluelAmmoMtr();
-
-	static __int64 getHammerMtr();
-
-	static __int64 getCrucibleMtr();
-
-	static __int64 getBloodPunchMtr();
-
-	static __int64 getDashMtr();
-
-	static __int64 getHealthMtr();
-
-	static __int64 getArmorMtr();
+	static  idMaterial2* getFlameBelchMtr();
+	static idMaterial2* getFluelAmmoMtr();
+	static idMaterial2* getHammerMtr();
+	static idMaterial2* getCrucibleMtr();
+	static idMaterial2* getBloodPunchMtr();
+	static idMaterial2* getDashMtr();
+	static idMaterial2* getHealthMtr();
+	static idMaterial2* getArmorMtr();
 
 
 
@@ -88,30 +83,18 @@ public:
 	//? trying this to see if it can not only prevent the crash we have when sometimes loading horde mode, the fact that the materials is wrong for the ice nade icon, i mean i got bloodpunch wft???? and that the ice nade icon doesn't show up when the mod is activated i have to reload the mod a second time but the cooldown of the string show up, so may be a material issue (?)
 	//! update it seems the crash inded came from the cached materials addresses, i'm getting rid of them all right now...
 
-	static __int64 getIceGrenadeMtr();
-	
-
-	static __int64 getIceNadeBorderMtr();
-
-	static __int64 getIceNadeExtraBorderMtr();
-
-	static __int64 getIceNadeBackgroundMtr();
-
-	
-
-	static __int64 getShellIconMtr();
-
-	static __int64 getBulletIconMtr();
-
-	static __int64 getRocketIconMtr();
-
-	static __int64 getCellIconMtr();
-		
-
-	static __int64 getCursorEmptyMtr();
+	static  idMaterial2* getIceGrenadeMtr();
+	static  idMaterial2* getIceNadeBorderMtr();
+	static  idMaterial2* getIceNadeExtraBorderMtr();
+	static  idMaterial2* getIceNadeBackgroundMtr();
+	static  idMaterial2* getShellIconMtr();
+	static  idMaterial2* getBulletIconMtr();
+	static  idMaterial2* getRocketIconMtr();
+	static  idMaterial2* getCellIconMtr();
+	static  idMaterial2* getCursorEmptyMtr();
 
 
-	static __int64 getMtr(std::string matrStr);
+	static idMaterial2* getMtr(std::string matrStr);
 	
 
 	//! found this studying idFont16GetMaterialWidth_4CCA50 but org code is for a idfont
